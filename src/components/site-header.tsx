@@ -102,9 +102,8 @@ export function SiteHeader() {
             href={whatsappGeneral}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden h-10 items-center gap-2 rounded-full bg-brand px-5 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:inline-flex"
+            className="hidden h-10 items-center bg-brand px-5 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:inline-flex"
           >
-            <WhatsApp className="h-4 w-4" />
             Falar com especialista
           </a>
 
@@ -169,7 +168,7 @@ export function SiteHeader() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-brand px-6 text-sm font-medium text-white"
+            className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-6 text-sm font-medium text-white"
           >
             <WhatsApp className="h-4.5 w-4.5" />
             Falar com especialista

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { CtaSection } from "@/components/cta-section";
 import { ArrowRight, Document, Phone, WhatsApp } from "@/components/icons";
-import { Mark } from "@/components/logo";
 import { VehicleCard } from "@/components/vehicle-card";
 import { Eyebrow } from "@/components/ui";
 import { contact } from "@/data/brand";
@@ -56,14 +55,12 @@ export default async function VehiclePage({
   const related = relatedVehicles(vehicle);
   const whatsapp = whatsappForVehicle(name, vehicle.plate);
 
+  // The hero already states year, mileage, fuel and colour; the sheet carries
+  // what it does not, so the page never prints the same figure twice.
   const spec = [
     { label: "Marca", value: vehicle.make },
     { label: "Modelo", value: vehicle.model },
     { label: "Versão", value: vehicle.version },
-    { label: "Ano fabricação/modelo", value: vehicle.year, numeric: true },
-    { label: "Combustível", value: vehicle.fuel },
-    { label: "Cor", value: vehicle.color },
-    { label: "Quilometragem", value: formatKm(vehicle.km), numeric: true },
     { label: "Placa", value: vehicle.plate, numeric: true },
     {
       label: "Situação",
@@ -104,18 +101,7 @@ export default async function VehiclePage({
           itself is the subject: name, figures, price — set over the brand
           symbol rather than over a stand-in photo of a different car.
           --------------------------------------------------------------- */}
-      <section className="relative isolate overflow-hidden border-b border-border pb-14 pt-32 sm:pb-20 sm:pt-40 lg:pt-48">
-        <Mark
-          className="pointer-events-none absolute -right-28 top-1/2 -z-10 h-72 w-auto -translate-y-1/2 text-ink-850/70 sm:-right-24 sm:h-[26rem] lg:-right-20 lg:h-[32rem]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(60rem 32rem at 88% 40%, color-mix(in srgb, var(--color-brand) 12%, transparent), transparent 70%)",
-          }}
-        />
+      <section className="border-b border-border pb-16 pt-32 sm:pb-24 sm:pt-40 lg:pt-48">
 
         <div className="container-editorial">
           <nav aria-label="Trilha" className="mb-10 text-sm sm:mb-14">
@@ -145,10 +131,10 @@ export default async function VehiclePage({
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
               <Eyebrow>{vehicle.make}</Eyebrow>
-              <h1 className="mt-6 text-display-lg font-semibold text-foreground">
+              <h1 className="mt-6 text-display-xl font-semibold text-foreground">
                 {vehicle.model}
               </h1>
-              <p className="mt-4 font-display text-display-sm font-medium tracking-tight text-foreground-muted">
+              <p className="mt-5 font-display text-display-sm font-medium tracking-tight text-foreground-muted">
                 {vehicle.version}
               </p>
 
@@ -175,14 +161,14 @@ export default async function VehiclePage({
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="border border-border bg-surface p-7 sm:p-9 lg:sticky lg:top-28">
                 {vehicle.origin === "consignado" ? (
-                  <p className="mb-5 inline-flex items-center rounded-full border border-border-strong px-3 py-1 text-eyebrow font-medium uppercase text-foreground-muted">
+                  <p className="mb-5 inline-flex items-center border border-border-strong px-3 py-1 text-eyebrow font-medium uppercase text-foreground-muted">
                     Consignado
                   </p>
                 ) : null}
                 <p className="text-eyebrow font-medium uppercase text-foreground-subtle">
                   Valor
                 </p>
-                <p className="tnum mt-3 font-display text-display-md font-semibold text-foreground">
+                <p className="tnum mt-4 font-display text-display-md font-semibold leading-none tracking-[-0.03em] text-foreground">
                   {formatPrice(vehicle.price)}
                 </p>
 
@@ -191,14 +177,14 @@ export default async function VehiclePage({
                     href={whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-brand px-6 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
+                    className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-6 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
                   >
                     <WhatsApp className="h-4.5 w-4.5" />
                     Tenho interesse
                   </a>
                   <a
                     href={`tel:+${contact.phoneE164}`}
-                    className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+                    className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
                   >
                     <Phone className="h-4 w-4" />
                     <span className="tnum">{contact.phoneLabel}</span>
@@ -221,7 +207,7 @@ export default async function VehiclePage({
       <section className="py-section" aria-labelledby="ficha">
         <div className="container-editorial">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
               <Eyebrow>Ficha técnica</Eyebrow>
               <h2
                 id="ficha"
@@ -282,16 +268,19 @@ export default async function VehiclePage({
               </h2>
               <Link
                 href="/veiculos"
-                className="group/link inline-flex shrink-0 items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+                className="group/link inline-flex shrink-0 items-center gap-3 text-sm font-medium tracking-tight text-foreground-muted transition-colors duration-300 hover:text-brand-bright"
               >
                 Ver todo o estoque
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
               </Link>
             </div>
 
-            <ul className="mt-10 grid gap-px sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid border-t border-border sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((other) => (
-                <li key={other.slug}>
+                <li
+                  key={other.slug}
+                  className="border-b border-border sm:border-l sm:border-b-0 sm:pl-8 sm:first:border-l-0 sm:first:pl-0 lg:pl-10"
+                >
                   <VehicleCard vehicle={other} />
                 </li>
               ))}

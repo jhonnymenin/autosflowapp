@@ -37,7 +37,7 @@ export function CtaSection({
           <Eyebrow>Atendimento</Eyebrow>
           <h2
             id="cta"
-            className="mt-6 text-display-lg font-semibold text-foreground"
+            className="mt-5 text-display-lg font-semibold text-foreground"
           >
             {title}
           </h2>
@@ -50,14 +50,14 @@ export function CtaSection({
               href={whatsappGeneral}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-brand px-7 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:h-14 sm:px-9"
+              className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-8 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:h-14 sm:px-10"
             >
               <WhatsApp className="h-4.5 w-4.5" />
               Falar com especialista
             </a>
             <a
               href={`tel:+${contact.phoneE164}`}
-              className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full border border-white/25 px-7 text-sm font-medium tracking-tight text-foreground backdrop-blur-sm transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright sm:h-14 sm:px-9"
+              className="inline-flex h-13 items-center justify-center gap-3 border border-white/30 px-8 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950 sm:h-14 sm:px-10"
             >
               <Phone className="h-4 w-4" />
               <span className="tnum">{contact.phoneLabel}</span>

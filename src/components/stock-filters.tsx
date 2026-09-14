@@ -42,7 +42,7 @@ function Chip({
       href={href}
       scroll={false}
       aria-current={selected ? "true" : undefined}
-      className={`inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-sm tracking-tight transition-colors duration-300 ${
+      className={`inline-flex h-9 items-center gap-2 whitespace-nowrap border px-4 text-sm tracking-tight transition-colors duration-300 ${
         selected
           ? "border-brand bg-brand text-white"
           : "border-border text-foreground-muted hover:border-border-strong hover:text-foreground"

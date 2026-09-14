@@ -5,6 +5,9 @@ import { ArrowRight } from "@/components/icons";
 
 /* -------------------------------------------------------------------------
    Eyebrow
+
+   Letterspaced caps only. The rule-and-label combination reads as a template
+   tic when it repeats on every section, so the label carries it alone.
    ---------------------------------------------------------------------- */
 
 export function Eyebrow({
@@ -18,14 +21,10 @@ export function Eyebrow({
 }) {
   return (
     <p
-      className={`flex items-center gap-3 text-eyebrow font-medium uppercase ${
+      className={`text-eyebrow font-medium uppercase ${
         tone === "dark" ? "text-brand-bright" : "text-brand"
       } ${className ?? ""}`}
     >
-      <span
-        aria-hidden="true"
-        className="h-px w-6 flex-none bg-current opacity-50"
-      />
       {children}
     </p>
   );
@@ -33,10 +32,13 @@ export function Eyebrow({
 
 /* -------------------------------------------------------------------------
    Buttons
+
+   Square. Automotive brands set their calls to action as precise rectangles;
+   the pill shape is what makes an interface read as a SaaS product.
    ---------------------------------------------------------------------- */
 
 const buttonBase =
-  "group/btn inline-flex items-center justify-center gap-2.5 rounded-full text-sm font-medium tracking-tight transition-colors duration-300 disabled:opacity-50";
+  "group/btn inline-flex items-center justify-center gap-3 text-sm font-medium tracking-tight transition-colors duration-300 disabled:opacity-50";
 
 const sizes = {
   md: "h-11 px-6",
@@ -47,9 +49,9 @@ const variants = {
   primary: "bg-brand text-white hover:bg-brand-bright",
   invert: "bg-foreground text-ink-950 hover:bg-white",
   outline:
-    "border border-border-strong text-foreground hover:border-brand-bright hover:text-brand-bright",
+    "border border-border-strong text-foreground hover:border-foreground hover:bg-foreground hover:text-ink-950",
   outlineLight:
-    "border border-navy/25 text-navy hover:border-brand hover:text-brand",
+    "border border-navy/25 text-navy hover:border-navy hover:bg-navy hover:text-bone-50",
 } as const;
 
 type ButtonLinkProps = {

@@ -84,14 +84,14 @@ export default function ContactPage() {
                   href={whatsappGeneral}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-brand px-7 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:h-14 sm:px-9"
+                  className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-8 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:h-14 sm:px-10"
                 >
                   <WhatsApp className="h-4.5 w-4.5" />
                   Falar no WhatsApp
                 </a>
                 <a
                   href={`tel:+${contact.phoneE164}`}
-                  className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full border border-border-strong px-7 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright sm:h-14 sm:px-9"
+                  className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-8 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950 sm:h-14 sm:px-10"
                 >
                   <Phone className="h-4 w-4" />
                   <span className="tnum">{contact.phoneLabel}</span>

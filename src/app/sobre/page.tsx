@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { CtaSection } from "@/components/cta-section";
-import { Check, Document } from "@/components/icons";
+import { Document } from "@/components/icons";
+import { JourneyLine } from "@/components/journey-line";
 import { Reveal } from "@/components/reveal";
 import { Eyebrow } from "@/components/ui";
 import {
   audiences,
   brand,
-  journeySteps,
   manifesto,
   painPoints,
   positioningPillars,
@@ -56,7 +56,7 @@ export default function AboutPage() {
               <Eyebrow tone="light">Manifesto</Eyebrow>
               <h2
                 id="manifesto"
-                className="mt-6 text-display-md font-semibold text-navy"
+                className="mt-5 text-display-md font-semibold text-navy"
               >
                 {brand.tagline}
               </h2>
@@ -110,7 +110,7 @@ export default function AboutPage() {
               <Eyebrow>O desafio</Eyebrow>
               <h2
                 id="desafio"
-                className="mt-6 text-display-md font-semibold text-foreground"
+                className="mt-5 text-display-md font-semibold text-foreground"
               >
                 O problema não é anunciar o carro.
               </h2>
@@ -160,7 +160,7 @@ export default function AboutPage() {
             <Eyebrow>O posicionamento</Eyebrow>
             <h2
               id="posicionamento"
-              className="mt-6 text-display-md font-semibold text-foreground"
+              className="mt-5 text-display-md font-semibold text-foreground"
             >
               O autoshopping digital do proprietário.
             </h2>
@@ -170,22 +170,18 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <Reveal
-            delay={80}
-            as="ol"
-            className="mt-14 grid gap-px border-t border-border sm:mt-20 sm:grid-cols-2 lg:grid-cols-3"
-          >
+          <Reveal delay={60} as="ol" className="mt-14 sm:mt-20">
             {positioningPillars.map((pillar, index) => (
               <li
                 key={pillar}
-                className="border-b border-border py-7 sm:py-9 sm:[&:not(:nth-child(2n))]:pr-8 lg:[&:not(:nth-child(3n))]:pr-8"
+                className="flex flex-col gap-2 border-b border-border py-6 first:border-t sm:flex-row sm:items-baseline sm:gap-10 sm:py-7"
               >
-                <p className="tnum text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
+                <span className="tnum w-10 shrink-0 text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
                   {String(index + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-4 text-lg leading-snug tracking-tight text-foreground sm:text-xl">
+                </span>
+                <span className="max-w-3xl font-display text-xl font-medium leading-snug tracking-tight text-foreground sm:text-2xl">
                   {pillar}
-                </p>
+                </span>
               </li>
             ))}
           </Reveal>
@@ -199,7 +195,7 @@ export default function AboutPage() {
             <Eyebrow>O ecossistema</Eyebrow>
             <h2
               id="ecossistema"
-              className="mt-6 text-display-md font-semibold text-foreground"
+              className="mt-5 text-display-md font-semibold text-foreground"
             >
               Mais do que um site de carros.
             </h2>
@@ -209,19 +205,14 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal
-            delay={80}
+            delay={60}
             as="dl"
-            className="mt-14 grid gap-x-8 border-t border-border sm:mt-20 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-14 grid gap-x-10 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4"
           >
-            {audiences.map((audience, index) => (
-              <div key={audience.title} className="border-b border-border py-8">
-                <dt>
-                  <span className="tnum block text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="mt-4 block font-display text-2xl font-semibold tracking-tight text-foreground">
-                    {audience.title}
-                  </span>
+            {audiences.map((audience) => (
+              <div key={audience.title} className="border-t border-border pt-6">
+                <dt className="font-display text-2xl font-semibold tracking-tight text-foreground">
+                  {audience.title}
                 </dt>
                 <dd className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {audience.description}
@@ -238,38 +229,24 @@ export default function AboutPage() {
         aria-labelledby="jornada-sobre"
       >
         <div className="container-editorial">
-          <Reveal className="max-w-3xl">
-            <Eyebrow>A jornada</Eyebrow>
-            <h2
-              id="jornada-sobre"
-              className="mt-6 text-display-md font-semibold text-foreground"
-            >
-              Cuidamos do caminho.
-            </h2>
-            <p className="text-lead mt-6 max-w-2xl text-foreground-muted">
+          <Reveal className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <Eyebrow>A jornada</Eyebrow>
+              <h2
+                id="jornada-sobre"
+                className="mt-5 text-display-md font-semibold text-foreground"
+              >
+                Cuidamos do caminho.
+              </h2>
+            </div>
+            <p className="text-lead max-w-xl text-foreground-muted lg:col-span-6 lg:col-start-7 lg:self-end">
               Do cadastro do veículo à transferência, o proprietário conta com
               uma jornada mais segura e profissional.
             </p>
           </Reveal>
 
-          <Reveal
-            delay={80}
-            as="ol"
-            className="mt-14 grid gap-px border-t border-border sm:mt-20 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {journeySteps.map((step, index) => (
-              <li
-                key={step}
-                className="border-b border-border py-7 sm:py-9 sm:[&:not(:nth-child(2n))]:pr-8 lg:[&:not(:nth-child(3n))]:pr-8"
-              >
-                <p className="tnum text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
-                  Etapa {String(index + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-4 max-w-[15ch] font-display text-xl font-medium tracking-tight text-foreground sm:text-2xl">
-                  {step}
-                </p>
-              </li>
-            ))}
+          <Reveal delay={60}>
+            <JourneyLine />
           </Reveal>
         </div>
       </section>
@@ -281,7 +258,7 @@ export default function AboutPage() {
             <Eyebrow>Serviços</Eyebrow>
             <h2
               id="servicos"
-              className="mt-6 text-display-md font-semibold text-foreground"
+              className="mt-5 text-display-md font-semibold text-foreground"
             >
               Serviços conectados à jornada.
             </h2>
@@ -324,18 +301,25 @@ export default function AboutPage() {
               <Eyebrow>Verificação</Eyebrow>
               <h2
                 id="verificacao"
-                className="mt-6 text-display-md font-semibold text-foreground"
+                className="mt-5 text-display-md font-semibold text-foreground"
               >
                 Confiança como diferencial competitivo.
               </h2>
               <p className="text-lead mt-6 max-w-xl text-foreground-muted">
                 {verified.note}
               </p>
-              <ul className="mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-                {verified.criteria.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <Check className="mt-0.5 h-4.5 w-4.5 flex-none text-brand-bright" />
-                    <span className="text-sm text-foreground">{item}</span>
+              <ul className="mt-10 border-t border-border">
+                {verified.criteria.map((item, index) => (
+                  <li
+                    key={item}
+                    className="flex items-baseline gap-5 border-b border-border py-3.5"
+                  >
+                    <span className="tnum text-eyebrow font-medium tracking-[0.18em] text-foreground-subtle">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-sm tracking-tight text-foreground sm:text-base">
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -367,7 +351,7 @@ export default function AboutPage() {
             <Eyebrow>Visão de longo prazo</Eyebrow>
             <h2
               id="visao"
-              className="mt-6 text-display-md font-semibold text-foreground"
+              className="mt-5 text-display-md font-semibold text-foreground"
             >
               {vision.lead}
             </h2>

@@ -26,14 +26,14 @@ export default function NotFound() {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Link
             href="/veiculos"
-            className="group/btn inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-brand px-7 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
+            className="group/btn inline-flex h-13 items-center justify-center gap-3 bg-brand px-8 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
           >
             Ver o estoque
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
           </Link>
           <Link
             href="/"
-            className="inline-flex h-13 items-center justify-center rounded-full border border-border-strong px-7 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+            className="inline-flex h-13 items-center justify-center border border-border-strong px-8 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
           >
             Voltar ao início
           </Link>

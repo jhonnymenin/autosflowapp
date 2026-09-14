@@ -1,12 +1,37 @@
 import Link from "next/link";
 
-import { ArrowUpRight } from "@/components/icons";
 import { formatKmShort, formatPrice } from "@/lib/format";
 import type { Vehicle } from "@/types/vehicle";
 
+/** Shared column track, so the header and every row stay on one grid. */
+const track =
+  "grid grid-cols-[2rem_1fr] items-baseline gap-x-5 sm:gap-x-8 lg:grid-cols-[3rem_minmax(0,1.5fr)_5.5rem_7rem_5rem_6rem_minmax(0,1fr)] lg:items-center lg:gap-x-6";
+
 /**
- * Catalogue entry. A full-width editorial row rather than a card, so the
- * record reads at a glance and seventeen of them still scan quickly.
+ * Column header for the catalogue.
+ *
+ * The labels are declared once here instead of repeating on all seventeen
+ * rows, which is what turns the list from a stack of cards into a ledger.
+ */
+export function VehicleListHeader() {
+  return (
+    <div
+      aria-hidden="true"
+      className={`${track} hidden border-b border-border-strong pb-3 text-eyebrow font-medium uppercase text-foreground-subtle lg:grid`}
+    >
+      <span />
+      <span>Veículo</span>
+      <span>Ano</span>
+      <span className="text-right">Quilometragem</span>
+      <span>Comb.</span>
+      <span>Cor</span>
+      <span className="text-right">Valor</span>
+    </div>
+  );
+}
+
+/**
+ * Catalogue entry — a full-width ledger line, not a card.
  */
 export function VehicleRow({
   vehicle,
@@ -19,7 +44,7 @@ export function VehicleRow({
     <li className="border-b border-border">
       <Link
         href={`/veiculos/${vehicle.slug}`}
-        className="group/row relative grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-5 py-7 transition-colors duration-500 sm:gap-x-8 sm:py-9 lg:grid-cols-[3rem_minmax(0,1.4fr)_minmax(0,1.6fr)_auto_2.75rem] lg:items-center lg:gap-x-10"
+        className={`group/row relative ${track} py-6 sm:py-7`}
       >
         <span
           aria-hidden="true"
@@ -34,7 +59,7 @@ export function VehicleRow({
           <p className="text-eyebrow font-medium uppercase text-brand-bright">
             {vehicle.make}
           </p>
-          <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/row:translate-x-1 sm:text-3xl">
+          <h3 className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-foreground transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/row:translate-x-1.5 sm:text-3xl lg:text-[2rem]">
             {vehicle.model}
           </h3>
           <p className="mt-1 truncate text-sm text-foreground-muted">
@@ -42,7 +67,8 @@ export function VehicleRow({
           </p>
         </div>
 
-        <dl className="col-span-2 flex flex-wrap gap-x-6 gap-y-2 text-sm lg:col-span-1 lg:gap-x-8">
+        {/* Below `lg` the row stacks, so each value carries its own label. */}
+        <dl className="col-span-2 mt-1 flex flex-wrap gap-x-6 gap-y-2 text-sm lg:hidden">
           {[
             { label: "Ano", value: vehicle.year, numeric: true },
             { label: "Km", value: formatKmShort(vehicle.km), numeric: true },
@@ -62,23 +88,30 @@ export function VehicleRow({
           ))}
         </dl>
 
-        <div className="col-span-2 flex items-center justify-between gap-4 lg:col-span-1 lg:block lg:text-right">
+        {/* From `lg` the values sit under the header declared once above. */}
+        <span className="tnum hidden text-sm text-foreground-muted lg:block">
+          {vehicle.year}
+        </span>
+        <span className="tnum hidden text-right text-sm text-foreground-muted lg:block">
+          {formatKmShort(vehicle.km)}
+        </span>
+        <span className="hidden text-sm text-foreground-muted lg:block">
+          {vehicle.fuel}
+        </span>
+        <span className="hidden text-sm text-foreground-muted lg:block">
+          {vehicle.color}
+        </span>
+
+        <div className="col-span-2 mt-3 flex items-baseline justify-between gap-4 lg:col-span-1 lg:mt-0 lg:block lg:text-right">
           {vehicle.origin === "consignado" ? (
             <p className="order-2 text-eyebrow font-medium uppercase text-foreground-subtle lg:order-none lg:mb-1.5">
               Consignado
             </p>
           ) : null}
-          <p className="tnum font-display text-data-xl font-semibold text-foreground">
+          <p className="tnum font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             {formatPrice(vehicle.price)}
           </p>
         </div>
-
-        <span
-          aria-hidden="true"
-          className="hidden h-11 w-11 items-center justify-center rounded-full border border-border text-foreground-subtle transition-colors duration-500 group-hover/row:border-brand group-hover/row:bg-brand group-hover/row:text-white lg:flex"
-        >
-          <ArrowUpRight className="h-4 w-4" />
-        </span>
       </Link>
     </li>
   );

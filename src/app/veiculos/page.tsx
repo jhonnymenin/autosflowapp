@@ -5,7 +5,7 @@ import { CtaSection } from "@/components/cta-section";
 import { Document } from "@/components/icons";
 import { StockFilters } from "@/components/stock-filters";
 import { Eyebrow } from "@/components/ui";
-import { VehicleRow } from "@/components/vehicle-row";
+import { VehicleListHeader, VehicleRow } from "@/components/vehicle-row";
 import { STOCK_ISSUED_AT } from "@/data/vehicles";
 import { filterStock, isSortKey } from "@/lib/stock";
 
@@ -66,7 +66,7 @@ export default async function VehiclesPage({
             </div>
             <Link
               href="/tabela-de-precos"
-              className="inline-flex shrink-0 items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright lg:pb-2"
+              className="inline-flex shrink-0 items-center gap-3 text-sm font-medium tracking-tight text-foreground-muted transition-colors duration-300 hover:text-brand-bright"
             >
               <Document className="h-4 w-4" />
               Ver tabela de preços
@@ -79,11 +79,14 @@ export default async function VehiclesPage({
         <StockFilters active={active} total={results.length} />
 
         {results.length > 0 ? (
-          <ul className="mt-12 border-t border-border sm:mt-16">
-            {results.map((vehicle, index) => (
-              <VehicleRow key={vehicle.slug} vehicle={vehicle} index={index} />
-            ))}
-          </ul>
+          <div className="mt-14 sm:mt-16">
+            <VehicleListHeader />
+            <ul className="border-t border-border lg:border-t-0">
+              {results.map((vehicle, index) => (
+                <VehicleRow key={vehicle.slug} vehicle={vehicle} index={index} />
+              ))}
+            </ul>
+          </div>
         ) : (
           <div className="mt-16 border-t border-border py-20 text-center">
             <p className="font-display text-display-sm font-semibold text-foreground">
@@ -95,7 +98,7 @@ export default async function VehiclesPage({
             </p>
             <Link
               href="/veiculos"
-              className="mt-8 inline-flex h-11 items-center rounded-full border border-border-strong px-6 text-sm font-medium text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+              className="mt-8 inline-flex h-11 items-center border border-border-strong px-6 text-sm font-medium text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
             >
               Ver todo o estoque
             </Link>

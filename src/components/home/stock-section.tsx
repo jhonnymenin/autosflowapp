@@ -18,7 +18,7 @@ export function StockSection() {
             <Eyebrow>O estoque</Eyebrow>
             <h2
               id="estoque"
-              className="mt-6 text-display-md font-semibold text-foreground"
+              className="mt-5 text-display-md font-semibold text-foreground"
             >
               {vehicles.length} veículos,
               <br />
@@ -55,7 +55,7 @@ export function StockSection() {
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link
                 href="/veiculos"
-                className="group/link inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+                className="group/link inline-flex items-center gap-3 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:text-brand-bright"
               >
                 Explorar o estoque
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
