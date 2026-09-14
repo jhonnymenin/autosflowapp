@@ -47,6 +47,7 @@ src/
     page.tsx                home
     veiculos/page.tsx       catálogo com filtros por search params
     veiculos/[slug]/        página de cada veículo (estática, 17 rotas)
+    creditos/               créditos das imagens de referência (noindex)
     tabela-de-precos/       tabela de preços completa em HTML
     sobre/ · contato/       institucional
     icon.svg · apple-icon.png · sitemap.ts · robots.ts · not-found.tsx
@@ -57,10 +58,12 @@ src/
     vehicle-row.tsx         linha editorial do catálogo
     stock-filters.tsx       filtros — links, sem JavaScript
     price-table.tsx         tabela de preços semântica
+    vehicle-gallery.tsx     carrossel (scroll-snap nativo, sem dependência)
     cta-section.tsx         bloco comercial compartilhado
     home/                   seções da home
   data/
-    vehicles.ts             ← fonte única do estoque
+    vehicles.ts             ← fonte única do estoque (dados verificados)
+    vehicle-images.ts       ← fotos dos veículos (PROVISÓRIAS)
     brand.ts                ← fonte única do conteúdo institucional
   lib/
     stock.ts                filtros, ordenação, relacionados
@@ -95,13 +98,16 @@ documentos de origem.
    site usa AutosFlow em todo lugar, e o conteúdo da apresentação foi
    reaproveitado sem as menções ao nome antigo.
 
-2. **Fotos dos veículos.** A tabela de origem registra `n/d` na coluna Fotos —
-   não existe fotografia do estoque real. Por isso o catálogo e as páginas de
-   veículo são construídos sobre o **registro** (nome, ano, km, cor, placa,
-   valor) e sobre o símbolo da marca, e nunca sobre a foto de outro carro. A
-   fotografia cinematográfica da apresentação aparece apenas como imagem
-   institucional, jamais identificada como um veículo do estoque. As páginas
-   dizem, de forma clara, que fotos e laudo estão sob consulta.
+2. **Fotos dos veículos são PROVISÓRIAS.** A tabela de origem registra `n/d` na
+   coluna Fotos — não existe fotografia do estoque real. As imagens hoje
+   publicadas são **referências do modelo**, não da unidade anunciada: cor, ano
+   e estado não correspondem ao registro. Todas vêm do Wikimedia Commons sob
+   Creative Commons ou domínio público, com uso comercial permitido, e estão
+   creditadas em `/creditos`.
+
+   Enquanto forem provisórias, cada carrossel exibe a nota "Imagem de
+   referência do modelo — não é a unidade anunciada". Ver
+   [Substituir as fotos](#substituir-as-fotos-dos-veículos).
 
 ---
 
@@ -159,18 +165,33 @@ JSON-LD e link do mapa são todos derivados dali.
 
 ---
 
-## Adicionar imagens
+## Substituir as fotos dos veículos
+
+As imagens do catálogo vivem em
+[`src/data/vehicle-images.ts`](src/data/vehicle-images.ts). Cada veículo aponta
+para um conjunto pelo campo `imageSet`; o carrossel, as linhas do catálogo, o
+trilho da home e o JSON-LD leem tudo dali.
+
+Para trocar por fotos reais:
+
+1. Salve as fotos em `public/imagens/veiculos/` (JPEG, 16:9, 1600×900 mantém o
+   padrão atual).
+2. Em `vehicle-images.ts`, troque os `src` do conjunto correspondente e apague
+   `author`, `licence` e `source` — passam a ser fotos próprias.
+3. Se um veículo passar a ter conjunto exclusivo, crie uma chave nova e ajuste
+   o `imageSet` dele em `vehicles.ts`.
+4. Quando **todos** os conjuntos forem reais, troque
+   `ILLUSTRATIVE_IMAGES = false`. Isso remove a nota de imagem ilustrativa de
+   todo o site de uma vez.
+
+`imageOffset` gira um conjunto compartilhado para que duas unidades do mesmo
+modelo não abram com o mesmo quadro.
+
+## Adicionar imagens institucionais
 
 Coloque os arquivos em `public/imagens/` e use `next/image` com `sizes`
-adequado. As imagens atuais têm 1920×1080 e foram salvas como JPEG progressivo
-com qualidade 82.
-
-Se um dia houver fotografia real do estoque:
-
-1. Salve como `public/imagens/veiculos/<slug>-1.jpg`.
-2. Acrescente `heroImage` e `gallery` à interface em `src/types/vehicle.ts`.
-3. Preencha nos registros e renderize na página do veículo — a estrutura já
-   está preparada para isso.
+adequado. As imagens institucionais têm 1920×1080, JPEG progressivo, qualidade
+82.
 
 ---
 
@@ -217,6 +238,9 @@ Lighthouse desktop, build de produção:
 Os 96 vêm do contraste medido em elementos que ainda estão no início da
 animação de entrada, abaixo da dobra — o contraste em repouso passa em AA, e
 leitores de tela leem o conteúdo normalmente.
+
+O carrossel segue o padrão ARIA de carousel: `aria-roledescription`, slides
+como `role="group"`, botões rotulados e anúncio `aria-live` da imagem atual.
 
 ---
 

@@ -5,8 +5,10 @@ import { notFound } from "next/navigation";
 import { CtaSection } from "@/components/cta-section";
 import { ArrowRight, Document, Phone, WhatsApp } from "@/components/icons";
 import { VehicleCard } from "@/components/vehicle-card";
+import { VehicleGallery } from "@/components/vehicle-gallery";
 import { Eyebrow } from "@/components/ui";
 import { contact } from "@/data/brand";
+import { imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
 import { siteUrl, whatsappForVehicle } from "@/lib/site";
@@ -54,6 +56,7 @@ export default async function VehiclePage({
   const name = fullName(vehicle);
   const related = relatedVehicles(vehicle);
   const whatsapp = whatsappForVehicle(name, vehicle.plate);
+  const gallery = imagesFor(vehicle);
 
   // The hero already states year, mileage, fuel and colour; the sheet carries
   // what it does not, so the page never prints the same figure twice.
@@ -83,6 +86,7 @@ export default async function VehiclePage({
       vehicle.km > 0
         ? { "@type": "QuantitativeValue", value: vehicle.km, unitCode: "KMT" }
         : undefined,
+    image: gallery.map((image) => `${siteUrl}${image.src}`),
     url: `${siteUrl}/veiculos/${vehicle.slug}`,
     offers: {
       "@type": "Offer",
@@ -97,9 +101,9 @@ export default async function VehiclePage({
   return (
     <>
       {/* ---------------------------------------------------------------
-          Hero. The source table carries no photography, so the record
-          itself is the subject: name, figures, price — set over the brand
-          symbol rather than over a stand-in photo of a different car.
+          Hero. Gallery and price sit side by side so the images are in view
+          at the moment the figure is read. The photographs are references for
+          the model, not the advertised unit — see data/vehicle-images.ts.
           --------------------------------------------------------------- */}
       <section className="border-b border-border pb-16 pt-32 sm:pb-24 sm:pt-40 lg:pt-48">
 
@@ -128,17 +132,21 @@ export default async function VehiclePage({
             </ol>
           </nav>
 
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-7">
-              <Eyebrow>{vehicle.make}</Eyebrow>
-              <h1 className="mt-6 text-display-xl font-semibold text-foreground">
-                {vehicle.model}
-              </h1>
-              <p className="mt-5 font-display text-display-sm font-medium tracking-tight text-foreground-muted">
-                {vehicle.version}
-              </p>
+          <div className="max-w-4xl">
+            <Eyebrow>{vehicle.make}</Eyebrow>
+            <h1 className="mt-5 text-display-xl font-semibold text-foreground">
+              {vehicle.model}
+            </h1>
+            <p className="mt-4 font-display text-display-sm font-medium tracking-tight text-foreground-muted">
+              {vehicle.version}
+            </p>
+          </div>
 
-              <dl className="mt-12 grid max-w-xl grid-cols-2 gap-x-8 gap-y-7 border-t border-border pt-8 sm:grid-cols-4">
+          <div className="mt-12 grid gap-10 sm:mt-14 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-7">
+              <VehicleGallery images={gallery} alt={name} priority />
+
+              <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-border pt-8 sm:grid-cols-4">
                 {[
                   { label: "Ano", value: vehicle.year },
                   { label: "Quilometragem", value: formatKm(vehicle.km) },
@@ -157,7 +165,7 @@ export default async function VehiclePage({
               </dl>
             </div>
 
-            {/* Commercial panel, sticky alongside the sheet on large screens */}
+            {/* Commercial panel, sticky alongside the gallery on large screens */}
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="border border-border bg-surface p-7 sm:p-9 lg:sticky lg:top-28">
                 {vehicle.origin === "consignado" ? (
@@ -192,8 +200,8 @@ export default async function VehiclePage({
                 </div>
 
                 <p className="mt-7 border-t border-border pt-6 text-xs leading-relaxed text-foreground-subtle">
-                  Fotos e laudo deste veículo sob consulta. Primeiro entendemos
-                  você. Depois falamos de carro.
+                  Fotos reais e laudo desta unidade sob consulta. Primeiro
+                  entendemos você. Depois falamos de carro.
                 </p>
               </div>
             </div>
@@ -279,7 +287,7 @@ export default async function VehiclePage({
               {related.map((other) => (
                 <li
                   key={other.slug}
-                  className="border-b border-border sm:border-l sm:border-b-0 sm:pl-8 sm:first:border-l-0 sm:first:pl-0 lg:pl-10"
+                  className="border-b border-border sm:border-b-0 sm:border-r sm:pr-8 sm:last:border-r-0 sm:last:pr-0 lg:pr-10"
                 >
                   <VehicleCard vehicle={other} />
                 </li>

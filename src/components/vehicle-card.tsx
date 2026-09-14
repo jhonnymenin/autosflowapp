@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import { imagesFor } from "@/data/vehicle-images";
 import { formatKmShort, formatPrice } from "@/lib/format";
 import type { Vehicle } from "@/types/vehicle";
 
@@ -20,12 +22,27 @@ export function VehicleCard({
   index?: number;
   className?: string;
 }) {
+  const cover = imagesFor(vehicle)[0];
+
   return (
     <Link
       href={`/veiculos/${vehicle.slug}`}
-      className={`group/card flex h-full flex-col justify-between pb-2 pr-6 pt-6 sm:pr-10 ${className ?? ""}`}
+      className={`group/card flex h-full flex-col justify-between pb-2 pt-6 ${className ?? ""}`}
     >
       <div>
+        {cover ? (
+          <div className="relative mb-7 aspect-16/10 w-full overflow-hidden bg-surface">
+            <Image
+              src={cover.src}
+              alt=""
+              fill
+              sizes="(min-width: 1280px) 320px, (min-width: 640px) 40vw, 72vw"
+              quality={72}
+              className="object-cover object-center transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/card:scale-105"
+            />
+          </div>
+        ) : null}
+
         <div className="flex items-baseline justify-between gap-4">
           <p className="text-eyebrow font-medium uppercase text-brand-bright">
             {vehicle.make}
@@ -37,13 +54,13 @@ export function VehicleCard({
           ) : null}
         </div>
 
-        <h3 className="mt-7 text-display-sm font-semibold tracking-tight text-foreground transition-colors duration-500 group-hover/card:text-brand-bright">
+        <h3 className="mt-5 text-display-sm font-semibold tracking-tight text-foreground transition-colors duration-500 group-hover/card:text-brand-bright">
           {vehicle.model}
         </h3>
         <p className="mt-2 text-sm text-foreground-muted">{vehicle.version}</p>
       </div>
 
-      <div className="mt-14">
+      <div className="mt-10">
         <dl className="tnum flex flex-wrap items-baseline gap-x-6 gap-y-1 text-xs text-foreground-subtle">
           <div className="whitespace-nowrap">
             <dt className="sr-only">Ano</dt>

@@ -32,4 +32,11 @@ export interface Vehicle {
   /** Stock vehicle or vehicle listed on consignment (marked "*" in the source). */
   origin: Origin;
   featured: boolean;
+  /**
+   * Key into the placeholder image sets in `data/vehicle-images.ts`.
+   * Not part of the source record — see that file before changing it.
+   */
+  imageSet: string;
+  /** Rotates a shared image set so two units of a model differ. */
+  imageOffset?: number;
 }

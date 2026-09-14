@@ -1,11 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import { imagesFor } from "@/data/vehicle-images";
 import { formatKmShort, formatPrice } from "@/lib/format";
 import type { Vehicle } from "@/types/vehicle";
 
 /** Shared column track, so the header and every row stay on one grid. */
 const track =
-  "grid grid-cols-[2rem_1fr] items-baseline gap-x-5 sm:gap-x-8 lg:grid-cols-[3rem_minmax(0,1.5fr)_5.5rem_7rem_5rem_6rem_minmax(0,1fr)] lg:items-center lg:gap-x-6";
+  "grid grid-cols-[6.5rem_1fr] items-start gap-x-4 sm:grid-cols-[9rem_1fr] sm:gap-x-6 lg:grid-cols-[9rem_minmax(0,1.3fr)_5rem_6.5rem_4.5rem_5rem_minmax(0,1fr)] lg:items-center lg:gap-x-5 xl:grid-cols-[10.5rem_minmax(0,1.4fr)_5.5rem_7rem_5rem_6rem_minmax(0,1fr)] xl:gap-x-6";
 
 /**
  * Column header for the catalogue.
@@ -19,7 +21,7 @@ export function VehicleListHeader() {
       aria-hidden="true"
       className={`${track} hidden border-b border-border-strong pb-3 text-eyebrow font-medium uppercase text-foreground-subtle lg:grid`}
     >
-      <span />
+      <span>Imagem</span>
       <span>Veículo</span>
       <span>Ano</span>
       <span className="text-right">Quilometragem</span>
@@ -40,6 +42,9 @@ export function VehicleRow({
   vehicle: Vehicle;
   index: number;
 }) {
+  const cover = imagesFor(vehicle)[0];
+  if (!cover) return null;
+
   return (
     <li className="border-b border-border">
       <Link
@@ -51,15 +56,25 @@ export function VehicleRow({
           className="pointer-events-none absolute inset-x-0 -inset-y-px -z-10 origin-top scale-y-0 bg-surface transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/row:scale-y-100"
         />
 
-        <span className="tnum text-eyebrow font-medium tracking-[0.18em] text-foreground-subtle lg:text-sm lg:tracking-normal">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+        <div className="relative aspect-16/9 w-full overflow-hidden bg-surface">
+          <Image
+            src={cover.src}
+            alt=""
+            fill
+            sizes="(min-width: 1280px) 168px, (min-width: 640px) 144px, 104px"
+            quality={70}
+            className="object-cover object-center transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/row:scale-105"
+          />
+          <span className="absolute left-0 top-0 bg-ink-950/75 px-1.5 py-0.5 text-[0.625rem] font-medium tabular-nums tracking-[0.14em] text-foreground-muted">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
 
         <div className="min-w-0">
           <p className="text-eyebrow font-medium uppercase text-brand-bright">
             {vehicle.make}
           </p>
-          <h3 className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-foreground transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/row:translate-x-1.5 sm:text-3xl lg:text-[2rem]">
+          <h3 className="mt-1.5 font-display text-xl font-semibold tracking-tight text-foreground transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/row:translate-x-1.5 sm:text-2xl lg:text-[1.75rem]">
             {vehicle.model}
           </h3>
           <p className="mt-1 truncate text-sm text-foreground-muted">

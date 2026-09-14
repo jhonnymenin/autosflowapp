@@ -35,6 +35,7 @@ export const vehicles: Vehicle[] = [
     price: 94990,
     origin: "loja",
     featured: true,
+    imageSet: "audi-q3",
   },
   {
     slug: "bmw-x1-s20i-active-flex",
@@ -52,6 +53,7 @@ export const vehicles: Vehicle[] = [
     price: 109990,
     origin: "loja",
     featured: true,
+    imageSet: "bmw-x1",
   },
   {
     slug: "chevrolet-onix-10mt-lt2",
@@ -69,6 +71,7 @@ export const vehicles: Vehicle[] = [
     price: 65990,
     origin: "loja",
     featured: false,
+    imageSet: "chevrolet-onix",
   },
   {
     slug: "chevrolet-onix-hb",
@@ -86,6 +89,7 @@ export const vehicles: Vehicle[] = [
     price: 59990,
     origin: "consignado",
     featured: false,
+    imageSet: "chevrolet-onix-hatch",
   },
   {
     slug: "chevrolet-onix-1-0-mt-ls",
@@ -103,6 +107,8 @@ export const vehicles: Vehicle[] = [
     price: 46990,
     origin: "consignado",
     featured: false,
+    imageSet: "chevrolet-onix-hatch",
+    imageOffset: 1,
   },
   {
     slug: "chevrolet-sonic-ltz-hb-at",
@@ -120,6 +126,7 @@ export const vehicles: Vehicle[] = [
     price: 45990,
     origin: "loja",
     featured: false,
+    imageSet: "chevrolet-sonic",
   },
   {
     slug: "chrysler-pt-cruiser-ltd",
@@ -137,6 +144,7 @@ export const vehicles: Vehicle[] = [
     price: 45990,
     origin: "loja",
     featured: false,
+    imageSet: "chrysler-pt-cruiser",
   },
   {
     slug: "fiat-strada-ranch-at",
@@ -154,6 +162,7 @@ export const vehicles: Vehicle[] = [
     price: 118990,
     origin: "loja",
     featured: true,
+    imageSet: "fiat-strada",
   },
   {
     slug: "ford-fiesta-ha-1-6l-titanium",
@@ -171,6 +180,7 @@ export const vehicles: Vehicle[] = [
     price: 51990,
     origin: "consignado",
     featured: false,
+    imageSet: "ford-fiesta",
   },
   {
     slug: "ford-fiesta-ha-1-6l-seab",
@@ -188,6 +198,8 @@ export const vehicles: Vehicle[] = [
     price: 47990,
     origin: "loja",
     featured: false,
+    imageSet: "ford-fiesta",
+    imageOffset: 1,
   },
   {
     slug: "honda-hr-v-ex-cvt",
@@ -205,6 +217,7 @@ export const vehicles: Vehicle[] = [
     price: 95990,
     origin: "loja",
     featured: false,
+    imageSet: "honda-hr-v",
   },
   {
     slug: "honda-city-lx-cvt",
@@ -222,6 +235,7 @@ export const vehicles: Vehicle[] = [
     price: 73990,
     origin: "loja",
     featured: false,
+    imageSet: "honda-city",
   },
   {
     slug: "hyundai-creta-16a-attitude",
@@ -239,6 +253,7 @@ export const vehicles: Vehicle[] = [
     price: 87990,
     origin: "consignado",
     featured: false,
+    imageSet: "hyundai-creta",
   },
   {
     slug: "mitsubishi-eclipse-cross-hpe",
@@ -256,6 +271,7 @@ export const vehicles: Vehicle[] = [
     price: 142990,
     origin: "consignado",
     featured: true,
+    imageSet: "mitsubishi-eclipse-cross",
   },
   {
     slug: "nissan-kicks-advance-1-6-16v-aut",
@@ -273,6 +289,7 @@ export const vehicles: Vehicle[] = [
     price: 109990,
     origin: "loja",
     featured: true,
+    imageSet: "nissan-kicks",
   },
   {
     slug: "renault-kwid-zen-2",
@@ -290,6 +307,7 @@ export const vehicles: Vehicle[] = [
     price: 51990,
     origin: "consignado",
     featured: false,
+    imageSet: "renault-kwid",
   },
   {
     slug: "volkswagen-t-cross-sense-tsi-ad",
@@ -307,5 +325,6 @@ export const vehicles: Vehicle[] = [
     price: 95990,
     origin: "consignado",
     featured: false,
+    imageSet: "volkswagen-t-cross",
   },
 ];

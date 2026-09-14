@@ -125,9 +125,16 @@ export function SiteFooter() {
           <p>
             © {year} {brand.name}. Todos os direitos reservados.
           </p>
-          <p className="max-w-md sm:text-right">
-            Valores e disponibilidade sujeitos a alteração sem aviso prévio.
-            Consulte as condições no atendimento.
+          <p className="flex flex-wrap gap-x-5 gap-y-2 sm:max-w-md sm:justify-end sm:text-right">
+            <span>
+              Valores e disponibilidade sujeitos a alteração sem aviso prévio.
+            </span>
+            <Link
+              href="/creditos"
+              className="transition-colors duration-300 hover:text-foreground"
+            >
+              Créditos de imagem
+            </Link>
           </p>
         </div>
       </div>

@@ -49,7 +49,7 @@ export function FeaturedSection() {
           {featured.map((vehicle, index) => (
             <li
               key={vehicle.slug}
-              className="w-[72vw] max-w-xs shrink-0 snap-start border-l border-border pl-6 first:border-l-0 first:pl-0 sm:w-[40vw] sm:pl-10 lg:w-[23vw] xl:w-80"
+              className="w-[72vw] max-w-xs shrink-0 snap-start border-r border-border pr-6 last:border-r-0 last:pr-0 sm:w-[40vw] sm:pr-10 lg:w-[23vw] xl:w-80"
             >
               <VehicleCard vehicle={vehicle} index={index} />
             </li>
