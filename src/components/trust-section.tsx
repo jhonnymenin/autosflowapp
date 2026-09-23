@@ -4,7 +4,7 @@ import { ArrowRight } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
 import { Eyebrow } from "@/components/ui";
 import { manifesto, verified } from "@/data/brand";
-import { testimonials } from "@/data/testimonials";
+import { sampleTestimonials, testimonials } from "@/data/testimonials";
 import { vehicles } from "@/data/vehicles";
 import { formatPrice } from "@/lib/format";
 import { originCounts, priceRange } from "@/lib/stock";
@@ -45,7 +45,11 @@ const figures = [
 ];
 
 export function TrustSection() {
-  const hasTestimonials = testimonials.length > 0;
+  // Em dev, sem depoimento real, mostra os exemplos marcados para ver o layout.
+  const isPreview =
+    testimonials.length === 0 && process.env.NODE_ENV !== "production";
+  const items = isPreview ? sampleTestimonials : testimonials;
+  const hasTestimonials = items.length > 0;
 
   return (
     <section
@@ -73,11 +77,16 @@ export function TrustSection() {
             as="ul"
             className="mt-12 grid gap-x-10 gap-y-10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {testimonials.map((item) => (
+            {items.map((item) => (
               <li
                 key={`${item.author}-${item.quote.slice(0, 24)}`}
                 className="border-t border-border pt-6"
               >
+                {isPreview ? (
+                  <span className="mb-3 inline-block border border-dashed border-border px-2 py-0.5 text-eyebrow uppercase text-foreground-subtle">
+                    Exemplo · só em dev
+                  </span>
+                ) : null}
                 <blockquote className="font-display text-lg leading-snug tracking-tight text-foreground sm:text-xl">
                   “{item.quote}”
                 </blockquote>
