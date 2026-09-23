@@ -10,7 +10,8 @@ import { formatPrice } from "@/lib/format";
 import { priceRange } from "@/lib/stock";
 
 export const metadata: Metadata = {
-  title: "Veículos selecionados em São Paulo",
+  // O template do layout não alcança a página da mesma pasta — a marca vai à mão.
+  title: { absolute: "AutosFlow — Veículos selecionados em São Paulo" },
   description: `${vehicles.length} veículos em estoque a partir de ${formatPrice(priceRange.min)}. Busque por modelo, marca, ano, preço ou quilometragem e fale direto com um especialista da AutosFlow.`,
   alternates: { canonical: "/" },
 };

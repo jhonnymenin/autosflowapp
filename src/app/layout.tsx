@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter } from "next/font/google";
 
+import { Analytics } from "@/components/analytics";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { brand, contact } from "@/data/brand";
@@ -90,6 +91,7 @@ export default function RootLayout({
         <SiteHeader />
         <main id="conteudo">{children}</main>
         <SiteFooter />
+        <Analytics />
         <script
           type="application/ld+json"
           // Static, build-time constant — no user input reaches this string.

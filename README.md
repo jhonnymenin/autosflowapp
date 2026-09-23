@@ -20,8 +20,9 @@ venda assistida, catálogo navegável do estoque e a tabela de preços completa.
 | Animação     | CSS scroll-driven (`animation-timeline`)   |
 | Dados        | Arquivos TypeScript locais — sem banco     |
 
-Não há dependências além de `next`, `react` e `react-dom`. Não há backend,
-banco de dados nem variáveis de ambiente obrigatórias.
+Além de `next`, `react` e `react-dom`, a única dependência é
+`@vercel/analytics`. Não há backend, banco de dados nem variáveis de ambiente
+obrigatórias.
 
 ---
 
@@ -77,7 +78,7 @@ src/
 public/
   brand/                    símbolo em SVG e logotipo em PNG (claro/escuro)
   imagens/                  fotografia de marca
-  documentos/               PDFs originais servidos ao público
+  documentos/               manifesto em PDF
 ```
 
 ---
@@ -91,7 +92,7 @@ documentos de origem.
 | Origem                              | Onde aparece                                    |
 | ----------------------------------- | ----------------------------------------------- |
 | `Manifesto_Autosflow.pdf`           | `data/brand.ts` → home, `/sobre`                |
-| `Tabela de Preços (Venda)..pdf`     | `data/vehicles.ts` → catálogo, `/tabela-de-precos` |
+| `Tabela de Preços (Venda)..pdf`     | `data/vehicles.ts` → catálogo, `/tabela-de-precos` (o PDF não é publicado) |
 | `apresentacao_carflow.pdf`          | `data/brand.ts` → jornada, ecossistema, serviços |
 | Folha de logotipo AutosFlow         | `public/brand/`, cores em `globals.css`         |
 
@@ -155,8 +156,10 @@ site publica apenas o prefixo (`PZI-1G••`) e usa a **referência de estoque*
 (`AF-1234`, derivada do slug em `lib/stock.ts`) como identificação comercial —
 nas páginas, na tabela e nas mensagens de WhatsApp.
 
-> O PDF original em `/documentos` ainda contém as placas completas. Se isso for
-> um problema, gere uma versão sem a coluna ou deixe de servi-lo publicamente.
+> O PDF original da tabela **não é publicado**: ele traz as placas completas,
+> inclusive de veículos consignados de pessoas físicas. A tabela pública é a
+> página `/tabela-de-precos`, com a placa mascarada. Não volte a colocar o PDF
+> em `public/`.
 
 ---
 
@@ -195,8 +198,7 @@ não há duplicação em nenhum outro lugar.
 
 1. Substitua as entradas de `vehicles.ts` pelo novo export.
 2. Atualize `STOCK_ISSUED_AT` no topo do arquivo com a data de emissão.
-3. Troque `public/documentos/autosflow-tabela-de-precos.pdf` pelo novo PDF.
-4. `npm run build` — as 17 rotas (ou quantas houver) são regeradas sozinhas.
+3. `npm run build` — as 17 rotas (ou quantas houver) são regeradas sozinhas.
 
 Se um veículo sair do estoque, remova-o: a rota deixa de existir e passa a
 responder a página 404 do site.
@@ -293,6 +295,21 @@ como `role="group"`, botões rotulados e anúncio `aria-live` da imagem atual.
 
 ---
 
+## Compartilhamento e medição
+
+**Prévia de link.** `app/opengraph-image.tsx` e
+`app/veiculos/[slug]/opengraph-image.tsx` geram no build a imagem que aparece
+quando alguém cola o link no WhatsApp: uma da marca e uma por veículo, com
+modelo, ano, km e preço. São só tipografia — enquanto as fotos forem
+ilustrativas, uma prévia com foto pareceria a unidade anunciada.
+
+**Analytics.** `components/analytics.tsx` liga o Vercel Web Analytics (sem
+cookies) e registra o evento `whatsapp` a cada clique num link `wa.me`, com a
+página de origem. Ative em *Vercel → projeto → Analytics*. Eventos
+personalizados exigem o plano Pro; no Hobby, só as visitas são contadas.
+
+---
+
 ## Deploy
 
 Projeto Next.js padrão, sem configuração especial.
@@ -316,7 +333,7 @@ projeto usa o domínio de produção da própria Vercel — e, localmente,
 
 ## Manutenção
 
-- **Rotina do estoque:** atualizar `vehicles.ts` + o PDF, e publicar.
+- **Rotina do estoque:** atualizar `vehicles.ts` e publicar.
 - **Antes de publicar:** `npm run lint && npm run typecheck && npm run build`.
 - **Ao mexer em cor ou espaçamento:** alterar o token, não o componente.
 - **Ao acrescentar página:** incluí-la em `src/app/sitemap.ts` e, se for de
