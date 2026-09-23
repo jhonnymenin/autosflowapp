@@ -3,16 +3,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CtaSection } from "@/components/cta-section";
-import { ArrowRight, Document, Phone, WhatsApp } from "@/components/icons";
+import { ArrowRight, Calendar, Document, Phone } from "@/components/icons";
 import { VehicleCard } from "@/components/vehicle-card";
 import { VehicleGallery } from "@/components/vehicle-gallery";
+import { VehicleLead } from "@/components/vehicle-lead";
 import { Eyebrow } from "@/components/ui";
 import { contact } from "@/data/brand";
 import { imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
-import { siteUrl, whatsappForVehicle } from "@/lib/site";
-import { fullName, getVehicle, relatedVehicles } from "@/lib/stock";
+import { siteUrl, whatsappVisit } from "@/lib/site";
+import {
+  fullName,
+  getVehicle,
+  maskedPlate,
+  relatedVehicles,
+  stockRef,
+} from "@/lib/stock";
 
 export function generateStaticParams() {
   return vehicles.map((vehicle) => ({ slug: vehicle.slug }));
@@ -55,7 +62,7 @@ export default async function VehiclePage({
 
   const name = fullName(vehicle);
   const related = relatedVehicles(vehicle);
-  const whatsapp = whatsappForVehicle(name, vehicle.plate);
+  const ref = stockRef(vehicle);
   const gallery = imagesFor(vehicle);
 
   // The hero already states year, mileage, fuel and colour; the sheet carries
@@ -64,7 +71,8 @@ export default async function VehiclePage({
     { label: "Marca", value: vehicle.make },
     { label: "Modelo", value: vehicle.model },
     { label: "Versão", value: vehicle.version },
-    { label: "Placa", value: vehicle.plate, numeric: true },
+    { label: "Referência", value: ref, numeric: true },
+    { label: "Placa", value: maskedPlate(vehicle.plate), numeric: true },
     {
       label: "Situação",
       value: vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
@@ -169,9 +177,16 @@ export default async function VehiclePage({
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="border border-border bg-surface p-7 sm:p-9 lg:sticky lg:top-28">
                 {vehicle.origin === "consignado" ? (
-                  <p className="mb-5 inline-flex items-center border border-border-strong px-3 py-1 text-eyebrow font-medium uppercase text-foreground-muted">
-                    Consignado
-                  </p>
+                  <div className="mb-6 border-l-2 border-brand pl-4">
+                    <p className="text-eyebrow font-medium uppercase text-brand-bright">
+                      Consignado
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-foreground-muted">
+                      Veículo de um proprietário, anunciado e negociado com
+                      intermediação da AutosFlow. A avaliação, a documentação e
+                      a entrega seguem o mesmo processo dos veículos da loja.
+                    </p>
+                  </div>
                 ) : null}
                 <p className="text-eyebrow font-medium uppercase text-foreground-subtle">
                   Valor
@@ -180,28 +195,31 @@ export default async function VehiclePage({
                   {formatPrice(vehicle.price)}
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3">
+                <VehicleLead vehicle={vehicle} />
+
+                <div className="mt-4 flex flex-col gap-3">
                   <a
-                    href={whatsapp}
+                    href={whatsappVisit(vehicle)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-6 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
+                    className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
                   >
-                    <WhatsApp className="h-4.5 w-4.5" />
-                    Tenho interesse
+                    <Calendar className="h-4 w-4" />
+                    Agendar visita ou test-drive
                   </a>
                   <a
                     href={`tel:+${contact.phoneE164}`}
-                    className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
+                    className="inline-flex h-12 items-center justify-center gap-3 text-sm tracking-tight text-foreground-muted transition-colors duration-300 hover:text-foreground"
                   >
                     <Phone className="h-4 w-4" />
                     <span className="tnum">{contact.phoneLabel}</span>
                   </a>
                 </div>
 
-                <p className="mt-7 border-t border-border pt-6 text-xs leading-relaxed text-foreground-subtle">
-                  Fotos reais e laudo desta unidade sob consulta. Primeiro
-                  entendemos você. Depois falamos de carro.
+                <p className="mt-6 border-t border-border pt-5 text-xs leading-relaxed text-foreground-subtle">
+                  Referência <span className="tnum text-foreground-muted">{ref}</span> — cite este
+                  código no atendimento. Fotos reais e laudo desta unidade sob
+                  consulta.
                 </p>
               </div>
             </div>
@@ -283,12 +301,9 @@ export default async function VehiclePage({
               </Link>
             </div>
 
-            <ul className="mt-10 grid border-t border-border sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid gap-x-8 border-t border-border sm:mt-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
               {related.map((other) => (
-                <li
-                  key={other.slug}
-                  className="border-b border-border sm:border-b-0 sm:border-r sm:pr-8 sm:last:border-r-0 sm:last:pr-0 lg:pr-10"
-                >
+                <li key={other.slug} className="border-b border-border">
                   <VehicleCard vehicle={other} />
                 </li>
               ))}

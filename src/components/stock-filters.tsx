@@ -1,21 +1,30 @@
 import Link from "next/link";
 
 import {
+  countInBand,
   fuelsWithCounts,
+  kmBands,
   makesWithCounts,
   originCounts,
+  priceBands,
   sortOptions,
+  yearBands,
+  type Band,
   type SortKey,
 } from "@/lib/stock";
 
 export interface ActiveFilters {
+  q?: string;
   marca?: string;
   combustivel?: string;
   origem?: string;
+  preco?: string;
+  ano?: string;
+  km?: string;
   ordem?: SortKey;
 }
 
-/** Builds /veiculos?… keeping the other choices intact. */
+/** Monta /veiculos?… preservando as outras escolhas. */
 function buildHref(active: ActiveFilters, patch: Partial<ActiveFilters>) {
   const next = { ...active, ...patch };
   const params = new URLSearchParams();
@@ -68,11 +77,11 @@ function Group({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-      <h3 className="w-28 shrink-0 text-eyebrow font-medium uppercase text-foreground-subtle">
+    <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-5">
+      <h3 className="w-24 shrink-0 text-eyebrow font-medium uppercase text-foreground-subtle">
         {label}
       </h3>
-      {/* Horizontal scroll keeps long option sets off a second line on phones */}
+      {/* Rolagem horizontal evita quebra de linha nos conjuntos longos */}
       <div className="-mx-(--spacing-gutter) overflow-x-auto px-(--spacing-gutter) [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
         <div className="flex gap-2 sm:flex-wrap">{children}</div>
       </div>
@@ -80,9 +89,46 @@ function Group({
   );
 }
 
+/** Um grupo de faixas (preço, ano, km). */
+function BandGroup({
+  label,
+  kind,
+  bands,
+  param,
+  active,
+}: {
+  label: string;
+  kind: "price" | "year" | "km";
+  bands: Band[];
+  param: "preco" | "ano" | "km";
+  active: ActiveFilters;
+}) {
+  const current = active[param];
+  return (
+    <Group label={label}>
+      <Chip href={buildHref(active, { [param]: undefined })} selected={!current}>
+        Todas
+      </Chip>
+      {bands.map((band) => (
+        <Chip
+          key={band.value}
+          href={buildHref(active, { [param]: band.value })}
+          selected={current === band.value}
+          count={countInBand(kind, band)}
+        >
+          {band.label}
+        </Chip>
+      ))}
+    </Group>
+  );
+}
+
 /**
- * Filters are plain links over search params: they work without JavaScript,
- * survive a refresh and can be shared or bookmarked.
+ * Filtros de alta intenção.
+ *
+ * Tudo são links e um formulário GET sobre search params: funcionam sem
+ * JavaScript, sobrevivem ao refresh e podem ser compartilhados ou salvos —
+ * um link de "até R$ 80 mil, 2020 ou mais novo" vai direto para o resultado.
  */
 export function StockFilters({
   active,
@@ -93,13 +139,68 @@ export function StockFilters({
 }) {
   const makes = makesWithCounts();
   const fuels = fuelsWithCounts();
-  const hasFilters = Boolean(active.marca || active.combustivel || active.origem);
+  const hasFilters = Boolean(
+    active.q ||
+      active.marca ||
+      active.combustivel ||
+      active.origem ||
+      active.preco ||
+      active.ano ||
+      active.km,
+  );
 
   return (
     <section aria-labelledby="filtros" className="flex flex-col gap-6">
       <h2 id="filtros" className="sr-only">
-        Filtrar e ordenar o estoque
+        Buscar e filtrar o estoque
       </h2>
+
+      {/* Busca livre — formulário GET, sem JavaScript */}
+      <form action="/veiculos" method="get" className="flex gap-2">
+        {active.ordem ? (
+          <input type="hidden" name="ordem" value={active.ordem} />
+        ) : null}
+        <label htmlFor="busca" className="sr-only">
+          Buscar por modelo, marca ou referência
+        </label>
+        <input
+          id="busca"
+          name="q"
+          type="search"
+          defaultValue={active.q ?? ""}
+          placeholder="Buscar por modelo, marca ou referência"
+          className="h-12 w-full border border-border bg-surface px-4 text-sm text-foreground outline-none transition-colors duration-300 placeholder:text-foreground-subtle focus:border-brand-bright"
+        />
+        <button
+          type="submit"
+          className="h-12 shrink-0 bg-foreground px-6 text-sm font-medium tracking-tight text-ink-950 transition-colors duration-300 hover:bg-white"
+        >
+          Buscar
+        </button>
+      </form>
+
+      <BandGroup
+        label="Preço"
+        kind="price"
+        bands={priceBands}
+        param="preco"
+        active={active}
+      />
+      <BandGroup
+        label="Ano"
+        kind="year"
+        bands={yearBands}
+        param="ano"
+        active={active}
+      />
+      <BandGroup
+        label="Km"
+        kind="km"
+        bands={kmBands}
+        param="km"
+        active={active}
+      />
+
       <Group label="Marca">
         <Chip
           href={buildHref(active, { marca: undefined })}
@@ -173,17 +274,20 @@ export function StockFilters({
         ))}
       </Group>
 
-      <div className="flex items-center gap-5 border-t border-border pt-5">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-5">
         <p aria-live="polite" className="text-sm text-foreground-muted">
           <span className="tnum font-medium text-foreground">{total}</span>{" "}
           {total === 1 ? "veículo" : "veículos"}
+          {active.q ? (
+            <>
+              {" "}
+              para <span className="text-foreground">“{active.q}”</span>
+            </>
+          ) : null}
         </p>
         {hasFilters ? (
           <Link
-            href={buildHref(
-              { ordem: active.ordem },
-              { marca: undefined, combustivel: undefined, origem: undefined },
-            )}
+            href={buildHref({ ordem: active.ordem }, {})}
             scroll={false}
             className="text-sm text-foreground-subtle underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
           >

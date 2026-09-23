@@ -45,7 +45,7 @@ src/
   app/
     layout.tsx              cabeçalho, rodapé, fontes, metadata, JSON-LD
     page.tsx                home
-    veiculos/page.tsx       catálogo com filtros por search params
+    veiculos/page.tsx       catálogo: busca + filtros por search params
     veiculos/[slug]/        página de cada veículo (estática, 17 rotas)
     creditos/               créditos das imagens de referência (noindex)
     tabela-de-precos/       tabela de preços completa em HTML
@@ -56,11 +56,12 @@ src/
     site-footer.tsx · logo.tsx · icons.tsx · ui.tsx · reveal.tsx
     vehicle-card.tsx        painel de veículo (home, relacionados)
     vehicle-row.tsx         linha editorial do catálogo
-    stock-filters.tsx       filtros — links, sem JavaScript
+    stock-filters.tsx       busca e filtros — links e form GET, sem JavaScript
+    vehicle-lead.tsx        proposta por veículo (entrada, prazo, troca)
     price-table.tsx         tabela de preços semântica
     vehicle-gallery.tsx     carrossel (scroll-snap nativo, sem dependência)
     cta-section.tsx         bloco comercial compartilhado
-    home/                   seções da home
+    home/                   hero, vitrine e "por que"
   data/
     vehicles.ts             ← fonte única do estoque (dados verificados)
     vehicle-images.ts       ← fotos dos veículos (PROVISÓRIAS)
@@ -108,6 +109,39 @@ documentos de origem.
    Enquanto forem provisórias, cada carrossel exibe a nota "Imagem de
    referência do modelo — não é a unidade anunciada". Ver
    [Substituir as fotos](#substituir-as-fotos-dos-veículos).
+
+---
+
+## Arquitetura da conversão
+
+A home é deliberadamente curta: hero com busca, vitrine de 6 veículos, um
+resumo da marca e o CTA. O institucional completo — manifesto, jornada,
+ecossistema, verificação — vive em `/sobre`, fora do caminho de quem veio
+procurar carro.
+
+**Busca e filtros** (`/veiculos`) são links e um formulário GET sobre search
+params: funcionam sem JavaScript, sobrevivem ao refresh e podem ser
+compartilhados. Filtram por texto, preço, ano, quilometragem, marca,
+combustível e origem.
+
+**Cada veículo tem sua conversão.** O bloco de proposta monta a mensagem do
+WhatsApp com entrada, prazo e troca já preenchidos, e o anúncio identificado
+pela referência de estoque. O atendimento recebe a conversa pronta e dá para
+medir depois quais veículos geram interesse.
+
+> O bloco **não calcula parcela**. Não há taxa, seguro nem tarifa cadastrados
+> no site, e um número estimado viraria uma promessa que o atendimento teria de
+> desfazer. Para calcular de verdade, é preciso cadastrar as condições reais.
+
+### Placa e referência
+
+A placa completa identifica veículo e proprietário em consultas públicas. O
+site publica apenas o prefixo (`PZI-1G••`) e usa a **referência de estoque**
+(`AF-1234`, derivada do slug em `lib/stock.ts`) como identificação comercial —
+nas páginas, na tabela e nas mensagens de WhatsApp.
+
+> O PDF original em `/documentos` ainda contém as placas completas. Se isso for
+> um problema, gere uma versão sem a coluna ou deixe de servi-lo publicamente.
 
 ---
 
@@ -274,3 +308,18 @@ projeto usa o domínio de produção da própria Vercel — e, localmente,
   navegação principal, em `nav` dentro de `src/lib/site.ts`.
 - **Regra de conteúdo:** se um dado não existe no material de origem, ele não
   vai para o site.
+
+---
+
+## O que falta dado para existir
+
+Estes itens estão pendentes de informação real, não de código:
+
+| Item | O que é preciso |
+| ---- | --------------- |
+| Filtro de câmbio | Só 6 dos 17 registros trazem indicação (MT, AT, CVT, Aut.). Precisa do campo na exportação do estoque. |
+| Filtro de carroceria | Não existe na tabela de origem. |
+| Simulador de parcela | Taxa, tarifas e prazos reais da financeira. |
+| Prova social | Avaliações e depoimentos verdadeiros — não podem ser inventados. |
+| Horário, e-mail, atendente, prazo de resposta | Não constam em nenhum material recebido. |
+| Formulário sem WhatsApp | Um e-mail de destino ou um serviço de formulário. |

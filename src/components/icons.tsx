@@ -65,6 +65,15 @@ export function Document({ className }: IconProps) {
   );
 }
 
+export function Calendar({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <rect x="3" y="5" width="18" height="16" rx="1.5" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
+    </svg>
+  );
+}
+
 export function Check({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base}>

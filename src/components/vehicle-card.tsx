@@ -31,7 +31,7 @@ export function VehicleCard({
     >
       <div>
         {cover ? (
-          <div className="relative mb-7 aspect-16/10 w-full overflow-hidden bg-surface">
+          <div className="relative mb-6 aspect-16/10 w-full overflow-hidden bg-surface">
             <Image
               src={cover.src}
               alt=""
@@ -60,7 +60,7 @@ export function VehicleCard({
         <p className="mt-2 text-sm text-foreground-muted">{vehicle.version}</p>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-8">
         <dl className="tnum flex flex-wrap items-baseline gap-x-6 gap-y-1 text-xs text-foreground-subtle">
           <div className="whitespace-nowrap">
             <dt className="sr-only">Ano</dt>

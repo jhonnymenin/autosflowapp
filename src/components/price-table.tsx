@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKmShort, formatNumber } from "@/lib/format";
-import { originCounts } from "@/lib/stock";
+import { originCounts, stockRef } from "@/lib/stock";
 import type { Vehicle } from "@/types/vehicle";
 
 /** Groups the stock by manufacturer, mirroring the source document. */
@@ -41,7 +41,7 @@ export function PriceTable() {
         <caption className="sr-only" id="tabela-titulo">
           Tabela de preços dos veículos em estoque da AutosFlow, emitida em{" "}
           {STOCK_ISSUED_AT}. Sete colunas: veículo, ano, combustível, cor,
-          quilometragem, placa e valor.
+          quilometragem, referência e valor.
         </caption>
 
         <thead>
@@ -71,7 +71,7 @@ export function PriceTable() {
               scope="col"
               className={`${cell} text-eyebrow font-medium uppercase text-foreground-subtle`}
             >
-              Placa
+              Ref.
             </th>
             <th
               scope="col"
@@ -135,7 +135,7 @@ export function PriceTable() {
                   {vehicle.km > 0 ? formatKmShort(vehicle.km) : "0"}
                 </td>
                 <td className={`${cell} tnum whitespace-nowrap text-foreground-muted`}>
-                  {vehicle.plate}
+                  {stockRef(vehicle)}
                 </td>
                 <td
                   className={`${cell} tnum whitespace-nowrap text-right font-medium text-foreground`}

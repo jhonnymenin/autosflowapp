@@ -60,7 +60,13 @@ export default function PriceTablePage() {
             <p>
               <span className="text-foreground-muted">(*)</span> Veículo
               consignado — pertencente a um proprietário e anunciado com
-              intermediação da AutosFlow.
+              intermediação da AutosFlow. A avaliação, a documentação e a
+              entrega seguem o mesmo processo dos veículos da loja.
+            </p>
+            <p>
+              A coluna <span className="text-foreground-muted">Ref.</span> é o
+              código público do anúncio. A placa completa não é publicada e é
+              informada no atendimento.
             </p>
             <p>
               Emissão do registro: {STOCK_ISSUED_AT}. Valores e disponibilidade
