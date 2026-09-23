@@ -4,8 +4,7 @@ import { useMemo, useState } from "react";
 
 import { WhatsApp } from "@/components/icons";
 import { formatPrice } from "@/lib/format";
-import { whatsappForVehicle } from "@/lib/site";
-import type { Vehicle } from "@/types/vehicle";
+import { whatsappForVehicle, type LeadVehicle } from "@/lib/site";
 
 const TERMS = [24, 36, 48, 60];
 
@@ -17,7 +16,7 @@ const TERMS = [24, 36, 48, 60];
  * estimado aqui viraria uma promessa que o atendimento teria de desfazer.
  * Quem define o valor é o atendimento, com a proposta já em mãos.
  */
-export function VehicleLead({ vehicle }: { vehicle: Vehicle }) {
+export function VehicleLead({ lead }: { lead: LeadVehicle }) {
   const [down, setDown] = useState("");
   const [term, setTerm] = useState<number | null>(null);
   const [tradeIn, setTradeIn] = useState(false);
@@ -27,7 +26,7 @@ export function VehicleLead({ vehicle }: { vehicle: Vehicle }) {
     return digits ? Number(digits) : 0;
   }, [down]);
 
-  const href = whatsappForVehicle(vehicle, {
+  const href = whatsappForVehicle(lead, {
     downPayment: downValue || undefined,
     instalments: term ?? undefined,
     tradeIn,

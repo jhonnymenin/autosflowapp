@@ -12,7 +12,7 @@ import { contact } from "@/data/brand";
 import { imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
-import { siteUrl, whatsappVisit } from "@/lib/site";
+import { siteUrl, toLeadVehicle, whatsappVisit } from "@/lib/site";
 import {
   fullName,
   getVehicle,
@@ -63,6 +63,7 @@ export default async function VehiclePage({
   const name = fullName(vehicle);
   const related = relatedVehicles(vehicle);
   const ref = stockRef(vehicle);
+  const lead = toLeadVehicle(vehicle);
   const gallery = imagesFor(vehicle);
 
   // The hero already states year, mileage, fuel and colour; the sheet carries
@@ -195,11 +196,11 @@ export default async function VehiclePage({
                   {formatPrice(vehicle.price)}
                 </p>
 
-                <VehicleLead vehicle={vehicle} />
+                <VehicleLead lead={lead} />
 
                 <div className="mt-4 flex flex-col gap-3">
                   <a
-                    href={whatsappVisit(vehicle)}
+                    href={whatsappVisit(lead)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"

@@ -41,6 +41,35 @@ export const whatsappSell = whatsappUrl(
    identificação é feita pela referência de estoque, não pela placa.
    ---------------------------------------------------------------------- */
 
+/**
+ * Dados do anúncio que podem cruzar para o cliente.
+ *
+ * O objeto `Vehicle` inteiro NÃO pode ser passado para um componente cliente:
+ * o React serializa a prop no payload e a placa apareceria no HTML, anulando
+ * o mascaramento. Aqui só entra o que já está visível na página.
+ */
+export interface LeadVehicle {
+  name: string;
+  ref: string;
+  year: string;
+  km: string;
+  fuel: string;
+  color: string;
+  price: number;
+}
+
+export function toLeadVehicle(vehicle: Vehicle): LeadVehicle {
+  return {
+    name: fullName(vehicle),
+    ref: stockRef(vehicle),
+    year: vehicle.year,
+    km: formatKm(vehicle.km),
+    fuel: vehicle.fuel,
+    color: vehicle.color,
+    price: vehicle.price,
+  };
+}
+
 export interface LeadOptions {
   /** Entrada em reais, quando o cliente informa. */
   downPayment?: number;
@@ -53,23 +82,23 @@ export interface LeadOptions {
 }
 
 /** Bloco com os dados do anúncio, comum a todas as mensagens. */
-function vehicleBlock(vehicle: Vehicle): string {
+function vehicleBlock(lead: LeadVehicle): string {
   return [
-    `*${fullName(vehicle)}*`,
-    `Ref. ${stockRef(vehicle)}`,
-    `Ano ${vehicle.year} · ${formatKm(vehicle.km)} · ${vehicle.fuel} · ${vehicle.color}`,
-    `Valor ${formatPrice(vehicle.price)}`,
+    `*${lead.name}*`,
+    `Ref. ${lead.ref}`,
+    `Ano ${lead.year} · ${lead.km} · ${lead.fuel} · ${lead.color}`,
+    `Valor ${formatPrice(lead.price)}`,
   ].join("\n");
 }
 
 export function whatsappForVehicle(
-  vehicle: Vehicle,
+  lead: LeadVehicle,
   options: LeadOptions = {},
 ): string {
   const lines = [
     "Olá! Tenho interesse neste veículo do site da AutosFlow:",
     "",
-    vehicleBlock(vehicle),
+    vehicleBlock(lead),
   ];
 
   const wants: string[] = [];
@@ -90,12 +119,12 @@ export function whatsappForVehicle(
 }
 
 /** Agendamento de visita para um veículo específico. */
-export function whatsappVisit(vehicle: Vehicle): string {
+export function whatsappVisit(lead: LeadVehicle): string {
   return whatsappUrl(
     [
       "Olá! Gostaria de agendar uma visita para ver este veículo:",
       "",
-      vehicleBlock(vehicle),
+      vehicleBlock(lead),
     ].join("\n"),
   );
 }
