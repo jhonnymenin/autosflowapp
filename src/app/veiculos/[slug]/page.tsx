@@ -6,6 +6,7 @@ import { CtaSection } from "@/components/cta-section";
 import { ArrowRight, Calendar, Document, Phone } from "@/components/icons";
 import { VehicleCard } from "@/components/vehicle-card";
 import { VehicleGallery } from "@/components/vehicle-gallery";
+import { TrustBadges } from "@/components/trust-badges";
 import { VehicleLead } from "@/components/vehicle-lead";
 import { Eyebrow } from "@/components/ui";
 import { contact } from "@/data/brand";
@@ -216,6 +217,8 @@ export default async function VehiclePage({
                     <span className="tnum">{contact.phoneLabel}</span>
                   </a>
                 </div>
+
+                <TrustBadges />
 
                 <p className="mt-6 border-t border-border pt-5 text-xs leading-relaxed text-foreground-subtle">
                   Referência <span className="tnum text-foreground-muted">{ref}</span> — cite este

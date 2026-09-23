@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CtaSection } from "@/components/cta-section";
+import { TrustSection } from "@/components/trust-section";
 import { Hero } from "@/components/home/hero";
 import { ShowcaseSection } from "@/components/home/showcase-section";
 import { WhySection } from "@/components/home/why-section";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Hero />
       <ShowcaseSection />
       <WhySection />
+      <TrustSection />
       <CtaSection />
     </>
   );

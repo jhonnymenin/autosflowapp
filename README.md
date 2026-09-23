@@ -58,12 +58,15 @@ src/
     vehicle-row.tsx         linha editorial do catálogo
     stock-filters.tsx       busca e filtros — links e form GET, sem JavaScript
     vehicle-lead.tsx        proposta por veículo (entrada, prazo, troca)
+    trust-section.tsx       prova social — depoimentos reais + prova factual
+    trust-badges.tsx        garantias ao lado do botão de conversão
     price-table.tsx         tabela de preços semântica
     vehicle-gallery.tsx     carrossel (scroll-snap nativo, sem dependência)
     cta-section.tsx         bloco comercial compartilhado
     home/                   hero, vitrine e "por que"
   data/
     vehicles.ts             ← fonte única do estoque (dados verificados)
+    testimonials.ts         ← depoimentos de clientes (só reais)
     vehicle-images.ts       ← fotos dos veículos (PROVISÓRIAS)
     brand.ts                ← fonte única do conteúdo institucional
   lib/
@@ -128,6 +131,18 @@ combustível e origem.
 WhatsApp com entrada, prazo e troca já preenchidos, e o anúncio identificado
 pela referência de estoque. O atendimento recebe a conversa pronta e dá para
 medir depois quais veículos geram interesse.
+
+### Prova social
+
+A seção de confiança da home mostra o que já é verdadeiro: os critérios de
+verificação, os compromissos da marca e os números do estoque. Ela absorve
+depoimentos reais automaticamente — preencha
+[`src/data/testimonials.ts`](src/data/testimonials.ts) e eles aparecem acima
+dos compromissos, sem mexer em mais nada.
+
+> Nunca cadastre depoimento inventado. Além de ser publicidade enganosa (CDC,
+> art. 37), é o tipo de coisa que quebra a confiança exatamente no momento em
+> que o cliente ia decidir confiar.
 
 > O bloco **não calcula parcela**. Não há taxa, seguro nem tarifa cadastrados
 > no site, e um número estimado viraria uma promessa que o atendimento teria de
@@ -320,6 +335,6 @@ Estes itens estão pendentes de informação real, não de código:
 | Filtro de câmbio | Só 6 dos 17 registros trazem indicação (MT, AT, CVT, Aut.). Precisa do campo na exportação do estoque. |
 | Filtro de carroceria | Não existe na tabela de origem. |
 | Simulador de parcela | Taxa, tarifas e prazos reais da financeira. |
-| Prova social | Avaliações e depoimentos verdadeiros — não podem ser inventados. |
+| Depoimentos | Avaliações reais de clientes. A seção de confiança já está no ar com a prova factual; basta preencher `src/data/testimonials.ts` e os depoimentos aparecem sozinhos. |
 | Horário, e-mail, atendente, prazo de resposta | Não constam em nenhum material recebido. |
 | Formulário sem WhatsApp | Um e-mail de destino ou um serviço de formulário. |
