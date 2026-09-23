@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CtaSection } from "@/components/cta-section";
-import { ArrowRight, Document } from "@/components/icons";
+import { ArrowRight } from "@/components/icons";
 import { PriceTable } from "@/components/price-table";
 import { Eyebrow } from "@/components/ui";
 import { addressOneLine, contact } from "@/data/brand";
@@ -35,13 +35,6 @@ export default function PriceTablePage() {
                 interno. Sem letras pequenas e sem surpresas.
               </p>
             </div>
-            <a
-              href="/documentos/autosflow-tabela-de-precos.pdf"
-              className="inline-flex shrink-0 items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright lg:pb-2"
-            >
-              <Document className="h-4 w-4" />
-              Documento original em PDF
-            </a>
           </div>
         </div>
       </section>

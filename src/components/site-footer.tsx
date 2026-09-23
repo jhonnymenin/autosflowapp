@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Document, MapPin, Phone, WhatsApp } from "@/components/icons";
+import { MapPin, Phone, WhatsApp } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { brand, contact } from "@/data/brand";
 import { nav, whatsappGeneral } from "@/lib/site";
@@ -67,15 +67,6 @@ export function SiteFooter() {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <a
-                    href="/documentos/autosflow-tabela-de-precos.pdf"
-                    className="inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors duration-300 hover:text-foreground"
-                  >
-                    <Document className="h-4 w-4" />
-                    Tabela em PDF
-                  </a>
-                </li>
               </ul>
             </div>
           </nav>

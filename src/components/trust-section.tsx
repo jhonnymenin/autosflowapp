@@ -21,7 +21,7 @@ import { originCounts, priceRange } from "@/lib/stock";
 const commitments = [
   {
     title: "O que está no anúncio está no registro",
-    body: "Ano, quilometragem, cor e valor saem da nossa tabela de estoque. A mesma tabela fica publicada, em HTML e em PDF, para qualquer um conferir.",
+    body: "Ano, quilometragem, cor e valor saem da nossa tabela de estoque. A mesma tabela fica publicada, inteira, para qualquer um conferir.",
     href: "/tabela-de-precos",
     hrefLabel: "Ver a tabela completa",
   },

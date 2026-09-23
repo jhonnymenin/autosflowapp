@@ -250,13 +250,13 @@ export default async function VehiclePage({
                 {STOCK_ISSUED_AT} registra sobre este veículo — nada além disso.
                 Opcionais, laudo e histórico são confirmados no atendimento.
               </p>
-              <a
-                href="/documentos/autosflow-tabela-de-precos.pdf"
+              <Link
+                href="/tabela-de-precos"
                 className="mt-7 inline-flex items-center gap-2.5 text-sm text-foreground-muted underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
               >
                 <Document className="h-4 w-4" />
-                Tabela original em PDF
-              </a>
+                Ver na tabela de preços
+              </Link>
             </div>
 
             <div className="lg:col-span-7 lg:col-start-6">

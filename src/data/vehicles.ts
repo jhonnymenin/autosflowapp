@@ -4,8 +4,8 @@ import type { Vehicle } from "@/types/vehicle";
  * Single source of truth for the published stock.
  *
  * Every field below is transcribed from "Tabela de Preços dos Veículos em
- * Estoque" (issued 26/08/2026, 09:03:24), which ships unaltered at
- * /documentos/autosflow-tabela-de-precos.pdf.
+ * Estoque" (issued 26/08/2026, 09:03:24). The original PDF is NOT published:
+ * it carries full plates, which the site only shows masked.
  *
  * `sourceName` holds the description string verbatim; `make`, `model` and
  * `version` are the same string split and normalised for display only. No
@@ -13,8 +13,8 @@ import type { Vehicle } from "@/types/vehicle";
  * document — the source leaves "Opcionais", "Loja" and "Fotos" empty, so the
  * site does not show them.
  *
- * To update the stock, replace the entries below from a fresh export and swap
- * the PDF in /public/documentos. See README.md.
+ * To update the stock, replace the entries below from a fresh export. See
+ * README.md.
  */
 export const STOCK_ISSUED_AT = "26/08/2026";
 
