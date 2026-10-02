@@ -16,6 +16,16 @@ export const brand = {
   positioning: "Intermediação automotiva premium",
 } as const;
 
+/**
+ * O que a AutosFlow faz, dito sem metáfora — abertura da home. Texto sugerido
+ * pela equipe para que o visitante entenda o serviço sem interpretar o
+ * conceito.
+ */
+export const pitch = {
+  lead: "A gente cuida da venda do seu carro do começo ao fim. Avaliação, divulgação, atendimento, negociação e documentação.",
+  close: "Você acompanha. A AutosFlow cuida do processo.",
+} as const;
+
 export const contact = {
   phoneLabel: "(11) 94876-8653",
   /** E.164, for tel: and wa.me links. */
@@ -31,10 +41,13 @@ export const contact = {
 
 export const addressOneLine = `${contact.address.street} — ${contact.address.district}, ${contact.address.city} — ${contact.address.state}, CEP ${contact.address.postalCode}`;
 
-/** Manifesto, transcribed from Manifesto_Autosflow.pdf. */
+/**
+ * Manifesto, transcribed from Manifesto_Autosflow.pdf. One deliberate edit
+ * from the team (01/10/2026): "deveria ser" became "deve ser" in the opening.
+ */
 export const manifesto = {
   opening:
-    "Comprar um carro deveria ser uma conquista. Nunca uma preocupação. Para transformar a compra, a venda e a troca de um carro em uma experiência mais simples, transparente, segura e prazerosa nasce a AutosFlow.",
+    "Comprar um carro deve ser uma conquista. Nunca uma preocupação. Para transformar a compra, a venda e a troca de um carro em uma experiência mais simples, transparente, segura e prazerosa nasce a AutosFlow.",
   claim: "Aqui, carro não é apenas estoque.",
   claimEcho: "É escolha. É história. É desejo. É movimento.",
   criteria: [

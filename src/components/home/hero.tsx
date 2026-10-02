@@ -2,20 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowRight, WhatsApp } from "@/components/icons";
-import { brand } from "@/data/brand";
+import { pitch } from "@/data/brand";
 import { vehicles } from "@/data/vehicles";
 import { formatPrice } from "@/lib/format";
 import { priceRange } from "@/lib/stock";
 import { whatsappSell } from "@/lib/site";
 
-const makes = new Set(vehicles.map((vehicle) => vehicle.make)).size;
-
 /**
  * Hero.
  *
- * Deliberadamente curto: a vitrine tem de aparecer quase junto. A busca fica
- * aqui, no primeiro contato, para quem já sabe o que procura — é um
- * formulário GET, então funciona antes mesmo do JavaScript carregar.
+ * Diz em uma frase o que a AutosFlow faz e abre os dois caminhos do negócio:
+ * vender o carro ou comprar um. A busca vive no estoque, um clique adiante.
  */
 export function Hero() {
   return (
@@ -44,63 +41,43 @@ export function Hero() {
 
       <div className="container-editorial relative -mt-14 pb-12 sm:-mt-24 sm:pb-16 lg:mt-0 lg:w-full lg:pb-0">
         <div className="max-w-xl lg:max-w-2xl">
-          <p className="text-eyebrow font-medium uppercase text-brand-bright">
-            {brand.positioning}
-          </p>
-
-          <h1 className="mt-5 text-display-lg font-semibold text-foreground sm:mt-6">
+          <h1 className="text-display-lg font-semibold text-foreground">
             Seu carro no
             <br />
             fluxo certo.
           </h1>
 
-          <p className="mt-5 max-w-md text-lead text-foreground-muted">
-            {vehicles.length} veículos selecionados, de {makes} marcas, a partir
-            de {formatPrice(priceRange.min)}.
+          <p className="mt-5 max-w-lg text-lead text-foreground-muted sm:mt-6">
+            {pitch.lead}
+          </p>
+          <p className="mt-3 max-w-lg text-lead font-medium text-foreground">
+            {pitch.close}
           </p>
 
-          {/* Busca direta — o caminho mais curto até o carro */}
-          <form
-            action="/veiculos"
-            method="get"
-            className="mt-7 flex max-w-lg gap-2 sm:mt-8"
-          >
-            <label htmlFor="busca-hero" className="sr-only">
-              Buscar por modelo ou marca
-            </label>
-            <input
-              id="busca-hero"
-              name="q"
-              type="search"
-              placeholder="Buscar por modelo ou marca"
-              className="h-13 w-full border border-white/25 bg-ink-950/50 px-4 text-sm text-foreground outline-none backdrop-blur-sm transition-colors duration-300 placeholder:text-foreground-subtle focus:border-brand-bright sm:h-14"
-            />
-            <button
-              type="submit"
-              className="h-13 shrink-0 bg-foreground px-6 text-sm font-medium tracking-tight text-ink-950 transition-colors duration-300 hover:bg-white sm:h-14 sm:px-8"
-            >
-              Buscar
-            </button>
-          </form>
-
-          <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
-            <Link
-              href="/veiculos"
-              className="group/link inline-flex items-center gap-2.5 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:text-brand-bright"
-            >
-              Ver todo o estoque
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
-            </Link>
+          {/* Os dois caminhos do negócio, lado a lado e com o mesmo peso */}
+          <div className="mt-8 flex flex-col gap-2 sm:flex-row">
             <a
               href={whatsappSell}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-sm tracking-tight text-foreground-muted transition-colors duration-300 hover:text-foreground"
+              className="inline-flex h-14 items-center justify-center gap-3 bg-brand whitespace-nowrap px-7 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors duration-300 hover:bg-brand-bright"
             >
               <WhatsApp className="h-4 w-4" />
               Quero vender meu carro
             </a>
+            <Link
+              href="/veiculos"
+              className="group/link inline-flex h-14 items-center justify-center gap-3 bg-foreground whitespace-nowrap px-7 text-sm font-semibold uppercase tracking-[0.08em] text-ink-950 transition-colors duration-300 hover:bg-white"
+            >
+              Quero comprar um carro
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+            </Link>
           </div>
+
+          <p className="mt-5 text-sm text-foreground-subtle">
+            {vehicles.length} veículos em estoque, a partir de{" "}
+            {formatPrice(priceRange.min)}.
+          </p>
         </div>
       </div>
     </section>
