@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Eyebrow } from "@/components/ui";
-import {
-  allImageCredits,
-  ILLUSTRATIVE_IMAGES,
-} from "@/data/vehicle-images";
+import { allImageCredits } from "@/data/vehicle-images";
 
 export const metadata: Metadata = {
   title: "Créditos de imagem",
@@ -26,10 +23,10 @@ export default function CreditsPage() {
           <h1 className="mt-5 text-display-lg font-semibold text-foreground">
             Créditos de imagem.
           </h1>
-          {ILLUSTRATIVE_IMAGES ? (
+          {credits.length > 0 ? (
             <p className="text-lead mt-6 text-foreground-muted">
-              As imagens que ilustram o catálogo são referências do modelo, não
-              da unidade anunciada. Todas são Creative Commons ou domínio
+              Os veículos que ainda não têm fotos próprias são ilustrados com
+              referências do modelo, não da unidade anunciada. Todas são Creative Commons ou domínio
               público, com uso comercial permitido, e estão creditadas abaixo.
             </p>
           ) : (
@@ -62,8 +59,8 @@ export default function CreditsPage() {
         </ul>
 
         <p className="mt-10 max-w-2xl text-xs leading-relaxed text-foreground-subtle">
-          Fotografia institucional e identidade visual são material próprio da
-          AutosFlow.
+          Fotografia institucional, identidade visual e as fotos reais das
+          unidades em estoque são material próprio da AutosFlow.
         </p>
 
         <Link

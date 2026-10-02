@@ -4,11 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ArrowRight } from "@/components/icons";
-import {
-  ILLUSTRATIVE_IMAGES,
-  ILLUSTRATIVE_NOTE,
-  type VehicleImage,
-} from "@/data/vehicle-images";
+import { ILLUSTRATIVE_NOTE, type VehicleImage } from "@/data/vehicle-images";
 
 /**
  * Vehicle carousel.
@@ -17,15 +13,22 @@ import {
  * without a carousel library, and every frame stays in the document for
  * crawlers. The buttons only drive `scrollTo`, so with JavaScript unavailable
  * the strip is still a scrollable gallery.
+ *
+ * Fotos reais chegam em qualquer proporção, muitas em pé (celular). Quadros
+ * largos preenchem o slide; os demais aparecem inteiros sobre um fundo
+ * desfocado da própria foto, sem cortar o carro.
  */
 export function VehicleGallery({
   images,
   alt,
+  real = false,
   priority = false,
 }: {
   images: VehicleImage[];
-  /** Describes the model shown, not the advertised unit. */
+  /** Nome do veículo. */
   alt: string;
+  /** Fotos da própria unidade; sem isso, são referências do modelo. */
+  real?: boolean;
   priority?: boolean;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -66,37 +69,61 @@ export function VehicleGallery({
     <section
       className="group/gallery relative"
       aria-roledescription="carrossel"
-      aria-label={`Imagens do modelo ${alt}`}
+      aria-label={real ? `Fotos do ${alt}` : `Imagens do modelo ${alt}`}
     >
       <div className="relative overflow-hidden bg-surface">
         <div
           ref={trackRef}
           className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {images.map((image, index) => (
-            <div
-              key={image.src}
-              className="relative aspect-16/9 w-full shrink-0 snap-center"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Imagem ${index + 1} de ${images.length}`}
-            >
-              <Image
-                src={image.src}
-                alt={
-                  index === 0
-                    ? `${alt} — imagem de referência do modelo`
-                    : `${alt} — imagem de referência ${index + 1}`
-                }
-                fill
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                quality={80}
-                priority={priority && index === 0}
-                loading={priority && index === 0 ? undefined : "lazy"}
-                className="object-cover object-center"
-              />
-            </div>
-          ))}
+          {images.map((image, index) => {
+            const wide =
+              !image.width ||
+              !image.height ||
+              image.width / image.height >= 1.3;
+            const eager = priority && index === 0;
+            const label = real
+              ? `${alt} — foto ${index + 1}`
+              : index === 0
+                ? `${alt} — imagem de referência do modelo`
+                : `${alt} — imagem de referência ${index + 1}`;
+
+            return (
+              <div
+                key={image.src}
+                className="relative aspect-4/3 w-full shrink-0 snap-center overflow-hidden"
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Imagem ${index + 1} de ${images.length}`}
+              >
+                {wide ? null : (
+                  <Image
+                    src={image.src}
+                    alt=""
+                    fill
+                    sizes="64px"
+                    quality={30}
+                    loading={eager ? undefined : "lazy"}
+                    className="scale-110 object-cover opacity-50 blur-2xl"
+                  />
+                )}
+                <Image
+                  src={image.src}
+                  alt={label}
+                  fill
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  quality={80}
+                  priority={eager}
+                  loading={eager ? undefined : "lazy"}
+                  className={
+                    wide
+                      ? "object-cover object-center"
+                      : "object-contain object-center"
+                  }
+                />
+              </div>
+            );
+          })}
         </div>
 
         {images.length > 1 ? (
@@ -104,22 +131,31 @@ export function VehicleGallery({
             {/* Controls sit over the frame; they fade in on pointer devices
                 but are always reachable by keyboard. */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between p-3 sm:p-4">
-              <div className="pointer-events-auto flex gap-1.5">
-                {images.map((image, index) => (
-                  <button
-                    key={image.src}
-                    type="button"
-                    onClick={() => scrollTo(index)}
-                    aria-label={`Ir para a imagem ${index + 1}`}
-                    aria-current={index === active ? "true" : undefined}
-                    className={`h-1 w-7 transition-colors duration-300 ${
-                      index === active
-                        ? "bg-foreground"
-                        : "bg-foreground/35 hover:bg-foreground/60"
-                    }`}
-                  />
-                ))}
-              </div>
+              {images.length > 8 ? (
+                <p
+                  aria-hidden="true"
+                  className="tnum bg-ink-950/70 px-3 py-2 text-xs font-medium tracking-[0.14em] text-foreground backdrop-blur-sm"
+                >
+                  {active + 1} / {images.length}
+                </p>
+              ) : (
+                <div className="pointer-events-auto flex gap-1.5">
+                  {images.map((image, index) => (
+                    <button
+                      key={image.src}
+                      type="button"
+                      onClick={() => scrollTo(index)}
+                      aria-label={`Ir para a imagem ${index + 1}`}
+                      aria-current={index === active ? "true" : undefined}
+                      className={`h-1 w-7 transition-colors duration-300 ${
+                        index === active
+                          ? "bg-foreground"
+                          : "bg-foreground/35 hover:bg-foreground/60"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
 
               <div className="pointer-events-auto flex gap-px">
                 <button
@@ -150,7 +186,7 @@ export function VehicleGallery({
         ) : null}
       </div>
 
-      {ILLUSTRATIVE_IMAGES ? (
+      {!real ? (
         <p className="mt-3 text-xs leading-relaxed text-foreground-subtle">
           {ILLUSTRATIVE_NOTE}
         </p>

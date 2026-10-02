@@ -1,78 +1,37 @@
+import { vehicles } from "@/data/vehicles";
+import { vehiclePhotos } from "@/data/vehicle-photos";
 import type { Vehicle } from "@/types/vehicle";
 
 /**
- * PLACEHOLDER VEHICLE IMAGERY — replace with photographs of the real units.
+ * Imagens do catálogo.
  *
- * The stock price table records no photography, so these are reference shots
- * of each MODEL, not of the unit advertised: the colour, year and condition
- * will not match the record in `vehicles.ts`. They exist so the catalogue can
- * be shown while the real photographs are produced.
+ * Cada veículo usa, nesta ordem:
  *
- * Every file is Creative Commons or public domain from Wikimedia Commons and
- * cleared for commercial use; credits are carried below and rendered on
- * /creditos. That keeps the site free of third-party copyright exposure while
- * the placeholders are in place.
+ * 1. As FOTOS REAIS da unidade, em `data/vehicle-photos.ts`.
+ * 2. Na falta delas, um conjunto PROVISÓRIO de referência do MODELO (abaixo):
+ *    cor, ano e estado não batem com o anúncio, e a galeria mostra a nota de
+ *    imagem ilustrativa. São Creative Commons ou domínio público, do Wikimedia
+ *    Commons, creditadas em /creditos.
  *
- * TO REPLACE: drop the real photographs in /public/imagens/veiculos/ and swap
- * the `src` values for the vehicle's `imageSet`. Nothing else has to change —
- * the carousel, catalogue, home rail and metadata all read from here. Once
- * every set is real, set ILLUSTRATIVE_IMAGES to false to drop the disclaimer.
+ * Quando um veículo ganha fotos reais, o conjunto provisório dele pode sair
+ * daqui (e os arquivos de public/imagens/veiculos/) se nenhum outro o usar.
  */
-
-/** Flip to false once the real photographs are in place. */
-export const ILLUSTRATIVE_IMAGES = true;
 
 export const ILLUSTRATIVE_NOTE =
   "Imagem de referência do modelo — não é a unidade anunciada. Fotos reais deste veículo sob consulta.";
 
 export interface VehicleImage {
   src: string;
-  author: string;
-  licence: string;
-  source: string;
+  /** Dimensões do arquivo, quando conhecidas (fotos reais). */
+  width?: number;
+  height?: number;
+  /** Só nas imagens de referência: crédito da licença. */
+  author?: string;
+  licence?: string;
+  source?: string;
 }
 
 const imageSets: Record<string, VehicleImage[]> = {
-  "audi-q3": [
-    {
-      src: "/imagens/veiculos/audi-q3-1.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:AUDI_Q3_(Typ_8U)_China_(32).jpg",
-    },
-    {
-      src: "/imagens/veiculos/audi-q3-2.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:AUDI_Q3_(Typ_8U)_China_(23).jpg",
-    },
-    {
-      src: "/imagens/veiculos/audi-q3-3.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:AUDI_Q3_(Typ_8U)_China_(7).jpg",
-    },
-  ],
-  "bmw-x1": [
-    {
-      src: "/imagens/veiculos/bmw-x1-1.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:BMW_X1_LWB_(F48)_China_(26).jpg",
-    },
-    {
-      src: "/imagens/veiculos/bmw-x1-2.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:BMW_X1_LWB_(F48)_China_(15).jpg",
-    },
-    {
-      src: "/imagens/veiculos/bmw-x1-3.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:BMW_X1_LWB_(F48)_China_(39).jpg",
-    },
-  ],
   "chevrolet-onix": [
     {
       src: "/imagens/veiculos/chevrolet-onix-1.jpg",
@@ -233,26 +192,6 @@ const imageSets: Record<string, VehicleImage[]> = {
       source: "https://commons.wikimedia.org/wiki/File:2015_Honda_HR-V_rear,_West_Surabaya.jpg",
     },
   ],
-  "hyundai-creta": [
-    {
-      src: "/imagens/veiculos/hyundai-creta-1.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:HYUNDAI_CRETA_,_iX25_(GS,GC)_China_(11).jpg",
-    },
-    {
-      src: "/imagens/veiculos/hyundai-creta-2.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:HYUNDAI_CRETA_,_iX25_(GS,GC)_China_(2).jpg",
-    },
-    {
-      src: "/imagens/veiculos/hyundai-creta-3.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:HYUNDAI_CRETA_,_iX25_(GS,GC)_China_(4).jpg",
-    },
-  ],
   "mitsubishi-eclipse-cross": [
     {
       src: "/imagens/veiculos/mitsubishi-eclipse-cross-1.jpg",
@@ -335,25 +274,35 @@ const imageSets: Record<string, VehicleImage[]> = {
   ],
 };
 
+/** A unidade anunciada tem fotos próprias? */
+export function hasRealPhotos(vehicle: Vehicle): boolean {
+  return (vehiclePhotos[vehicle.slug]?.length ?? 0) > 0;
+}
+
 /**
- * Images for a vehicle. Sets shared by more than one unit are rotated so two
- * vehicles of the same model never lead with the same frame.
+ * Imagens de um veículo: as fotos reais, ou o conjunto de referência do
+ * modelo. Conjuntos compartilhados giram para que duas unidades do mesmo
+ * modelo não abram com o mesmo quadro.
  */
 export function imagesFor(vehicle: Vehicle): VehicleImage[] {
-  const set = imageSets[vehicle.imageSet];
+  const real = vehiclePhotos[vehicle.slug];
+  if (real && real.length > 0) return real;
+
+  const set = vehicle.imageSet ? imageSets[vehicle.imageSet] : undefined;
   if (!set || set.length === 0) return [];
   const offset = vehicle.imageOffset ?? 0;
   if (offset === 0) return set;
   return [...set.slice(offset % set.length), ...set.slice(0, offset % set.length)];
 }
 
-/** Every credit on the site, de-duplicated, for the attribution page. */
+/** Créditos das imagens de referência ainda em uso, sem repetição. */
 export function allImageCredits(): VehicleImage[] {
   const seen = new Set<string>();
   const out: VehicleImage[] = [];
-  for (const set of Object.values(imageSets)) {
-    for (const image of set) {
-      if (seen.has(image.src)) continue;
+  for (const vehicle of vehicles) {
+    if (hasRealPhotos(vehicle)) continue;
+    for (const image of imagesFor(vehicle)) {
+      if (!image.author || seen.has(image.src)) continue;
       seen.add(image.src);
       out.push(image);
     }

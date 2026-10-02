@@ -57,7 +57,8 @@ src/
     site-footer.tsx · logo.tsx · icons.tsx · ui.tsx · reveal.tsx
     vehicle-card.tsx        painel de veículo (home, relacionados)
     vehicle-row.tsx         linha editorial do catálogo
-    stock-filters.tsx       busca e filtros — links e form GET, sem JavaScript
+    stock-filters.tsx       busca e filtros em listas suspensas (form GET)
+    filter-form.tsx         aplica o filtro ao mudar a lista, sem recarregar
     vehicle-lead.tsx        proposta por veículo (entrada, prazo, troca)
     trust-section.tsx       prova social — depoimentos reais + prova factual
     trust-badges.tsx        garantias ao lado do botão de conversão
@@ -68,7 +69,8 @@ src/
   data/
     vehicles.ts             ← fonte única do estoque (dados verificados)
     testimonials.ts         ← depoimentos de clientes (só reais)
-    vehicle-images.ts       ← fotos dos veículos (PROVISÓRIAS)
+    vehicle-photos.ts       ← FOTOS REAIS das unidades, em ordem
+    vehicle-images.ts       ← imagens de referência (provisórias) + escolha
     brand.ts                ← fonte única do conteúdo institucional
   lib/
     stock.ts                filtros, ordenação, relacionados
@@ -103,30 +105,30 @@ documentos de origem.
    site usa AutosFlow em todo lugar, e o conteúdo da apresentação foi
    reaproveitado sem as menções ao nome antigo.
 
-2. **Fotos dos veículos são PROVISÓRIAS.** A tabela de origem registra `n/d` na
-   coluna Fotos — não existe fotografia do estoque real. As imagens hoje
-   publicadas são **referências do modelo**, não da unidade anunciada: cor, ano
-   e estado não correspondem ao registro. Todas vêm do Wikimedia Commons sob
-   Creative Commons ou domínio público, com uso comercial permitido, e estão
-   creditadas em `/creditos`.
-
-   Enquanto forem provisórias, cada carrossel exibe a nota "Imagem de
-   referência do modelo — não é a unidade anunciada". Ver
+2. **Fotos reais e provisórias.** 8 veículos têm fotos da própria unidade
+   (`data/vehicle-photos.ts`, pasta enviada pela equipe em 30/09/2026). Os
+   demais ainda usam **referências do modelo** do Wikimedia Commons, creditadas
+   em `/creditos`; nesses, o carrossel exibe a nota "Imagem de referência do
+   modelo — não é a unidade anunciada". Ver
    [Substituir as fotos](#substituir-as-fotos-dos-veículos).
 
 ---
 
 ## Arquitetura da conversão
 
-A home é deliberadamente curta: hero com busca, vitrine de 6 veículos, um
+A home é deliberadamente curta: um hero que diz em uma frase o que a AutosFlow
+faz, com os dois caminhos lado a lado ("Quero vender meu carro" e "Quero
+comprar um carro"), vitrine de 6 veículos (os com fotos reais primeiro), um
 resumo da marca e o CTA. O institucional completo — manifesto, jornada,
 ecossistema, verificação — vive em `/sobre`, fora do caminho de quem veio
 procurar carro.
 
-**Busca e filtros** (`/veiculos`) são links e um formulário GET sobre search
-params: funcionam sem JavaScript, sobrevivem ao refresh e podem ser
-compartilhados. Filtram por texto, preço, ano, quilometragem, marca,
-combustível e origem.
+**Busca e filtros** (`/veiculos`) são uma busca e uma linha de listas
+suspensas — marca, preço, ano, quilometragem, combustível e ordem — sobre
+search params: com JavaScript o filtro se aplica ao mudar a lista, sem
+recarregar; sem JavaScript, o botão envia o formulário. A URL guarda tudo, e os
+filtros aplicados aparecem abaixo, cada um removível. A ordem padrão põe os
+veículos com fotos reais primeiro.
 
 **Cada veículo tem sua conversão.** O bloco de proposta monta a mensagem do
 WhatsApp com entrada, prazo e troca já preenchidos, e o anúncio identificado
@@ -218,25 +220,25 @@ JSON-LD e link do mapa são todos derivados dali.
 
 ## Substituir as fotos dos veículos
 
-As imagens do catálogo vivem em
-[`src/data/vehicle-images.ts`](src/data/vehicle-images.ts). Cada veículo aponta
-para um conjunto pelo campo `imageSet`; o carrossel, as linhas do catálogo, o
-trilho da home e o JSON-LD leem tudo dali.
+Fotos reais vivem em [`src/data/vehicle-photos.ts`](src/data/vehicle-photos.ts),
+uma lista por slug, e os arquivos em `public/imagens/veiculos/reais/<slug>/`.
+Quando um veículo tem fotos reais, elas substituem o conjunto de referência
+sozinhas — carrossel, catálogo, vitrine, JSON-LD e a prévia de link (que passa
+a mostrar a capa) — e a nota de imagem ilustrativa some daquele veículo.
 
-Para trocar por fotos reais:
+Para adicionar fotos:
 
-1. Salve as fotos em `public/imagens/veiculos/` (JPEG, 16:9, 1600×900 mantém o
-   padrão atual).
-2. Em `vehicle-images.ts`, troque os `src` do conjunto correspondente e apague
-   `author`, `licence` e `source` — passam a ser fotos próprias.
-3. Se um veículo passar a ter conjunto exclusivo, crie uma chave nova e ajuste
-   o `imageSet` dele em `vehicles.ts`.
-4. Quando **todos** os conjuntos forem reais, troque
-   `ILLUSTRATIVE_IMAGES = false`. Isso remove a nota de imagem ilustrativa de
-   todo o site de uma vez.
+1. Exporte em JPEG, lado maior 1600 px, sem metadados, e salve como `01.jpg`,
+   `02.jpg`… na pasta do slug. A ordem é a de exibição: frente em três
+   quartos primeiro (vira a capa), depois laterais e traseira, interior e
+   detalhes. Fotos em pé funcionam: a galeria mostra o quadro inteiro.
+2. Acrescente a lista em `vehicle-photos.ts` com `width` e `height` de cada
+   arquivo.
+3. Se o conjunto de referência do modelo não for mais usado por ninguém, apague
+   a chave em `vehicle-images.ts` e os arquivos em `public/imagens/veiculos/`.
 
-`imageOffset` gira um conjunto compartilhado para que duas unidades do mesmo
-modelo não abram com o mesmo quadro.
+`imageOffset` gira um conjunto de referência compartilhado para que duas
+unidades do mesmo modelo não abram com o mesmo quadro.
 
 ## Adicionar imagens institucionais
 

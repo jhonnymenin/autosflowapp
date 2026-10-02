@@ -1,9 +1,16 @@
+import { hasRealPhotos } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
 import type { Vehicle } from "@/types/vehicle";
 
-export type SortKey = "preco-asc" | "preco-desc" | "ano-desc" | "km-asc";
+export type SortKey =
+  | "destaque"
+  | "preco-asc"
+  | "preco-desc"
+  | "ano-desc"
+  | "km-asc";
 
 export const sortOptions: { value: SortKey; label: string }[] = [
+  { value: "destaque", label: "Fotos primeiro" },
   { value: "preco-asc", label: "Menor preço" },
   { value: "preco-desc", label: "Maior preço" },
   { value: "ano-desc", label: "Mais novos" },
@@ -46,6 +53,8 @@ export const kmBands: Band[] = [
 
 function inBand(value: number, band: Band | undefined): boolean {
   if (!band) return true;
+  // 0 = não informado (km). Não entra em faixa nenhuma.
+  if (value <= 0) return false;
   if (band.min !== undefined && value < band.min) return false;
   if (band.max !== undefined && value > band.max) return false;
   return true;
@@ -173,11 +182,18 @@ export function countInBand(kind: "price" | "year" | "km", band: Band): number {
   }).length;
 }
 
+/** Km não informada (0) vai para o fim da ordem por quilometragem. */
+const kmOrder = (vehicle: Vehicle) =>
+  vehicle.km > 0 ? vehicle.km : Number.POSITIVE_INFINITY;
+
+const photoOrder = (vehicle: Vehicle) => (hasRealPhotos(vehicle) ? 0 : 1);
+
 const comparators: Record<SortKey, (a: Vehicle, b: Vehicle) => number> = {
+  destaque: (a, b) => photoOrder(a) - photoOrder(b) || a.price - b.price,
   "preco-asc": (a, b) => a.price - b.price,
   "preco-desc": (a, b) => b.price - a.price,
   "ano-desc": (a, b) => b.yearSort - a.yearSort || a.price - b.price,
-  "km-asc": (a, b) => a.km - b.km || a.price - b.price,
+  "km-asc": (a, b) => kmOrder(a) - kmOrder(b) || a.price - b.price,
 };
 
 export function isSortKey(value: string | undefined): value is SortKey {
@@ -201,7 +217,7 @@ export function filterStock(query: StockQuery): Vehicle[] {
   });
 
   return result.sort(
-    comparators[query.sort && isSortKey(query.sort) ? query.sort : "preco-asc"],
+    comparators[query.sort && isSortKey(query.sort) ? query.sort : "destaque"],
   );
 }
 
@@ -212,13 +228,19 @@ export function featuredVehicles(): Vehicle[] {
     .sort((a, b) => b.price - a.price);
 }
 
-/** Vitrine da home: destaques primeiro, depois os mais novos. */
+/**
+ * Vitrine da home: primeiro quem tem fotos reais (do mais novo para o mais
+ * antigo), depois os destaques e o restante do estoque.
+ */
 export function showcaseVehicles(limit = 6): Vehicle[] {
-  const featured = featuredVehicles();
+  const newest = (a: Vehicle, b: Vehicle) =>
+    b.yearSort - a.yearSort || kmOrder(a) - kmOrder(b);
+  const withPhotos = vehicles.filter(hasRealPhotos).sort(newest);
+  const featured = featuredVehicles().filter((v) => !hasRealPhotos(v));
   const rest = vehicles
-    .filter((vehicle) => !vehicle.featured)
-    .sort((a, b) => b.yearSort - a.yearSort || a.km - b.km);
-  return [...featured, ...rest].slice(0, limit);
+    .filter((v) => !hasRealPhotos(v) && !v.featured)
+    .sort(newest);
+  return [...withPhotos, ...featured, ...rest].slice(0, limit);
 }
 
 export function relatedVehicles(vehicle: Vehicle, limit = 3): Vehicle[] {

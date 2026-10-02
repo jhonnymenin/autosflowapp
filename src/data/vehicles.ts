@@ -18,6 +18,12 @@ import type { Vehicle } from "@/types/vehicle";
  */
 export const STOCK_ISSUED_AT = "26/08/2026";
 
+/**
+ * Última revisão de preços: Audi Q3, BMW X1 e Creta foram atualizados e quatro
+ * veículos entraram a partir da pasta de fotos e valores de 30/09/2026.
+ */
+export const STOCK_UPDATED_AT = "30/09/2026";
+
 export const vehicles: Vehicle[] = [
   {
     slug: "audi-q3-1-4-tfsi",
@@ -30,12 +36,11 @@ export const vehicles: Vehicle[] = [
     yearSort: 2017,
     fuel: "Flex",
     color: "Azul",
-    km: 92014,
+    km: 92261,
     plate: "PZI-1G13",
-    price: 94990,
+    price: 91990,
     origin: "loja",
     featured: true,
-    imageSet: "audi-q3",
   },
   {
     slug: "bmw-x1-s20i-active-flex",
@@ -50,10 +55,9 @@ export const vehicles: Vehicle[] = [
     color: "Prata",
     km: 97198,
     plate: "GEF-8H55",
-    price: 109990,
+    price: 105990,
     origin: "loja",
     featured: true,
-    imageSet: "bmw-x1",
   },
   {
     slug: "chevrolet-onix-10mt-lt2",
@@ -180,7 +184,6 @@ export const vehicles: Vehicle[] = [
     price: 51990,
     origin: "consignado",
     featured: false,
-    imageSet: "ford-fiesta",
   },
   {
     slug: "ford-fiesta-ha-1-6l-seab",
@@ -250,10 +253,9 @@ export const vehicles: Vehicle[] = [
     color: "Preta",
     km: 85137,
     plate: "ERZ-4H31",
-    price: 87990,
+    price: 86990,
     origin: "consignado",
     featured: false,
-    imageSet: "hyundai-creta",
   },
   {
     slug: "mitsubishi-eclipse-cross-hpe",
@@ -326,5 +328,73 @@ export const vehicles: Vehicle[] = [
     origin: "consignado",
     featured: false,
     imageSet: "volkswagen-t-cross",
+  },
+
+  /* -----------------------------------------------------------------------
+     Entradas de 30/09/2026, vindas da pasta de fotos e valores enviada pela
+     equipe ("Carros com fotos e Valores"). Modelo, ano e preço são os do nome
+     da pasta; cor e quilometragem foram lidas nas próprias fotos (painel). O
+     que não aparece em lugar nenhum — placa, origem e, em dois casos, a
+     quilometragem — fica em branco até o registro chegar.
+     ------------------------------------------------------------------- */
+  {
+    slug: "fiat-argo-1-0-mt",
+    make: "Fiat",
+    model: "Argo",
+    version: "1.0 MT",
+    sourceName: "Argo 1.0 MT 2022",
+    yearShort: "22",
+    year: "2022",
+    yearSort: 2022,
+    fuel: "Flex",
+    color: "Branco",
+    km: 65298,
+    price: 61990,
+    featured: false,
+  },
+  {
+    slug: "kia-cerato-1-6-at",
+    make: "Kia",
+    model: "Cerato",
+    version: "1.6 AT",
+    sourceName: "Cerato 1.6 AT 2018",
+    yearShort: "18",
+    year: "2018",
+    yearSort: 2018,
+    fuel: "Flex",
+    color: "Prata",
+    km: 0,
+    price: 77990,
+    featured: false,
+  },
+  {
+    slug: "hyundai-hb20-1-0-mt",
+    make: "Hyundai",
+    model: "HB20",
+    version: "1.0 MT",
+    sourceName: "Hb20 1.0 MT 2017",
+    yearShort: "17",
+    year: "2017",
+    yearSort: 2017,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 134100,
+    price: 49990,
+    featured: false,
+  },
+  {
+    slug: "ford-territory-1-5-ecoboost",
+    make: "Ford",
+    model: "Territory",
+    version: "1.5 EcoBoost",
+    sourceName: "Territory 1.5 ecoboost 2021",
+    yearShort: "21",
+    year: "2021",
+    yearSort: 2021,
+    fuel: "Gasolina",
+    color: "Bronze",
+    km: 0,
+    price: 99990,
+    featured: false,
   },
 ];

@@ -26,17 +26,18 @@ export interface Vehicle {
   color: string;
   /** Odometer in kilometres. */
   km: number;
-  plate: string;
+  /** Ausente quando o registro ainda não chegou. */
+  plate?: string;
   /** Asking price in BRL. */
   price: number;
   /** Stock vehicle or vehicle listed on consignment (marked "*" in the source). */
-  origin: Origin;
+  origin?: Origin;
   featured: boolean;
   /**
-   * Key into the placeholder image sets in `data/vehicle-images.ts`.
-   * Not part of the source record — see that file before changing it.
+   * Conjunto de imagens de REFERÊNCIA em `data/vehicle-images.ts`, usado só
+   * enquanto a unidade não tem fotos reais em `data/vehicle-photos.ts`.
    */
-  imageSet: string;
+  imageSet?: string;
   /** Rotates a shared image set so two units of a model differ. */
   imageOffset?: number;
 }

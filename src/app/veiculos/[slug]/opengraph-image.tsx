@@ -1,5 +1,9 @@
 import { ImageResponse } from "next/og";
 
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
+import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
 import { archivoFonts, ogColors, ogSize, wordmarkDataUrl } from "@/lib/og";
@@ -27,23 +31,31 @@ export default async function VehicleOpengraphImage({
 
   if (!vehicle) {
     return new ImageResponse(
-      (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: ogColors.background,
-          }}
-        >
-          <img src={wordmark} width={474} height={80} alt="" />
-        </div>
-      ),
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: ogColors.background,
+        }}
+      >
+        <img src={wordmark} width={474} height={80} alt="" />
+      </div>,
       { ...size, fonts },
     );
   }
+
+  // Com foto real da unidade, ela ocupa a direita da prévia. Imagens de
+  // referência do modelo ficam de fora: sem a nota de aviso, enganariam.
+  const cover = hasRealPhotos(vehicle) ? imagesFor(vehicle)[0] : undefined;
+  const photo = cover
+    ? `data:image/jpeg;base64,${(
+        await readFile(join(process.cwd(), "public", cover.src))
+      ).toString("base64")}`
+    : undefined;
+  const textWidth = photo ? 700 : ogSize.width;
 
   const facts = [
     vehicle.year,
@@ -53,19 +65,25 @@ export default async function VehicleOpengraphImage({
   ];
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        background: ogColors.background,
+        color: ogColors.foreground,
+        fontFamily: "Archivo",
+        borderBottom: `12px solid ${ogColors.brand}`,
+      }}
+    >
       <div
         style={{
-          width: "100%",
+          width: textWidth,
           height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: 72,
-          background: ogColors.background,
-          color: ogColors.foreground,
-          fontFamily: "Archivo",
-          borderBottom: `12px solid ${ogColors.brand}`,
+          padding: photo ? 60 : 72,
         }}
       >
         <div
@@ -103,7 +121,7 @@ export default async function VehicleOpengraphImage({
           <div
             style={{
               marginTop: 12,
-              fontSize: fullName(vehicle).length > 32 ? 68 : 84,
+              fontSize: photo ? 58 : fullName(vehicle).length > 32 ? 68 : 84,
               fontWeight: 700,
               letterSpacing: -2.5,
               lineHeight: 1.02,
@@ -116,7 +134,7 @@ export default async function VehicleOpengraphImage({
               display: "flex",
               gap: 18,
               marginTop: 28,
-              fontSize: 32,
+              fontSize: photo ? 26 : 32,
               fontWeight: 500,
               color: ogColors.muted,
             }}
@@ -139,15 +157,32 @@ export default async function VehicleOpengraphImage({
             justifyContent: "space-between",
           }}
         >
-          <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: -2 }}>
+          <div
+            style={{
+              fontSize: photo ? 64 : 76,
+              fontWeight: 700,
+              letterSpacing: -2,
+            }}
+          >
             {formatPrice(vehicle.price)}
           </div>
-          <div style={{ fontSize: 26, fontWeight: 500, color: ogColors.subtle }}>
+          <div
+            style={{ fontSize: 26, fontWeight: 500, color: ogColors.subtle }}
+          >
             autosflow.com.br
           </div>
         </div>
       </div>
-    ),
+      {photo ? (
+        <img
+          src={photo}
+          width={ogSize.width - textWidth}
+          height={ogSize.height - 12}
+          alt=""
+          style={{ objectFit: "cover" }}
+        />
+      ) : null}
+    </div>,
     { ...size, fonts },
   );
 }

@@ -10,7 +10,7 @@ import { TrustBadges } from "@/components/trust-badges";
 import { VehicleLead } from "@/components/vehicle-lead";
 import { Eyebrow } from "@/components/ui";
 import { contact } from "@/data/brand";
-import { imagesFor } from "@/data/vehicle-images";
+import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
 import { siteUrl, toLeadVehicle, whatsappVisit } from "@/lib/site";
@@ -66,6 +66,7 @@ export default async function VehiclePage({
   const ref = stockRef(vehicle);
   const lead = toLeadVehicle(vehicle);
   const gallery = imagesFor(vehicle);
+  const realPhotos = hasRealPhotos(vehicle);
 
   // The hero already states year, mileage, fuel and colour; the sheet carries
   // what it does not, so the page never prints the same figure twice.
@@ -74,11 +75,18 @@ export default async function VehiclePage({
     { label: "Modelo", value: vehicle.model },
     { label: "Versão", value: vehicle.version },
     { label: "Referência", value: ref, numeric: true },
-    { label: "Placa", value: maskedPlate(vehicle.plate), numeric: true },
-    {
-      label: "Situação",
-      value: vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
-    },
+    ...(vehicle.plate
+      ? [{ label: "Placa", value: maskedPlate(vehicle.plate), numeric: true }]
+      : []),
+    ...(vehicle.origin
+      ? [
+          {
+            label: "Situação",
+            value:
+              vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
+          },
+        ]
+      : []),
     { label: "Descrição em estoque", value: vehicle.sourceName },
   ];
 
@@ -112,8 +120,8 @@ export default async function VehiclePage({
     <>
       {/* ---------------------------------------------------------------
           Hero. Gallery and price sit side by side so the images are in view
-          at the moment the figure is read. The photographs are references for
-          the model, not the advertised unit — see data/vehicle-images.ts.
+          at the moment the figure is read. Real photographs when the unit has
+          them; otherwise model references, flagged — see data/vehicle-images.ts.
           --------------------------------------------------------------- */}
       <section className="border-b border-border pb-16 pt-32 sm:pb-24 sm:pt-40 lg:pt-48">
 
@@ -154,7 +162,12 @@ export default async function VehiclePage({
 
           <div className="mt-12 grid gap-10 sm:mt-14 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
-              <VehicleGallery images={gallery} alt={name} priority />
+              <VehicleGallery
+                images={gallery}
+                alt={name}
+                real={realPhotos}
+                priority
+              />
 
               <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-border pt-8 sm:grid-cols-4">
                 {[
@@ -222,8 +235,10 @@ export default async function VehiclePage({
 
                 <p className="mt-6 border-t border-border pt-5 text-xs leading-relaxed text-foreground-subtle">
                   Referência <span className="tnum text-foreground-muted">{ref}</span> — cite este
-                  código no atendimento. Fotos reais e laudo desta unidade sob
-                  consulta.
+                  código no atendimento.{" "}
+                  {realPhotos
+                    ? "Laudo desta unidade sob consulta."
+                    : "Fotos reais e laudo desta unidade sob consulta."}
                 </p>
               </div>
             </div>

@@ -6,13 +6,13 @@ import { Document } from "@/components/icons";
 import { StockFilters } from "@/components/stock-filters";
 import { Eyebrow } from "@/components/ui";
 import { VehicleListHeader, VehicleRow } from "@/components/vehicle-row";
-import { STOCK_ISSUED_AT } from "@/data/vehicles";
+import { STOCK_ISSUED_AT, STOCK_UPDATED_AT } from "@/data/vehicles";
 import { filterStock, isSortKey } from "@/lib/stock";
 
 export const metadata: Metadata = {
   title: "Veículos em estoque",
   description:
-    "Estoque AutosFlow: veículos selecionados com critério, com ano, quilometragem, combustível e valor de cada um. Filtre por marca, combustível e origem.",
+    "Estoque AutosFlow: veículos selecionados com critério, com ano, quilometragem, combustível e valor de cada um. Filtre por marca, preço, ano, quilometragem e combustível.",
   alternates: { canonical: "/veiculos" },
   openGraph: {
     title: "Veículos em estoque — AutosFlow",
@@ -121,8 +121,9 @@ export default async function VehiclesPage({
             processo dos veículos da loja.
           </p>
           <p>
-            Estoque conforme a tabela de preços de {STOCK_ISSUED_AT}. Valores e
-            disponibilidade sujeitos a alteração sem aviso prévio.
+            Estoque conforme a tabela de preços de {STOCK_ISSUED_AT}, com
+            valores revistos em {STOCK_UPDATED_AT}. Valores e disponibilidade
+            sujeitos a alteração sem aviso prévio.
           </p>
         </div>
       </div>
