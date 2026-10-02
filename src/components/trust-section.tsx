@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { ArrowRight } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
 import { Eyebrow } from "@/components/ui";
 import { manifesto, verified } from "@/data/brand";
 import { sampleTestimonials, testimonials } from "@/data/testimonials";
@@ -72,45 +73,8 @@ export function TrustSection() {
 
         {/* Depoimentos reais, quando existirem */}
         {hasTestimonials ? (
-          <Reveal
-            delay={60}
-            as="ul"
-            className="mt-12 grid gap-x-10 gap-y-10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {items.map((item) => (
-              <li
-                key={`${item.author}-${item.quote.slice(0, 24)}`}
-                className="border-t border-border pt-6"
-              >
-                {isPreview ? (
-                  <span className="mb-3 inline-block border border-dashed border-border px-2 py-0.5 text-eyebrow uppercase text-foreground-subtle">
-                    Exemplo · só em dev
-                  </span>
-                ) : null}
-                <blockquote className="font-display text-lg leading-snug tracking-tight text-foreground sm:text-xl">
-                  “{item.quote}”
-                </blockquote>
-                <p className="mt-4 text-sm text-foreground-muted">
-                  {item.author}
-                  {item.context ? (
-                    <span className="text-foreground-subtle">
-                      {" "}
-                      · {item.context}
-                    </span>
-                  ) : null}
-                </p>
-                {item.source ? (
-                  <a
-                    href={item.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-block text-xs text-foreground-subtle underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
-                  >
-                    Ver avaliação original
-                  </a>
-                ) : null}
-              </li>
-            ))}
+          <Reveal delay={60} className="mt-12 sm:mt-14">
+            <TestimonialCarousel items={items} preview={isPreview} />
           </Reveal>
         ) : null}
 

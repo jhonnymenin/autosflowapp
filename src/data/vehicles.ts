@@ -333,9 +333,10 @@ export const vehicles: Vehicle[] = [
   /* -----------------------------------------------------------------------
      Entradas de 30/09/2026, vindas da pasta de fotos e valores enviada pela
      equipe ("Carros com fotos e Valores"). Modelo, ano e preço são os do nome
-     da pasta; cor e quilometragem foram lidas nas próprias fotos (painel). O
-     que não aparece em lugar nenhum — placa, origem e, em dois casos, a
-     quilometragem — fica em branco até o registro chegar.
+     da pasta; cor e quilometragem foram lidas nas próprias fotos (painel),
+     exceto a do Cerato, informada pela equipe em 02/10/2026. O que não
+     aparece em lugar nenhum — placa, origem e a quilometragem do Territory —
+     fica em branco até o registro chegar.
      ------------------------------------------------------------------- */
   {
     slug: "fiat-argo-1-0-mt",
@@ -363,7 +364,7 @@ export const vehicles: Vehicle[] = [
     yearSort: 2018,
     fuel: "Flex",
     color: "Prata",
-    km: 0,
+    km: 169000,
     price: 77990,
     featured: false,
   },
