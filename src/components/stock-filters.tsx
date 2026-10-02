@@ -1,11 +1,12 @@
 import Link from "next/link";
 
+import { FilterForm } from "@/components/filter-form";
+import { ChevronDown } from "@/components/icons";
 import {
   countInBand,
   fuelsWithCounts,
   kmBands,
   makesWithCounts,
-  originCounts,
   priceBands,
   sortOptions,
   yearBands,
@@ -35,100 +36,69 @@ function buildHref(active: ActiveFilters, patch: Partial<ActiveFilters>) {
   return query ? `/veiculos?${query}` : "/veiculos";
 }
 
-function Chip({
-  href,
-  selected,
-  count,
-  children,
-}: {
-  href: string;
-  selected: boolean;
-  count?: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      scroll={false}
-      aria-current={selected ? "true" : undefined}
-      className={`inline-flex h-9 items-center gap-2 whitespace-nowrap border px-4 text-sm tracking-tight transition-colors duration-300 ${
-        selected
-          ? "border-brand bg-brand text-white"
-          : "border-border text-foreground-muted hover:border-border-strong hover:text-foreground"
-      }`}
-    >
-      {children}
-      {typeof count === "number" ? (
-        <span
-          className={`tnum text-xs ${selected ? "text-white/90" : "text-foreground-subtle"}`}
-        >
-          {count}
-        </span>
-      ) : null}
-    </Link>
-  );
+interface Option {
+  value: string;
+  label: string;
 }
 
-function Group({
+/** Lista suspensa nativa: teclado, leitor de tela e celular de graça. */
+function Select({
+  name,
   label,
-  children,
+  placeholder,
+  options,
+  value,
 }: {
+  name: keyof ActiveFilters;
   label: string;
-  children: React.ReactNode;
+  placeholder?: string;
+  options: Option[];
+  value?: string;
 }) {
+  const id = `filtro-${name}`;
   return (
-    <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-5">
-      <h3 className="w-24 shrink-0 text-eyebrow font-medium uppercase text-foreground-subtle">
+    <div className="relative">
+      <label
+        htmlFor={id}
+        className="pointer-events-none absolute left-4 top-2 text-[0.625rem] font-medium uppercase tracking-[0.14em] text-foreground-subtle"
+      >
         {label}
-      </h3>
-      {/* Rolagem horizontal evita quebra de linha nos conjuntos longos */}
-      <div className="-mx-(--spacing-gutter) overflow-x-auto px-(--spacing-gutter) [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
-        <div className="flex gap-2 sm:flex-wrap">{children}</div>
-      </div>
+      </label>
+      <select
+        id={id}
+        name={name}
+        defaultValue={value ?? ""}
+        key={value ?? ""}
+        className={`h-14 w-full cursor-pointer appearance-none border bg-surface pb-2 pl-4 pr-10 pt-6 text-sm tracking-tight outline-none transition-colors duration-300 hover:border-border-strong focus:border-brand-bright ${
+          value ? "border-brand text-foreground" : "border-border text-foreground-muted"
+        }`}
+      >
+        {placeholder !== undefined ? (
+          <option value="">{placeholder}</option>
+        ) : null}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-subtle" />
     </div>
   );
 }
 
-/** Um grupo de faixas (preço, ano, km). */
-function BandGroup({
-  label,
-  kind,
-  bands,
-  param,
-  active,
-}: {
-  label: string;
-  kind: "price" | "year" | "km";
-  bands: Band[];
-  param: "preco" | "ano" | "km";
-  active: ActiveFilters;
-}) {
-  const current = active[param];
-  return (
-    <Group label={label}>
-      <Chip href={buildHref(active, { [param]: undefined })} selected={!current}>
-        Todas
-      </Chip>
-      {bands.map((band) => (
-        <Chip
-          key={band.value}
-          href={buildHref(active, { [param]: band.value })}
-          selected={current === band.value}
-          count={countInBand(kind, band)}
-        >
-          {band.label}
-        </Chip>
-      ))}
-    </Group>
-  );
-}
+const bandOptions = (kind: "price" | "year" | "km", bands: Band[]) =>
+  bands.map((band) => ({
+    value: band.value,
+    label: `${band.label} (${countInBand(kind, band)})`,
+  }));
 
 /**
- * Filtros de alta intenção.
+ * Busca e filtros do estoque.
  *
- * Tudo são links e um formulário GET sobre search params: funcionam sem
- * JavaScript, sobrevivem ao refresh e podem ser compartilhados ou salvos —
- * um link de "até R$ 80 mil, 2020 ou mais novo" vai direto para o resultado.
+ * Uma linha de listas suspensas em vez de grupos de botões: o cliente escolhe
+ * marca, preço, ano, km e combustível sem rolar a página, e os filtros
+ * aplicados aparecem logo abaixo, cada um removível com um toque.
  */
 export function StockFilters({
   active,
@@ -139,159 +109,152 @@ export function StockFilters({
 }) {
   const makes = makesWithCounts();
   const fuels = fuelsWithCounts();
-  const hasFilters = Boolean(
-    active.q ||
-      active.marca ||
-      active.combustivel ||
-      active.origem ||
-      active.preco ||
-      active.ano ||
-      active.km,
+
+  const applied = [
+    active.q ? { key: "q", label: `“${active.q}”` } : null,
+    active.marca ? { key: "marca", label: active.marca } : null,
+    active.preco
+      ? {
+          key: "preco",
+          label: priceBands.find((b) => b.value === active.preco)?.label,
+        }
+      : null,
+    active.ano
+      ? { key: "ano", label: yearBands.find((b) => b.value === active.ano)?.label }
+      : null,
+    active.km
+      ? { key: "km", label: kmBands.find((b) => b.value === active.km)?.label }
+      : null,
+    active.combustivel
+      ? { key: "combustivel", label: active.combustivel }
+      : null,
+    active.origem
+      ? {
+          key: "origem",
+          label: active.origem === "loja" ? "Da loja" : "Consignados",
+        }
+      : null,
+  ].filter(
+    (item): item is { key: keyof ActiveFilters; label: string } =>
+      Boolean(item?.label),
   );
 
   return (
-    <section aria-labelledby="filtros" className="flex flex-col gap-6">
+    <section aria-labelledby="filtros">
       <h2 id="filtros" className="sr-only">
         Buscar e filtrar o estoque
       </h2>
 
-      {/* Busca livre — formulário GET, sem JavaScript */}
-      <form action="/veiculos" method="get" className="flex gap-2">
-        {active.ordem ? (
-          <input type="hidden" name="ordem" value={active.ordem} />
+      <FilterForm className="flex flex-col gap-2">
+        {/* Mantém um filtro que veio por link e não tem lista própria */}
+        {active.origem ? (
+          <input type="hidden" name="origem" value={active.origem} />
         ) : null}
-        <label htmlFor="busca" className="sr-only">
-          Buscar por modelo, marca ou referência
-        </label>
-        <input
-          id="busca"
-          name="q"
-          type="search"
-          defaultValue={active.q ?? ""}
-          placeholder="Buscar por modelo, marca ou referência"
-          className="h-12 w-full border border-border bg-surface px-4 text-sm text-foreground outline-none transition-colors duration-300 placeholder:text-foreground-subtle focus:border-brand-bright"
-        />
-        <button
-          type="submit"
-          className="h-12 shrink-0 bg-foreground px-6 text-sm font-medium tracking-tight text-ink-950 transition-colors duration-300 hover:bg-white"
-        >
-          Buscar
-        </button>
-      </form>
 
-      <BandGroup
-        label="Preço"
-        kind="price"
-        bands={priceBands}
-        param="preco"
-        active={active}
-      />
-      <BandGroup
-        label="Ano"
-        kind="year"
-        bands={yearBands}
-        param="ano"
-        active={active}
-      />
-      <BandGroup
-        label="Km"
-        kind="km"
-        bands={kmBands}
-        param="km"
-        active={active}
-      />
-
-      <Group label="Marca">
-        <Chip
-          href={buildHref(active, { marca: undefined })}
-          selected={!active.marca}
-        >
-          Todas
-        </Chip>
-        {makes.map((entry) => (
-          <Chip
-            key={entry.make}
-            href={buildHref(active, { marca: entry.make })}
-            selected={active.marca === entry.make}
-            count={entry.count}
+        <div className="flex gap-2">
+          <label htmlFor="busca" className="sr-only">
+            Buscar por modelo, marca ou referência
+          </label>
+          <input
+            id="busca"
+            name="q"
+            type="search"
+            defaultValue={active.q ?? ""}
+            key={active.q ?? ""}
+            placeholder="Buscar por modelo, marca ou referência"
+            className="h-14 w-full border border-border bg-surface px-4 text-sm text-foreground outline-none transition-colors duration-300 placeholder:text-foreground-subtle focus:border-brand-bright"
+          />
+          <button
+            type="submit"
+            className="h-14 shrink-0 bg-foreground px-6 text-sm font-medium tracking-tight text-ink-950 transition-colors duration-300 hover:bg-white sm:px-8"
           >
-            {entry.make}
-          </Chip>
-        ))}
-      </Group>
+            Buscar
+          </button>
+        </div>
 
-      <Group label="Combustível">
-        <Chip
-          href={buildHref(active, { combustivel: undefined })}
-          selected={!active.combustivel}
-        >
-          Todos
-        </Chip>
-        {fuels.map((entry) => (
-          <Chip
-            key={entry.fuel}
-            href={buildHref(active, { combustivel: entry.fuel })}
-            selected={active.combustivel === entry.fuel}
-            count={entry.count}
-          >
-            {entry.fuel}
-          </Chip>
-        ))}
-      </Group>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          <Select
+            name="marca"
+            label="Marca"
+            placeholder="Todas"
+            value={active.marca}
+            options={makes.map((entry) => ({
+              value: entry.make,
+              label: `${entry.make} (${entry.count})`,
+            }))}
+          />
+          <Select
+            name="preco"
+            label="Preço"
+            placeholder="Qualquer"
+            value={active.preco}
+            options={bandOptions("price", priceBands)}
+          />
+          <Select
+            name="ano"
+            label="Ano"
+            placeholder="Qualquer"
+            value={active.ano}
+            options={bandOptions("year", yearBands)}
+          />
+          <Select
+            name="km"
+            label="Quilometragem"
+            placeholder="Qualquer"
+            value={active.km}
+            options={bandOptions("km", kmBands)}
+          />
+          <Select
+            name="combustivel"
+            label="Combustível"
+            placeholder="Todos"
+            value={active.combustivel}
+            options={fuels.map((entry) => ({
+              value: entry.fuel,
+              label: `${entry.fuel} (${entry.count})`,
+            }))}
+          />
+          <Select
+            name="ordem"
+            label="Ordenar por"
+            // O padrão fica fora da URL: valor vazio = "Fotos primeiro".
+            value={active.ordem === "destaque" ? undefined : active.ordem}
+            options={sortOptions.map((option) => ({
+              label: option.label,
+              value: option.value === "destaque" ? "" : option.value,
+            }))}
+          />
+        </div>
+      </FilterForm>
 
-      <Group label="Origem">
-        <Chip
-          href={buildHref(active, { origem: undefined })}
-          selected={!active.origem}
-        >
-          Todos
-        </Chip>
-        <Chip
-          href={buildHref(active, { origem: "loja" })}
-          selected={active.origem === "loja"}
-          count={originCounts.loja}
-        >
-          Da loja
-        </Chip>
-        <Chip
-          href={buildHref(active, { origem: "consignado" })}
-          selected={active.origem === "consignado"}
-          count={originCounts.consignado}
-        >
-          Consignados
-        </Chip>
-      </Group>
-
-      <Group label="Ordenar">
-        {sortOptions.map((option) => (
-          <Chip
-            key={option.value}
-            href={buildHref(active, { ordem: option.value })}
-            selected={(active.ordem ?? "preco-asc") === option.value}
-          >
-            {option.label}
-          </Chip>
-        ))}
-      </Group>
-
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-5">
-        <p aria-live="polite" className="text-sm text-foreground-muted">
+      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+        <p aria-live="polite" className="mr-2 text-sm text-foreground-muted">
           <span className="tnum font-medium text-foreground">{total}</span>{" "}
           {total === 1 ? "veículo" : "veículos"}
-          {active.q ? (
-            <>
-              {" "}
-              para <span className="text-foreground">“{active.q}”</span>
-            </>
-          ) : null}
         </p>
-        {hasFilters ? (
+
+        {applied.map((item) => (
+          <Link
+            key={item.key}
+            href={buildHref(active, { [item.key]: undefined })}
+            scroll={false}
+            aria-label={`Remover filtro ${item.label}`}
+            className="inline-flex h-8 items-center gap-2 border border-border px-3 text-xs tracking-tight text-foreground transition-colors duration-300 hover:border-foreground"
+          >
+            {item.label}
+            <span aria-hidden="true" className="text-foreground-subtle">
+              ×
+            </span>
+          </Link>
+        ))}
+
+        {applied.length > 0 ? (
           <Link
             href={buildHref({ ordem: active.ordem }, {})}
             scroll={false}
-            className="text-sm text-foreground-subtle underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
+            className="text-xs text-foreground-subtle underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
           >
-            Limpar filtros
+            Limpar tudo
           </Link>
         ) : null}
       </div>
