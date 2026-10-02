@@ -28,8 +28,14 @@ export const pitch = {
 
 export const contact = {
   phoneLabel: "(11) 94876-8653",
-  /** E.164, for tel: and wa.me links. */
+  /** E.164, for tel: links. */
   phoneE164: "5511948768653",
+  /**
+   * WhatsApp comercial — Vinicius (desde 02/10/2026). Todas as mensagens do
+   * site (proposta, visita, venda, contato) vão para este número.
+   */
+  whatsappLabel: "(11) 95047-1706",
+  whatsappE164: "5511950471706",
   address: {
     street: "Av. Prof. Luiz Ignácio Anhaia Mello, 3.850",
     district: "Jd. Independência",

@@ -22,7 +22,7 @@ export const nav = [
 
 /** Opens WhatsApp with a prefilled message. */
 export function whatsappUrl(message: string): string {
-  return `https://wa.me/${contact.phoneE164}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(message)}`;
 }
 
 export const whatsappGeneral = whatsappUrl(
