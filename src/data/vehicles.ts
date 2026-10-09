@@ -16,13 +16,20 @@ import type { Vehicle } from "@/types/vehicle";
  * To update the stock, replace the entries below from a fresh export. See
  * README.md.
  */
-export const STOCK_ISSUED_AT = "26/08/2026";
+export const STOCK_ISSUED_AT = "06/10/2026";
 
 /**
- * Última revisão de preços: Audi Q3, BMW X1 e Creta foram atualizados e quatro
- * veículos entraram a partir da pasta de fotos e valores de 30/09/2026.
+ * Revisões desde a tabela original de 26/08/2026:
+ * - 30/09: Q3, X1 e Creta com valores novos; Argo, Cerato, HB20 e Territory
+ *   entraram pela pasta de fotos e valores da equipe.
+ * - 09/10: tabela de 06/10/2026 aplicada — valores de Onix LT2, Creta e Cerato,
+ *   e placa, origem, ano e descrição de Argo, Cerato e HB20; entrou o Corolla
+ *   Cross. Veículos que não constam nessa tabela continuam publicados até a
+ *   equipe confirmar se foram vendidos (Onix HB, PT Cruiser, Strada, City,
+ *   T-Cross e Territory). O Creta 1TA Limited consta com valor 0 e fica de
+ *   fora até ter preço.
  */
-export const STOCK_UPDATED_AT = "30/09/2026";
+export const STOCK_UPDATED_AT = "09/10/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -72,7 +79,7 @@ export const vehicles: Vehicle[] = [
     color: "Preta",
     km: 85141,
     plate: "FVG-2H43",
-    price: 65990,
+    price: 62990,
     origin: "loja",
     featured: false,
     imageSet: "chevrolet-onix",
@@ -253,7 +260,7 @@ export const vehicles: Vehicle[] = [
     color: "Preta",
     km: 85137,
     plate: "ERZ-4H31",
-    price: 86990,
+    price: 87990,
     origin: "consignado",
     featured: false,
   },
@@ -343,14 +350,16 @@ export const vehicles: Vehicle[] = [
     make: "Fiat",
     model: "Argo",
     version: "1.0 MT",
-    sourceName: "Argo 1.0 MT 2022",
-    yearShort: "22",
-    year: "2022",
+    sourceName: "FIAT/ARGO 1.0",
+    yearShort: "22/22",
+    year: "2022/2022",
     yearSort: 2022,
     fuel: "Flex",
-    color: "Branco",
+    color: "Branca",
     km: 65298,
+    plate: "RUH-4F38",
     price: 61990,
+    origin: "consignado",
     featured: false,
   },
   {
@@ -358,29 +367,33 @@ export const vehicles: Vehicle[] = [
     make: "Kia",
     model: "Cerato",
     version: "1.6 AT",
-    sourceName: "Cerato 1.6 AT 2018",
-    yearShort: "18",
-    year: "2018",
-    yearSort: 2018,
+    sourceName: "I/KIA CERATO FF SX4 ATBN",
+    yearShort: "17/18",
+    year: "2017/2018",
+    yearSort: 2017,
     fuel: "Flex",
     color: "Prata",
     km: 169000,
-    price: 77990,
+    plate: "GJC-3G89",
+    price: 67990,
+    origin: "loja",
     featured: false,
   },
   {
     slug: "hyundai-hb20-1-0-mt",
     make: "Hyundai",
     model: "HB20",
-    version: "1.0 MT",
-    sourceName: "Hb20 1.0 MT 2017",
-    yearShort: "17",
-    year: "2017",
+    version: "1.0 MT Comfort",
+    sourceName: "HYUNDAI / HB20 10M COMFORT",
+    yearShort: "17/17",
+    year: "2017/2017",
     yearSort: 2017,
     fuel: "Flex",
     color: "Cinza",
-    km: 134100,
+    km: 133841,
+    plate: "PZS-0C98",
     price: 49990,
+    origin: "loja",
     featured: false,
   },
   {

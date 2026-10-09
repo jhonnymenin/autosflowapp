@@ -36,12 +36,13 @@ export const contact = {
    */
   whatsappLabel: "(11) 95047-1706",
   whatsappE164: "5511950471706",
+  /** Rodapé da tabela de preços de 06/10/2026. */
   address: {
-    street: "Av. Prof. Luiz Ignácio Anhaia Mello, 3.850",
-    district: "Jd. Independência",
+    street: "Rua Silva Bueno, 1.489",
+    district: "Ipiranga",
     city: "São Paulo",
     state: "SP",
-    postalCode: "03294-100",
+    postalCode: "04208-050",
   },
 } as const;
 
