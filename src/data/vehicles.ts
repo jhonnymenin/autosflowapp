@@ -398,4 +398,27 @@ export const vehicles: Vehicle[] = [
     price: 99990,
     featured: false,
   },
+
+  /* -----------------------------------------------------------------------
+     Entrada de 09/10/2026: linha da tabela de preços emitida em 06/10/2026
+     (06/10/2026 12:15:00) e fotos da própria unidade, na pasta "infos
+     autosflow" enviada pela equipe.
+     ------------------------------------------------------------------- */
+  {
+    slug: "toyota-corolla-cross-xre-2-0",
+    make: "Toyota",
+    model: "Corolla Cross",
+    version: "XRE 2.0",
+    sourceName: "TOYOTA / CCROSS XRE 20",
+    yearShort: "23/24",
+    year: "2023/2024",
+    yearSort: 2023,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 58000,
+    plate: "EXR-5H55",
+    price: 147990,
+    origin: "consignado",
+    featured: true,
+  },
 ];

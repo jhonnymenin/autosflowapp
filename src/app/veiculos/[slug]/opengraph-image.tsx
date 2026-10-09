@@ -49,7 +49,13 @@ export default async function VehicleOpengraphImage({
 
   // Com foto real da unidade, ela ocupa a direita da prévia. Imagens de
   // referência do modelo ficam de fora: sem a nota de aviso, enganariam.
-  const cover = hasRealPhotos(vehicle) ? imagesFor(vehicle)[0] : undefined;
+  // O espaço da foto na prévia é em pé: entre as primeiras fotos (as externas),
+  // prefere uma vertical, que entra sem cortar o carro.
+  const real = hasRealPhotos(vehicle) ? imagesFor(vehicle) : [];
+  const cover =
+    real
+      .slice(0, 4)
+      .find((image) => (image.height ?? 0) > (image.width ?? 0)) ?? real[0];
   const photo = cover
     ? `data:image/jpeg;base64,${(
         await readFile(join(process.cwd(), "public", cover.src))
