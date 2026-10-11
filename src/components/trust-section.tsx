@@ -1,158 +1,69 @@
-import Link from "next/link";
-
-import { ArrowRight } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
-import { Eyebrow } from "@/components/ui";
-import { manifesto, verified } from "@/data/brand";
+import { SectionHeading } from "@/components/ui";
+import { verified } from "@/data/brand";
 import { sampleTestimonials, testimonials } from "@/data/testimonials";
-import { vehicles } from "@/data/vehicles";
-import { formatPrice } from "@/lib/format";
-import { originCounts, priceRange } from "@/lib/stock";
+import { Check } from "@/components/icons";
 
 /**
  * Prova social.
  *
- * Enquanto não há depoimento real cadastrado, a seção mostra a prova que já é
- * verdadeira: o que é checado em cada veículo, o que a AutosFlow assume por
- * escrito e os números do estoque. Assim que `data/testimonials.ts` receber o
- * primeiro depoimento, ele entra aqui automaticamente, acima dos demais.
+ * Depoimentos reais (recebidos por WhatsApp, com autorização — ver
+ * data/testimonials.ts) num carrossel, e ao lado o que é checado em cada
+ * veículo. Sem depoimento cadastrado, a seção mostra só a verificação.
  */
-
-const commitments = [
-  {
-    title: "O que está no anúncio está no registro",
-    body: "Ano, quilometragem, cor e valor saem da nossa tabela de estoque. A mesma tabela fica publicada, inteira, para qualquer um conferir.",
-    href: "/tabela-de-precos",
-    hrefLabel: "Ver a tabela completa",
-  },
-  {
-    title: "Sem pressão, sem letras pequenas e sem surpresas",
-    body: "Você entende cada etapa da negociação antes de decidir. Sem pressão para fechar e sem condição que aparece só na assinatura.",
-  },
-  {
-    title: "A responsabilidade não termina na entrega",
-    body: "Documentação, transferência e o que vier depois seguem com a gente — inclusive nos veículos consignados.",
-    href: "/sobre",
-    hrefLabel: "Como funciona a jornada",
-  },
-];
-
-const figures = [
-  { label: "Veículos em estoque", value: String(vehicles.length) },
-  { label: "Da loja", value: String(originCounts.loja) },
-  { label: "Consignados", value: String(originCounts.consignado) },
-  { label: "A partir de", value: formatPrice(priceRange.min) },
-];
-
 export function TrustSection() {
   // Em dev, sem depoimento real, mostra os exemplos marcados para ver o layout.
   const isPreview =
     testimonials.length === 0 && process.env.NODE_ENV !== "production";
   const items = isPreview ? sampleTestimonials : testimonials;
-  const hasTestimonials = items.length > 0;
 
   return (
     <section
-      className="border-t border-border bg-surface py-section"
+      className="border-y border-border bg-surface py-section"
       aria-labelledby="confianca"
     >
       <div className="container-editorial">
-        <Reveal className="max-w-2xl">
-          <Eyebrow>Confiança</Eyebrow>
-          <h2
+        <Reveal>
+          <SectionHeading
             id="confianca"
-            className="mt-4 text-display-md font-semibold text-foreground"
-          >
-            Por que confiar no anúncio.
-          </h2>
-          <p className="mt-5 text-lead text-foreground-muted">
-            {manifesto.trustDetail}
-          </p>
+            eyebrow="Quem já comprou"
+            title="A experiência contada por quem viveu."
+          />
         </Reveal>
 
-        {/* Depoimentos reais, quando existirem */}
-        {hasTestimonials ? (
-          <Reveal delay={60} className="mt-12 sm:mt-14">
+        {items.length > 0 ? (
+          <Reveal delay={40} className="mt-10 sm:mt-12">
             <TestimonialCarousel items={items} preview={isPreview} />
           </Reveal>
         ) : null}
 
-        {/* O que assumimos — vale com ou sem depoimento */}
         <Reveal
-          delay={hasTestimonials ? 120 : 60}
-          as="dl"
-          className="mt-12 grid gap-x-10 gap-y-9 border-t border-border sm:mt-14 sm:grid-cols-3"
+          delay={60}
+          className="mt-12 grid gap-6 rounded-card bg-background p-6 sm:p-8 lg:grid-cols-12 lg:items-center lg:gap-10"
         >
-          {commitments.map((item, index) => (
-            <div key={item.title} className="pt-6">
-              <dt>
-                <span className="tnum block text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="mt-3 block font-display text-lg font-semibold leading-snug tracking-tight text-foreground sm:text-xl">
-                  {item.title}
-                </span>
-              </dt>
-              <dd className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                {item.body}
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="group/link mt-3 flex w-fit items-center gap-2 text-foreground transition-colors duration-300 hover:text-brand-bright"
-                  >
-                    {item.hrefLabel}
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/link:translate-x-1" />
-                  </Link>
-                ) : null}
-              </dd>
-            </div>
-          ))}
-        </Reveal>
-
-        {/* Checagem e números, lado a lado */}
-        <div className="mt-14 grid gap-12 border-t border-border pt-10 sm:mt-16 lg:grid-cols-12 lg:gap-16">
-          <Reveal className="lg:col-span-6">
-            <h3 className="text-eyebrow font-medium uppercase text-foreground-subtle">
-              O que é checado
+          <div className="lg:col-span-4">
+            <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
+              O que é checado em cada veículo
             </h3>
-            <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-              {verified.criteria.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-baseline gap-3 text-sm text-foreground"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 h-1 w-1 flex-none bg-brand"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 max-w-md text-xs leading-relaxed text-foreground-subtle">
+            <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
               {verified.note}
             </p>
-          </Reveal>
-
-          <Reveal delay={60} className="lg:col-span-5 lg:col-start-8">
-            <h3 className="text-eyebrow font-medium uppercase text-foreground-subtle">
-              O estoque hoje
-            </h3>
-            <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-6">
-              {figures.map((figure) => (
-                <div key={figure.label}>
-                  <dt className="text-eyebrow font-medium uppercase text-foreground-subtle">
-                    {figure.label}
-                  </dt>
-                  <dd className="tnum mt-1.5 font-display text-2xl font-semibold tracking-tight text-foreground">
-                    {figure.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
+          </div>
+          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
+            {verified.criteria.map((item) => (
+              <li
+                key={item}
+                className="flex items-center gap-2.5 text-sm font-medium text-foreground"
+              >
+                <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand/10 text-accent">
+                  <Check className="h-3.5 w-3.5" />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

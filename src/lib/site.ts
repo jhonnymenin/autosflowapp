@@ -16,6 +16,7 @@ export const siteUrl = (
 
 export const nav = [
   { href: "/veiculos", label: "Veículos" },
+  { href: "/vender", label: "Vender meu carro" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ] as const;

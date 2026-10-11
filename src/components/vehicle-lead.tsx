@@ -33,12 +33,8 @@ export function VehicleLead({ lead }: { lead: LeadVehicle }) {
   });
 
   return (
-    <div className="border-t border-border pt-7">
-      <h2 className="text-eyebrow font-medium uppercase text-foreground-subtle">
-        Montar proposta
-      </h2>
-
-      <div className="mt-5 space-y-5">
+    <div className="pt-4">
+      <div className="space-y-5">
         <div>
           <label
             htmlFor="entrada"
@@ -46,7 +42,7 @@ export function VehicleLead({ lead }: { lead: LeadVehicle }) {
           >
             Entrada
           </label>
-          <div className="mt-2 flex items-center border border-border bg-background focus-within:border-brand-bright">
+          <div className="mt-2 flex items-center rounded-control border border-border bg-background focus-within:border-brand">
             <span className="pl-3 text-sm text-foreground-subtle">R$</span>
             <input
               id="entrada"
@@ -57,7 +53,7 @@ export function VehicleLead({ lead }: { lead: LeadVehicle }) {
               placeholder="0"
               value={downValue ? downValue.toLocaleString("pt-BR") : ""}
               onChange={(event) => setDown(event.target.value)}
-              className="tnum h-11 w-full bg-transparent px-2 text-sm text-foreground outline-none placeholder:text-foreground-subtle"
+              className="tnum h-12 w-full bg-transparent px-2 text-sm text-foreground outline-none placeholder:text-foreground-subtle"
             />
           </div>
         </div>
@@ -75,10 +71,10 @@ export function VehicleLead({ lead }: { lead: LeadVehicle }) {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => setTerm(selected ? null : option)}
-                  className={`tnum h-9 border px-4 text-sm transition-colors duration-300 ${
+                  className={`tnum h-11 rounded-full border px-4 text-sm font-semibold transition-colors duration-300 ${
                     selected
                       ? "border-brand bg-brand text-white"
-                      : "border-border text-foreground-muted hover:border-border-strong hover:text-foreground"
+                      : "border-border-strong text-foreground hover:border-foreground"
                   }`}
                 >
                   {option}x
@@ -103,7 +99,7 @@ export function VehicleLead({ lead }: { lead: LeadVehicle }) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 inline-flex h-13 w-full items-center justify-center gap-3 bg-brand px-6 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright"
+        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-control bg-foreground px-6 text-sm font-semibold text-background transition-colors duration-300 hover:bg-foreground/85"
       >
         <WhatsApp className="h-4.5 w-4.5" />
         Enviar proposta

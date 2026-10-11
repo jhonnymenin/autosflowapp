@@ -12,30 +12,42 @@
   --color-brand-deep: #0b46b8;
   --color-navy: #1b2e4f;
 
-  /* --- Neutral ramp (navy-tinted, dark-first) ---------------------------- */
-  --color-ink-950: #05080f;
-  --color-ink-900: #080d17;
-  --color-ink-850: #0c1420;
-  --color-ink-800: #111b2b;
-  --color-ink-700: #1a2740;
-  --color-ink-600: #27374f;
-  --color-ink-500: #3d4f6b;
-  --color-ink-400: #647b9c;
-  --color-mute-400: #7f8ea6;
-  --color-mute-300: #a3b0c4;
-  --color-mute-200: #c7d0dd;
-  --color-bone-100: #eef1f6;
-  --color-bone-50: #f7f9fc;
+  /* --- Neutral ramp (navy-tinted) ------------------------------------- */
+  --color-ink-950: #070d18;
+  --color-ink-900: #0b1424;
+  --color-ink-850: #101b30;
+  --color-ink-800: #16243f;
+  --color-ink-700: #22324f;
+  --color-ink-600: #2f4266;
+  --color-ink-500: #475569;
+  --color-ink-400: #64748b;
+  --color-mute-400: #94a3b8;
+  --color-mute-300: #cbd5e1;
+  --color-mute-200: #e2e8f0;
+  --color-bone-100: #f1f5f9;
+  --color-bone-50: #f8fafc;
 
-  /* --- Semantic --------------------------------------------------------- */
-  --color-background: #05080f;
-  --color-surface: #080d17;
-  --color-surface-raised: #0c1420;
-  --color-foreground: #f5f7fa;
-  --color-foreground-muted: #a3b0c4;
-  --color-foreground-subtle: #7f8ea6;
-  --color-border: #1a2740;
-  --color-border-strong: #27374f;
+  /* --- Semantic (light by default) -------------------------------------
+     Premium claro: superfícies claras na maior parte do site, o marinho
+     concentrado onde cria profundidade (hero, venda, rodapé) — via
+     `.theme-dark`, que redefine estes mesmos tokens dentro da seção. */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f1f5f9;
+  --color-foreground: #111827;
+  --color-foreground-muted: #475569;
+  --color-foreground-subtle: #64748b;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  /* Acento para texto e hover: o azul da marca, um tom mais fundo no claro
+     para passar em AA sobre branco. */
+  --color-accent: #0f52d4;
+
+  /* --- Radius and depth ------------------------------------------------- */
+  --radius-card: 1.25rem;
+  --radius-control: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px -4px rgb(15 23 42 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.04), 0 18px 40px -12px rgb(15 23 42 / 0.22);
 
   /* --- Typography ------------------------------------------------------- */
   --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
@@ -50,12 +62,12 @@
   --text-display-xl--line-height: 0.9;
   --text-display-xl--letter-spacing: -0.035em;
 
-  --text-display-lg: clamp(2.25rem, 1.1rem + 5.2vw, 5.75rem);
+  --text-display-lg: clamp(2.375rem, 1.3rem + 4.4vw, 5rem);
   --text-display-lg--line-height: 0.94;
   --text-display-lg--letter-spacing: -0.032em;
 
-  --text-display-md: clamp(1.875rem, 1.15rem + 3.2vw, 3.75rem);
-  --text-display-md--line-height: 1;
+  --text-display-md: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+  --text-display-md--line-height: 1.04;
   --text-display-md--letter-spacing: -0.028em;
 
   --text-display-sm: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
@@ -122,7 +134,7 @@
 
   /* A single, consistent focus treatment across the site */
   :focus-visible {
-    outline: 2px solid var(--color-brand-bright);
+    outline: 2px solid var(--color-brand);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -148,6 +160,22 @@
   max-width: 96rem;
   margin-inline: auto;
   padding-inline: var(--spacing-gutter);
+}
+
+/* Seção escura: os mesmos tokens semânticos, valores de marinho profundo.
+   Tudo que usa `text-foreground`, `bg-surface`, `border-border`… se adapta. */
+@utility theme-dark {
+  --color-background: #0b1424;
+  --color-surface: #101b30;
+  --color-surface-raised: #16243f;
+  --color-foreground: #f5f7fa;
+  --color-foreground-muted: #b4c0d3;
+  --color-foreground-subtle: #8a9ab3;
+  --color-border: #22324f;
+  --color-border-strong: #2f4266;
+  --color-accent: #6ea1ff;
+  color: var(--color-foreground);
+  color-scheme: dark;
 }
 
 @utility hairline {

@@ -21,7 +21,7 @@ export function TestimonialCarousel({
   /** Exemplos de desenvolvimento, marcados como tal. */
   preview?: boolean;
 }) {
-  const trackRef = useRef<HTMLUListElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [atEnd, setAtEnd] = useState(false);
 
@@ -68,35 +68,50 @@ export function TestimonialCarousel({
       aria-roledescription="carrossel"
       aria-label="Depoimentos de clientes"
     >
-      <ul
+      <div
         ref={trackRef}
-        className="-mx-(--spacing-gutter) flex snap-x snap-mandatory scroll-px-(--spacing-gutter) gap-6 overflow-x-auto overscroll-x-contain scroll-smooth px-(--spacing-gutter) [scrollbar-width:none] sm:mx-0 sm:scroll-px-0 sm:gap-10 sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-(--spacing-gutter) flex snap-x snap-mandatory scroll-px-(--spacing-gutter) gap-4 overflow-x-auto overscroll-x-contain scroll-smooth px-(--spacing-gutter) py-2 [scrollbar-width:none] sm:mx-0 sm:scroll-px-0 sm:gap-5 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item, index) => (
-          <li
+          <div
             key={`${item.author}-${item.quote.slice(0, 24)}`}
             role="group"
             aria-roledescription="slide"
             aria-label={`Depoimento ${index + 1} de ${items.length}`}
-            className="w-[85%] shrink-0 snap-start border-t border-border pt-6 sm:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-5rem)/3)]"
+            className="flex w-[86%] shrink-0 snap-start flex-col rounded-card border border-border bg-surface p-6 shadow-card sm:w-[calc((100%-1.25rem)/2)] sm:p-7 lg:w-[calc((100%-2.5rem)/3)]"
           >
             {preview ? (
               <span className="mb-3 inline-block border border-dashed border-border px-2 py-0.5 text-eyebrow uppercase text-foreground-subtle">
                 Exemplo · só em dev
               </span>
             ) : null}
-            <blockquote className="font-display text-lg leading-snug tracking-tight text-foreground sm:text-xl">
-              “{item.quote}”
+            <span
+              aria-hidden="true"
+              className="font-display text-5xl leading-none text-brand/30"
+            >
+              “
+            </span>
+            <blockquote className="mt-1 grow text-[0.9375rem] leading-relaxed text-foreground">
+              {item.quote}
             </blockquote>
-            <p className="mt-4 text-sm text-foreground-muted">
-              {item.author}
-              {item.context ? (
-                <span className="text-foreground-subtle">
-                  {" "}
-                  · {item.context}
+            <div className="mt-6 flex items-center gap-3 border-t border-border pt-5">
+              <span
+                aria-hidden="true"
+                className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-brand/10 font-display text-sm font-semibold text-accent"
+              >
+                {item.author.charAt(0)}
+              </span>
+              <p className="text-sm leading-snug">
+                <span className="block font-semibold text-foreground">
+                  {item.author}
                 </span>
-              ) : null}
-            </p>
+                {item.context ? (
+                  <span className="block text-foreground-subtle">
+                    {item.context}
+                  </span>
+                ) : null}
+              </p>
+            </div>
             {item.source ? (
               <a
                 href={item.source}
@@ -107,12 +122,12 @@ export function TestimonialCarousel({
                 Ver avaliação original
               </a>
             ) : null}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {items.length > 1 ? (
-        <div className="mt-8 flex items-center justify-between gap-6">
+        <div className="mt-6 flex items-center justify-between gap-6">
           <p className="tnum text-xs font-medium tracking-[0.14em] text-foreground-subtle">
             <span className="text-foreground">
               {String(current + 1).padStart(2, "0")}
@@ -120,13 +135,13 @@ export function TestimonialCarousel({
             / {String(items.length).padStart(2, "0")}
           </p>
 
-          <div className="flex gap-px">
+          <div className="flex gap-2">
             <button
               type="button"
               onClick={() => scrollToIndex(Math.max(0, current - 1))}
               disabled={current === 0}
               aria-label="Depoimento anterior"
-              className="flex h-11 w-11 items-center justify-center border border-border text-foreground transition-colors duration-300 hover:border-foreground disabled:opacity-30 disabled:hover:border-border"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-surface text-foreground transition-colors duration-300 hover:border-foreground disabled:opacity-30 disabled:hover:border-border-strong"
             >
               <ArrowRight className="h-4 w-4 rotate-180" />
             </button>
@@ -135,7 +150,7 @@ export function TestimonialCarousel({
               onClick={() => scrollToIndex(Math.min(last, current + 1))}
               disabled={atEnd}
               aria-label="Próximo depoimento"
-              className="flex h-11 w-11 items-center justify-center border border-border text-foreground transition-colors duration-300 hover:border-foreground disabled:opacity-30 disabled:hover:border-border"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-surface text-foreground transition-colors duration-300 hover:border-foreground disabled:opacity-30 disabled:hover:border-border-strong"
             >
               <ArrowRight className="h-4 w-4" />
             </button>

@@ -53,8 +53,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05080f",
-  colorScheme: "dark",
+  themeColor: "#f8fafc",
+  colorScheme: "light",
 };
 
 const organizationLd = {

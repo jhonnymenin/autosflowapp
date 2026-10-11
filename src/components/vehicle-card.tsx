@@ -1,90 +1,111 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { imagesFor } from "@/data/vehicle-images";
+import { ArrowRight, Camera } from "@/components/icons";
+import { Badge } from "@/components/ui";
+import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { formatKmShort, formatPrice } from "@/lib/format";
 import type { Vehicle } from "@/types/vehicle";
 
 /**
- * Stock plate.
+ * Card de veículo — a unidade da vitrine e do estoque.
  *
- * The source table carries no photography, so desirability has to come from
- * the record: model at display scale, price as the closing figure, and the
- * metadata set as a precise ruled line. No box, no badge, no arrow button —
- * the plate is separated from its neighbours by a single rule.
+ * Hierarquia fixa: a foto vende, o nome identifica, a linha de dados apoia e
+ * o preço fecha. Selos só com informação real: "Fotos da unidade" quando a
+ * foto é do próprio carro, "Imagem ilustrativa" quando ainda não é.
  */
 export function VehicleCard({
   vehicle,
-  index,
-  className,
+  priority = false,
+  sizes = "(min-width: 1280px) 400px, (min-width: 640px) 50vw, 100vw",
 }: {
   vehicle: Vehicle;
-  index?: number;
-  className?: string;
+  priority?: boolean;
+  sizes?: string;
 }) {
   const cover = imagesFor(vehicle)[0];
+  const real = hasRealPhotos(vehicle);
+  const name = `${vehicle.make} ${vehicle.model}`;
 
   return (
     <Link
       href={`/veiculos/${vehicle.slug}`}
-      className={`group/card flex h-full flex-col justify-between pb-2 pt-6 ${className ?? ""}`}
+      className="group/card flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface shadow-card transition-[box-shadow,transform,border-color] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-border-strong hover:shadow-lift"
     >
-      <div>
+      <div className="relative aspect-4/3 w-full overflow-hidden bg-surface-raised">
         {cover ? (
-          <div className="relative mb-6 aspect-16/10 w-full overflow-hidden bg-surface">
-            <Image
-              src={cover.src}
-              alt=""
-              fill
-              sizes="(min-width: 1280px) 320px, (min-width: 640px) 40vw, 72vw"
-              quality={72}
-              className="object-cover object-center transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/card:scale-105"
-            />
-          </div>
+          <Image
+            src={cover.src}
+            alt={`${name} ${vehicle.version}`}
+            fill
+            sizes={sizes}
+            quality={74}
+            priority={priority}
+            className="object-cover object-center transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/card:scale-[1.04]"
+          />
         ) : null}
-
-        <div className="flex items-baseline justify-between gap-4">
-          <p className="text-eyebrow font-medium uppercase text-brand-bright">
-            {vehicle.make}
-          </p>
-          {typeof index === "number" ? (
-            <span className="tnum text-eyebrow font-medium tracking-[0.18em] text-foreground-subtle">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-          ) : null}
+        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+          {real ? (
+            <Badge tone="dark">
+              <Camera className="h-3.5 w-3.5" />
+              Fotos da unidade
+            </Badge>
+          ) : (
+            <Badge tone="dark">Imagem ilustrativa</Badge>
+          )}
         </div>
-
-        <h3 className="mt-5 text-display-sm font-semibold tracking-tight text-foreground transition-colors duration-500 group-hover/card:text-brand-bright">
-          {vehicle.model}
-        </h3>
-        <p className="mt-2 text-sm text-foreground-muted">{vehicle.version}</p>
       </div>
 
-      <div className="mt-8">
-        <dl className="tnum flex flex-wrap items-baseline gap-x-6 gap-y-1 text-xs text-foreground-subtle">
-          <div className="whitespace-nowrap">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground-subtle">
+          {vehicle.make}
+        </p>
+        <h3 className="mt-1.5 font-display text-xl font-semibold leading-tight tracking-tight text-foreground sm:text-[1.375rem]">
+          {vehicle.model}{" "}
+          <span className="font-medium text-foreground-muted">
+            {vehicle.version}
+          </span>
+        </h3>
+
+        <dl className="tnum mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-foreground-muted">
+          <div>
             <dt className="sr-only">Ano</dt>
             <dd>{vehicle.year}</dd>
           </div>
-          <div className="whitespace-nowrap">
+          <span aria-hidden="true" className="text-border-strong">
+            •
+          </span>
+          <div>
             <dt className="sr-only">Quilometragem</dt>
-            <dd>{formatKmShort(vehicle.km)}</dd>
+            <dd>
+              {vehicle.km > 0 ? formatKmShort(vehicle.km) : "Km sob consulta"}
+            </dd>
           </div>
-          <div className="whitespace-nowrap">
+          <span aria-hidden="true" className="text-border-strong">
+            •
+          </span>
+          <div>
             <dt className="sr-only">Combustível</dt>
             <dd>{vehicle.fuel}</dd>
           </div>
         </dl>
 
-        {/* The rule grows on hover — the only motion the plate needs. */}
-        <span
-          aria-hidden="true"
-          className="mt-4 block h-px w-full origin-left bg-border transition-colors duration-500 group-hover/card:bg-brand"
-        />
-
-        <p className="tnum mt-5 font-display text-data-xl font-semibold text-foreground">
-          {formatPrice(vehicle.price)}
-        </p>
+        <div className="mt-auto flex items-end justify-between gap-4 pt-5">
+          <div>
+            <p className="text-xs text-foreground-subtle">
+              {vehicle.origin === "consignado" ? "Consignado · valor" : "Valor"}
+            </p>
+            <p className="tnum mt-0.5 font-display text-[1.625rem] font-bold leading-none tracking-tight text-foreground">
+              {formatPrice(vehicle.price)}
+            </p>
+          </div>
+          <span
+            aria-hidden="true"
+            className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-surface-raised text-foreground transition-colors duration-300 group-hover/card:bg-brand group-hover/card:text-white"
+          >
+            <ArrowRight className="h-4.5 w-4.5" />
+          </span>
+        </div>
       </div>
     </Link>
   );

@@ -88,7 +88,7 @@ export function PriceTable() {
               <th
                 scope="colgroup"
                 colSpan={7}
-                className="sticky left-0 bg-background pb-3 pt-9 text-left text-eyebrow font-medium uppercase text-brand-bright lg:static"
+                className="sticky left-0 bg-background pb-3 pt-9 text-left text-eyebrow font-medium uppercase text-accent lg:static"
               >
                 {group.make}
               </th>
@@ -104,7 +104,7 @@ export function PriceTable() {
                 >
                   <Link
                     href={`/veiculos/${vehicle.slug}`}
-                    className="block max-w-[15rem] text-foreground transition-colors duration-300 hover:text-brand-bright lg:max-w-none"
+                    className="block max-w-[15rem] text-foreground transition-colors duration-300 hover:text-accent lg:max-w-none"
                   >
                     {vehicle.origin === "consignado" ? (
                       <span
@@ -120,13 +120,19 @@ export function PriceTable() {
                     ) : null}
                   </Link>
                 </th>
-                <td className={`${cell} tnum whitespace-nowrap text-foreground-muted`}>
+                <td
+                  className={`${cell} tnum whitespace-nowrap text-foreground-muted`}
+                >
                   {vehicle.yearShort}
                 </td>
-                <td className={`${cell} whitespace-nowrap text-foreground-muted`}>
+                <td
+                  className={`${cell} whitespace-nowrap text-foreground-muted`}
+                >
                   {vehicle.fuel === "Gasolina" ? "GAS" : "FLEX"}
                 </td>
-                <td className={`${cell} whitespace-nowrap text-foreground-muted`}>
+                <td
+                  className={`${cell} whitespace-nowrap text-foreground-muted`}
+                >
                   {vehicle.color}
                 </td>
                 <td
@@ -134,7 +140,9 @@ export function PriceTable() {
                 >
                   {vehicle.km > 0 ? formatKmShort(vehicle.km) : "0"}
                 </td>
-                <td className={`${cell} tnum whitespace-nowrap text-foreground-muted`}>
+                <td
+                  className={`${cell} tnum whitespace-nowrap text-foreground-muted`}
+                >
                   {stockRef(vehicle)}
                 </td>
                 <td
@@ -177,7 +185,10 @@ export function PriceTable() {
             >
               Total geral
             </th>
-            <td colSpan={6} className="tnum px-4 py-4 font-medium text-foreground">
+            <td
+              colSpan={6}
+              className="tnum px-4 py-4 font-medium text-foreground"
+            >
               {vehicles.length}
             </td>
           </tr>

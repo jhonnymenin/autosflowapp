@@ -2,18 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { CtaSection } from "@/components/cta-section";
-import { ArrowRight, Calendar, Document, Phone } from "@/components/icons";
+import {
+  Calendar,
+  Camera,
+  Check,
+  ChevronDown,
+  Document,
+  Phone,
+  Shield,
+  WhatsApp,
+} from "@/components/icons";
+import { Reveal } from "@/components/reveal";
+import { ArrowLink, Badge, buttonClass } from "@/components/ui";
 import { VehicleCard } from "@/components/vehicle-card";
 import { VehicleGallery } from "@/components/vehicle-gallery";
-import { TrustBadges } from "@/components/trust-badges";
 import { VehicleLead } from "@/components/vehicle-lead";
-import { Eyebrow } from "@/components/ui";
+import { bodyLabels, bodyOf } from "@/data/body-types";
 import { contact } from "@/data/brand";
 import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
 import { formatKm, formatPrice } from "@/lib/format";
-import { siteUrl, toLeadVehicle, whatsappVisit } from "@/lib/site";
+import {
+  siteUrl,
+  toLeadVehicle,
+  whatsappForVehicle,
+  whatsappVisit,
+} from "@/lib/site";
 import {
   fullName,
   getVehicle,
@@ -52,6 +66,14 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * Página do veículo.
+ *
+ * Ordem pensada para a decisão: a galeria primeiro, depois identificação e
+ * preço, as ações (interesse, visita, proposta), a ficha, o que é verificado
+ * e, por fim, alternativas. No celular, uma barra fixa mantém preço e
+ * WhatsApp sempre ao alcance do polegar.
+ */
 export default async function VehiclePage({
   params,
 }: {
@@ -67,14 +89,33 @@ export default async function VehiclePage({
   const lead = toLeadVehicle(vehicle);
   const gallery = imagesFor(vehicle);
   const realPhotos = hasRealPhotos(vehicle);
+  const body = bodyOf(vehicle);
+  const interest = whatsappForVehicle(lead);
 
-  // The hero already states year, mileage, fuel and colour; the sheet carries
-  // what it does not, so the page never prints the same figure twice.
+  const highlights = [
+    { label: "Ano", value: vehicle.year },
+    {
+      label: "Quilometragem",
+      value: vehicle.km > 0 ? formatKm(vehicle.km) : "Sob consulta",
+    },
+    { label: "Combustível", value: vehicle.fuel },
+    { label: "Cor", value: vehicle.color },
+  ];
+
+  // Linguagem de consumidor: o código interno da tabela fica na tabela.
   const spec = [
     { label: "Marca", value: vehicle.make },
     { label: "Modelo", value: vehicle.model },
     { label: "Versão", value: vehicle.version },
-    { label: "Referência", value: ref, numeric: true },
+    ...(body ? [{ label: "Tipo", value: bodyLabels[body].label }] : []),
+    { label: "Ano / modelo", value: vehicle.year, numeric: true },
+    {
+      label: "Quilometragem",
+      value: vehicle.km > 0 ? formatKm(vehicle.km) : "Sob consulta",
+      numeric: true,
+    },
+    { label: "Combustível", value: vehicle.fuel },
+    { label: "Cor", value: vehicle.color },
     ...(vehicle.plate
       ? [{ label: "Placa", value: maskedPlate(vehicle.plate), numeric: true }]
       : []),
@@ -82,12 +123,33 @@ export default async function VehiclePage({
       ? [
           {
             label: "Situação",
-            value:
-              vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
+            value: vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
           },
         ]
       : []),
-    { label: "Descrição em estoque", value: vehicle.sourceName },
+    { label: "Referência", value: ref, numeric: true },
+  ];
+
+  const transparency = [
+    {
+      title: "Dados conferem com o registro",
+      body: `Ano, quilometragem, cor e valor saem da tabela de estoque de ${STOCK_ISSUED_AT}, publicada para consulta.`,
+      done: true,
+    },
+    {
+      title: realPhotos
+        ? "Fotos da própria unidade"
+        : "Fotos reais sob consulta",
+      body: realPhotos
+        ? "As imagens desta página são deste carro, não de catálogo."
+        : "As imagens são de referência do modelo. Pedimos fotos desta unidade no atendimento.",
+      done: realPhotos,
+    },
+    {
+      title: "Laudo cautelar e histórico",
+      body: "Disponíveis sob consulta: solicite no atendimento antes de fechar negócio.",
+      done: false,
+    },
   ];
 
   const productLd = {
@@ -117,22 +179,13 @@ export default async function VehiclePage({
   };
 
   return (
-    <>
-      {/* ---------------------------------------------------------------
-          Hero. Gallery and price sit side by side so the images are in view
-          at the moment the figure is read. Real photographs when the unit has
-          them; otherwise model references, flagged — see data/vehicle-images.ts.
-          --------------------------------------------------------------- */}
-      <section className="border-b border-border pb-16 pt-32 sm:pb-24 sm:pt-40 lg:pt-48">
-
+    <div className="pb-24 lg:pb-0">
+      <section className="pt-20 sm:pt-24 lg:pt-28">
         <div className="container-editorial">
-          <nav aria-label="Trilha" className="mb-10 text-sm sm:mb-14">
+          <nav aria-label="Trilha" className="mb-5 text-sm">
             <ol className="flex flex-wrap items-center gap-2 text-foreground-subtle">
               <li>
-                <Link
-                  href="/veiculos"
-                  className="transition-colors duration-300 hover:text-foreground"
-                >
+                <Link href="/veiculos" className="hover:text-foreground">
                   Estoque
                 </Link>
               </li>
@@ -140,189 +193,226 @@ export default async function VehiclePage({
               <li>
                 <Link
                   href={`/veiculos?marca=${encodeURIComponent(vehicle.make)}`}
-                  className="transition-colors duration-300 hover:text-foreground"
+                  className="hover:text-foreground"
                 >
                   {vehicle.make}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
-              <li className="text-foreground-muted">{vehicle.model}</li>
+              <li className="font-medium text-foreground">{vehicle.model}</li>
             </ol>
           </nav>
 
-          <div className="max-w-4xl">
-            <Eyebrow>{vehicle.make}</Eyebrow>
-            <h1 className="mt-5 text-display-xl font-semibold text-foreground">
-              {vehicle.model}
-            </h1>
-            <p className="mt-4 font-display text-display-sm font-medium tracking-tight text-foreground-muted">
-              {vehicle.version}
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-10 sm:mt-14 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-7">
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
+            <div className="-mx-(--spacing-gutter) sm:mx-0 lg:col-span-7 xl:col-span-8">
               <VehicleGallery
                 images={gallery}
                 alt={name}
                 real={realPhotos}
                 priority
               />
-
-              <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-border pt-8 sm:grid-cols-4">
-                {[
-                  { label: "Ano", value: vehicle.year },
-                  { label: "Quilometragem", value: formatKm(vehicle.km) },
-                  { label: "Combustível", value: vehicle.fuel },
-                  { label: "Cor", value: vehicle.color },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <dt className="text-eyebrow font-medium uppercase text-foreground-subtle">
-                      {item.label}
-                    </dt>
-                    <dd className="tnum mt-2 text-lg font-display font-medium tracking-tight text-foreground">
-                      {item.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </div>
 
-            {/* Commercial panel, sticky alongside the gallery on large screens */}
-            <div className="lg:col-span-5 lg:col-start-8">
-              <div className="border border-border bg-surface p-7 sm:p-9 lg:sticky lg:top-28">
-                {vehicle.origin === "consignado" ? (
-                  <div className="mb-6 border-l-2 border-brand pl-4">
-                    <p className="text-eyebrow font-medium uppercase text-brand-bright">
-                      Consignado
-                    </p>
-                    <p className="mt-2 text-xs leading-relaxed text-foreground-muted">
-                      Veículo de um proprietário, anunciado e negociado com
-                      intermediação da AutosFlow. A avaliação, a documentação e
-                      a entrega seguem o mesmo processo dos veículos da loja.
-                    </p>
+            {/* Painel comercial — fixo ao lado da galeria no desktop */}
+            <aside className="lg:col-span-5 xl:col-span-4">
+              <div className="lg:sticky lg:top-24">
+                <div className="flex flex-wrap gap-1.5">
+                  {realPhotos ? (
+                    <Badge tone="brand">
+                      <Camera className="h-3.5 w-3.5" />
+                      Fotos da unidade
+                    </Badge>
+                  ) : null}
+                  {vehicle.origin === "consignado" ? (
+                    <Badge>Consignado</Badge>
+                  ) : null}
+                  {body ? <Badge>{bodyLabels[body].label}</Badge> : null}
+                </div>
+
+                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-foreground-subtle">
+                  {vehicle.make}
+                </p>
+                <h1 className="mt-1 font-display text-[2rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-[2.5rem]">
+                  {vehicle.model}
+                </h1>
+                <p className="mt-1.5 text-lg text-foreground-muted">
+                  {vehicle.version}
+                </p>
+
+                <dl className="mt-5 grid grid-cols-2 gap-2">
+                  {highlights.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-control bg-surface-raised px-3.5 py-2.5"
+                    >
+                      <dt className="text-xs text-foreground-muted">
+                        {item.label}
+                      </dt>
+                      <dd className="tnum mt-0.5 text-[0.9375rem] font-semibold text-foreground">
+                        {item.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div className="mt-6 rounded-card border border-border bg-surface p-5 shadow-card sm:p-6">
+                  <p className="text-sm text-foreground-subtle">Valor</p>
+                  <p className="tnum mt-1 font-display text-[2.5rem] font-bold leading-none tracking-tight text-foreground">
+                    {formatPrice(vehicle.price)}
+                  </p>
+
+                  <div className="mt-5 flex flex-col gap-2">
+                    <a
+                      href={interest}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={buttonClass("primary", "lg", "w-full")}
+                    >
+                      <WhatsApp className="h-4.5 w-4.5" />
+                      Tenho interesse
+                    </a>
+                    <a
+                      href={whatsappVisit(lead)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={buttonClass("outline", "lg", "w-full")}
+                    >
+                      <Calendar className="h-4 w-4" />
+                      Agendar visita ou test-drive
+                    </a>
                   </div>
-                ) : null}
-                <p className="text-eyebrow font-medium uppercase text-foreground-subtle">
-                  Valor
-                </p>
-                <p className="tnum mt-4 font-display text-display-md font-semibold leading-none tracking-[-0.03em] text-foreground">
-                  {formatPrice(vehicle.price)}
-                </p>
 
-                <VehicleLead lead={lead} />
+                  {/* Proposta com entrada, prazo e troca — sob demanda */}
+                  <details className="group/proposal mt-4 border-t border-border pt-4">
+                    <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+                      Montar proposta (entrada, prazo, troca)
+                      <ChevronDown className="h-4 w-4 transition-transform duration-300 group-open/proposal:rotate-180" />
+                    </summary>
+                    <VehicleLead lead={lead} />
+                  </details>
 
-                <div className="mt-4 flex flex-col gap-3">
-                  <a
-                    href={whatsappVisit(lead)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-6 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950"
-                  >
-                    <Calendar className="h-4 w-4" />
-                    Agendar visita ou test-drive
-                  </a>
                   <a
                     href={`tel:+${contact.phoneE164}`}
-                    className="inline-flex h-12 items-center justify-center gap-3 text-sm tracking-tight text-foreground-muted transition-colors duration-300 hover:text-foreground"
+                    className="mt-4 flex items-center justify-center gap-2 border-t border-border pt-4 text-sm font-medium text-foreground-muted hover:text-foreground"
                   >
                     <Phone className="h-4 w-4" />
-                    <span className="tnum">{contact.phoneLabel}</span>
+                    Prefere ligar?{" "}
+                    <span className="tnum font-semibold">
+                      {contact.phoneLabel}
+                    </span>
                   </a>
                 </div>
 
-                <TrustBadges />
-
-                <p className="mt-6 border-t border-border pt-5 text-xs leading-relaxed text-foreground-subtle">
-                  Referência <span className="tnum text-foreground-muted">{ref}</span> — cite este
-                  código no atendimento.{" "}
-                  {realPhotos
-                    ? "Laudo desta unidade sob consulta."
-                    : "Fotos reais e laudo desta unidade sob consulta."}
+                <p className="mt-4 text-xs leading-relaxed text-foreground-subtle">
+                  Referência <span className="tnum font-semibold">{ref}</span> —
+                  cite este código no atendimento.
                 </p>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* ---------------------------------------------------------------
-          Technical sheet — every field the source document records.
-          --------------------------------------------------------------- */}
-      <section className="py-section" aria-labelledby="ficha">
-        <div className="container-editorial">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
-              <Eyebrow>Ficha técnica</Eyebrow>
-              <h2
-                id="ficha"
-                className="mt-6 text-display-sm font-semibold text-foreground"
-              >
-                Tudo o que consta no registro.
-              </h2>
-              <p className="mt-5 text-sm leading-relaxed text-foreground-muted">
-                Publicamos exatamente o que a tabela de estoque de{" "}
-                {STOCK_ISSUED_AT} registra sobre este veículo — nada além disso.
-                Opcionais, laudo e histórico são confirmados no atendimento.
-              </p>
-              <Link
-                href="/tabela-de-precos"
-                className="mt-7 inline-flex items-center gap-2.5 text-sm text-foreground-muted underline-offset-4 transition-colors duration-300 hover:text-foreground hover:underline"
-              >
-                <Document className="h-4 w-4" />
-                Ver na tabela de preços
-              </Link>
-            </div>
-
-            <div className="lg:col-span-7 lg:col-start-6">
-              <dl className="border-t border-border">
-                {spec.map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8 sm:py-5"
+      {/* Ficha e transparência */}
+      <section className="py-16 sm:py-20" aria-labelledby="ficha">
+        <div className="container-editorial grid gap-6 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="rounded-card border border-border bg-surface p-6 shadow-card sm:p-8 lg:col-span-7 xl:col-span-8">
+            <h2
+              id="ficha"
+              className="font-display text-2xl font-semibold tracking-tight text-foreground"
+            >
+              Ficha do veículo
+            </h2>
+            <dl className="mt-6 grid gap-x-8 sm:grid-cols-2">
+              {spec.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-baseline justify-between gap-6 border-b border-border py-3.5"
+                >
+                  <dt className="text-sm text-foreground-subtle">
+                    {item.label}
+                  </dt>
+                  <dd
+                    className={`text-right text-[0.9375rem] font-semibold text-foreground ${item.numeric ? "tnum" : ""}`}
                   >
-                    <dt className="text-sm text-foreground-subtle">
-                      {item.label}
-                    </dt>
-                    <dd
-                      className={`text-base text-foreground sm:text-right ${item.numeric ? "tnum" : ""}`}
-                    >
-                      {item.value}
-                    </dd>
+                    {item.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-5 text-sm leading-relaxed text-foreground-muted">
+              Publicamos o que o registro de estoque traz sobre este carro.
+              Opcionais e detalhes de conservação são confirmados no
+              atendimento.
+            </p>
+          </Reveal>
+
+          <Reveal
+            delay={40}
+            className="rounded-card bg-surface-raised p-6 sm:p-8 lg:col-span-5 xl:col-span-4"
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface text-accent shadow-card">
+              <Shield className="h-5.5 w-5.5" />
+            </span>
+            <h2 className="mt-5 font-display text-2xl font-semibold tracking-tight text-foreground">
+              Transparência
+            </h2>
+            <ul className="mt-5 space-y-4">
+              {transparency.map((item) => (
+                <li key={item.title} className="flex gap-3">
+                  <span
+                    className={`mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full ${
+                      item.done
+                        ? "bg-brand text-white"
+                        : "border border-border-strong bg-surface text-foreground-subtle"
+                    }`}
+                  >
+                    {item.done ? (
+                      <Check className="h-3.5 w-3.5" />
+                    ) : (
+                      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                    )}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      {item.title}
+                    </p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-foreground-muted">
+                      {item.body}
+                    </p>
                   </div>
-                ))}
-              </dl>
-            </div>
-          </div>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/tabela-de-precos"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent underline-offset-4 hover:underline"
+            >
+              <Document className="h-4 w-4" />
+              Ver na tabela de preços
+            </Link>
+          </Reveal>
         </div>
       </section>
 
-      {/* Related stock */}
       {related.length > 0 ? (
         <section
-          className="border-t border-border py-section"
+          className="border-t border-border bg-surface py-16 sm:py-20"
           aria-labelledby="relacionados"
         >
           <div className="container-editorial">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-16">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <h2
                 id="relacionados"
-                className="text-display-sm font-semibold text-foreground"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
               >
-                Outros veículos no estoque
+                Você também pode gostar
               </h2>
-              <Link
-                href="/veiculos"
-                className="group/link inline-flex shrink-0 items-center gap-3 text-sm font-medium tracking-tight text-foreground-muted transition-colors duration-300 hover:text-brand-bright"
-              >
-                Ver todo o estoque
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
-              </Link>
+              <ArrowLink href="/veiculos">Ver todo o estoque</ArrowLink>
             </div>
-
-            <ul className="mt-10 grid gap-x-8 border-t border-border sm:mt-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
+            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((other) => (
-                <li key={other.slug} className="border-b border-border">
+                <li key={other.slug}>
                   <VehicleCard vehicle={other} />
                 </li>
               ))}
@@ -331,16 +421,34 @@ export default async function VehiclePage({
         </section>
       ) : null}
 
-      <CtaSection
-        image="/imagens/showroom-traseira.jpg"
-        title="Vamos conversar sobre este carro."
-      />
+      {/* Barra fixa do celular: preço e WhatsApp sempre à mão */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 py-3 shadow-[0_-8px_24px_-12px_rgb(15_23_42/0.25)] backdrop-blur-xl lg:hidden">
+        <div className="mx-auto flex max-w-xl items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs text-foreground-subtle">
+              {vehicle.model} {vehicle.version}
+            </p>
+            <p className="tnum font-display text-xl font-bold leading-tight text-foreground">
+              {formatPrice(vehicle.price)}
+            </p>
+          </div>
+          <a
+            href={interest}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClass("primary", "lg", "flex-none")}
+          >
+            <WhatsApp className="h-4.5 w-4.5" />
+            Tenho interesse
+          </a>
+        </div>
+      </div>
 
       <script
         type="application/ld+json"
         // Built from the typed stock record at build time.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
-    </>
+    </div>
   );
 }

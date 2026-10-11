@@ -39,7 +39,7 @@ export default function AboutPage() {
           <h1 className="mt-6 max-w-4xl text-display-lg font-semibold text-foreground">
             {manifesto.claim}
           </h1>
-          <p className="mt-6 max-w-3xl font-display text-display-sm font-medium tracking-tight text-brand-bright">
+          <p className="mt-6 max-w-3xl font-display text-display-sm font-medium tracking-tight text-accent">
             {manifesto.claimEcho}
           </p>
           <p className="text-lead mt-10 max-w-2xl text-foreground-muted">
@@ -49,20 +49,23 @@ export default function AboutPage() {
       </section>
 
       {/* Manifesto, set on light ground like the printed piece */}
-      <section className="bg-bone-50 py-section text-navy" aria-labelledby="manifesto">
+      <section
+        className="theme-dark bg-background py-section"
+        aria-labelledby="manifesto"
+      >
         <div className="container-editorial">
           <div className="grid gap-y-14 lg:grid-cols-12 lg:gap-x-16">
             <Reveal className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
-              <Eyebrow tone="light">Manifesto</Eyebrow>
+              <Eyebrow>Manifesto</Eyebrow>
               <h2
                 id="manifesto"
-                className="mt-5 text-display-md font-semibold text-navy"
+                className="mt-5 text-display-md font-semibold text-foreground"
               >
                 {brand.tagline}
               </h2>
               <a
                 href="/documentos/autosflow-manifesto.pdf"
-                className="mt-8 inline-flex items-center gap-2.5 text-sm text-navy/60 underline-offset-4 transition-colors duration-300 hover:text-brand hover:underline"
+                className="mt-8 inline-flex items-center gap-2.5 text-sm text-foreground-subtle underline-offset-4 transition-colors duration-300 hover:text-accent hover:underline"
               >
                 <Document className="h-4 w-4" />
                 Manifesto em PDF
@@ -70,16 +73,16 @@ export default function AboutPage() {
             </Reveal>
 
             <div className="lg:col-span-7 lg:col-start-6">
-              <Reveal as="ul" className="border-t border-navy/12">
+              <Reveal as="ul" className="border-t border-border">
                 {manifesto.criteria.map((line, index) => (
                   <li
                     key={line}
-                    className="flex items-baseline gap-5 border-b border-navy/12 py-4 sm:gap-8"
+                    className="flex items-baseline gap-5 border-b border-border py-4 sm:gap-8"
                   >
-                    <span className="tnum text-eyebrow font-medium tracking-[0.18em] text-navy/40">
+                    <span className="tnum text-eyebrow font-medium tracking-[0.18em] text-foreground-subtle">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-base tracking-tight text-navy sm:text-lg">
+                    <span className="text-base tracking-tight text-foreground sm:text-lg">
                       {line}
                     </span>
                   </li>
@@ -87,13 +90,19 @@ export default function AboutPage() {
               </Reveal>
 
               <Reveal delay={80} className="mt-12 space-y-8">
-                <p className="text-lead text-navy/75">{manifesto.trust}</p>
-                <p className="text-display-sm font-display font-semibold tracking-tight text-navy">
+                <p className="text-lead text-foreground-muted">
+                  {manifesto.trust}
+                </p>
+                <p className="text-display-sm font-display font-semibold tracking-tight text-foreground">
                   {manifesto.promise}
                 </p>
-                <p className="text-lead text-navy/75">{manifesto.order}</p>
-                <p className="text-lead text-navy/75">{manifesto.journey}</p>
-                <p className="border-l-2 border-brand pl-5 text-lg leading-relaxed tracking-tight text-navy">
+                <p className="text-lead text-foreground-muted">
+                  {manifesto.order}
+                </p>
+                <p className="text-lead text-foreground-muted">
+                  {manifesto.journey}
+                </p>
+                <p className="border-l-2 border-brand pl-5 text-lg leading-relaxed tracking-tight text-foreground">
                   {manifesto.closing}
                 </p>
               </Reveal>
@@ -176,7 +185,7 @@ export default function AboutPage() {
                 key={pillar}
                 className="flex flex-col gap-2 border-b border-border py-6 first:border-t sm:flex-row sm:items-baseline sm:gap-10 sm:py-7"
               >
-                <span className="tnum w-10 shrink-0 text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
+                <span className="tnum w-10 shrink-0 text-eyebrow font-medium tracking-[0.18em] text-accent">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="max-w-3xl font-display text-xl font-medium leading-snug tracking-tight text-foreground sm:text-2xl">
@@ -271,7 +280,7 @@ export default function AboutPage() {
           <div className="mt-14 grid gap-x-16 gap-y-12 sm:mt-20 lg:grid-cols-3">
             {serviceGroups.map((group, index) => (
               <Reveal key={group.stage} delay={index * 70}>
-                <h3 className="border-t border-border pt-5 text-eyebrow font-medium uppercase text-brand-bright">
+                <h3 className="border-t border-border pt-5 text-eyebrow font-medium uppercase text-accent">
                   {group.stage}
                 </h3>
                 <ul className="mt-5 space-y-3">
@@ -326,7 +335,7 @@ export default function AboutPage() {
             </Reveal>
 
             <Reveal delay={100} className="lg:col-span-6">
-              <div className="relative aspect-4/3 overflow-hidden lg:aspect-5/4">
+              <div className="relative aspect-4/3 overflow-hidden rounded-card lg:aspect-5/4">
                 <Image
                   src="/imagens/interior-volante.jpg"
                   alt="Detalhe do interior de um veículo, com volante e painel iluminados."
@@ -358,7 +367,7 @@ export default function AboutPage() {
             <p className="text-lead mt-8 max-w-2xl text-foreground-muted">
               {vision.detail}
             </p>
-            <p className="mt-10 font-display text-display-sm font-semibold tracking-tight text-brand-bright">
+            <p className="mt-10 font-display text-display-sm font-semibold tracking-tight text-accent">
               {vision.claim}
             </p>
           </Reveal>

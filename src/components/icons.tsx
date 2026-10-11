@@ -96,3 +96,85 @@ export function WhatsApp({ className }: IconProps) {
     </svg>
   );
 }
+
+export function Search({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.4-4.4" />
+    </svg>
+  );
+}
+
+export function Sliders({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M4 7h9M17 7h3M4 17h3M11 17h9" />
+      <circle cx="15" cy="7" r="2" />
+      <circle cx="9" cy="17" r="2" />
+    </svg>
+  );
+}
+
+export function Close({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
+export function Shield({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 3 5 6v5.5c0 4.4 3 8 7 9.5 4-1.5 7-5.1 7-9.5V6l-7-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+export function Camera({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.5-2h6l1.5 2h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-9Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </svg>
+  );
+}
+
+export function Handshake({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="m3 12 4-4 4 1.5L14 8l7 4" />
+      <path d="m7 8-4 4 6 6 2-1 2 1 6-6" />
+      <path d="m10 14 2 2M12 12l2.5 2.5" />
+    </svg>
+  );
+}
+
+export function Gauge({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M4.5 18a8.5 8.5 0 1 1 15 0" />
+      <path d="m12 13 4-4" />
+      <circle cx="12" cy="13" r="1" />
+    </svg>
+  );
+}
+
+export function Expand({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+    </svg>
+  );
+}
+
+export function Key({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <circle cx="8" cy="15" r="4" />
+      <path d="m11 12 8-8M16 7l2 2M14 9l2 2" />
+    </svg>
+  );
+}

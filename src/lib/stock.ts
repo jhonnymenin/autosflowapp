@@ -1,13 +1,15 @@
+import {
+  bodyLabels,
+  bodyOf,
+  isBodyType,
+  type BodyType,
+} from "@/data/body-types";
 import { hasRealPhotos } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
 import type { Vehicle } from "@/types/vehicle";
 
 export type SortKey =
-  | "destaque"
-  | "preco-asc"
-  | "preco-desc"
-  | "ano-desc"
-  | "km-asc";
+  "destaque" | "preco-asc" | "preco-desc" | "ano-desc" | "km-asc";
 
 export const sortOptions: { value: SortKey; label: string }[] = [
   { value: "destaque", label: "Fotos primeiro" },
@@ -99,6 +101,7 @@ export interface StockQuery {
   make?: string;
   fuel?: string;
   origin?: string;
+  body?: string;
   price?: string;
   year?: string;
   km?: string;
@@ -117,11 +120,7 @@ export function fullName(vehicle: Vehicle): string {
 
 /** Sem acentos e em caixa baixa, para a busca livre. */
 function normalise(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .trim();
+  return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 }
 
 function matchesSearch(vehicle: Vehicle, query: string): boolean {
@@ -162,6 +161,25 @@ export function fuelsWithCounts(): { fuel: string; count: number }[] {
     .map(([fuel, count]) => ({ fuel, count }))
     .sort((a, b) => b.count - a.count);
 }
+
+/** Carrocerias presentes no estoque, na ordem em que aparecem nos atalhos. */
+export function bodiesWithCounts(): {
+  body: BodyType;
+  label: string;
+  plural: string;
+  count: number;
+}[] {
+  return (Object.keys(bodyLabels) as BodyType[])
+    .map((body) => ({
+      body,
+      ...bodyLabels[body],
+      count: vehicles.filter((vehicle) => bodyOf(vehicle) === body).length,
+    }))
+    .filter((entry) => entry.count > 0);
+}
+
+/** Quantos veículos têm fotos da própria unidade. */
+export const realPhotoCount = vehicles.filter(hasRealPhotos).length;
 
 export const originCounts = {
   loja: vehicles.filter((vehicle) => vehicle.origin === "loja").length,
@@ -209,6 +227,7 @@ export function filterStock(query: StockQuery): Vehicle[] {
     if (query.make && vehicle.make !== query.make) return false;
     if (query.fuel && vehicle.fuel !== query.fuel) return false;
     if (query.origin && vehicle.origin !== query.origin) return false;
+    if (isBodyType(query.body) && bodyOf(vehicle) !== query.body) return false;
     if (!inBand(vehicle.price, price)) return false;
     if (!inBand(vehicle.yearSort, year)) return false;
     if (!inBand(vehicle.km, km)) return false;
@@ -240,7 +259,24 @@ export function showcaseVehicles(limit = 6): Vehicle[] {
   const rest = vehicles
     .filter((v) => !hasRealPhotos(v) && !v.featured)
     .sort(newest);
-  return [...withPhotos, ...featured, ...rest].slice(0, limit);
+  // O carro da abertura já aparece no hero; repetir logo abaixo é desperdício.
+  const hero = heroVehicle();
+  return [...withPhotos, ...featured, ...rest]
+    .filter((v) => v.slug !== hero?.slug)
+    .slice(0, limit);
+}
+
+/**
+ * O carro da abertura da home: um destaque com fotos da própria unidade (o
+ * mais valioso), para que a primeira imagem do site seja um carro real do
+ * estoque, e não fotografia genérica.
+ */
+export function heroVehicle(): Vehicle | undefined {
+  const withPhotos = vehicles.filter(hasRealPhotos);
+  const pool = withPhotos.filter((v) => v.featured);
+  return [...(pool.length ? pool : withPhotos)].sort(
+    (a, b) => b.price - a.price,
+  )[0];
 }
 
 export function relatedVehicles(vehicle: Vehicle, limit = 3): Vehicle[] {

@@ -74,7 +74,7 @@ export default function PriceTablePage() {
 
         <Link
           href="/veiculos"
-          className="group/link mt-12 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+          className="group/link mt-12 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
         >
           Ver o estoque com filtros
           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />

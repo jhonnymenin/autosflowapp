@@ -4,26 +4,19 @@ import type { ComponentProps, ReactNode } from "react";
 import { ArrowRight } from "@/components/icons";
 
 /* -------------------------------------------------------------------------
-   Eyebrow
-
-   Letterspaced caps only. The rule-and-label combination reads as a template
-   tic when it repeats on every section, so the label carries it alone.
+   Eyebrow — rótulo curto acima do título, no azul de acento.
    ---------------------------------------------------------------------- */
 
 export function Eyebrow({
   children,
   className,
-  tone = "dark",
 }: {
   children: ReactNode;
   className?: string;
-  tone?: "dark" | "light";
 }) {
   return (
     <p
-      className={`text-eyebrow font-medium uppercase ${
-        tone === "dark" ? "text-brand-bright" : "text-brand"
-      } ${className ?? ""}`}
+      className={`text-eyebrow font-semibold uppercase text-accent ${className ?? ""}`}
     >
       {children}
     </p>
@@ -31,31 +24,44 @@ export function Eyebrow({
 }
 
 /* -------------------------------------------------------------------------
-   Buttons
+   Botões
 
-   Square. Automotive brands set their calls to action as precise rectangles;
-   the pill shape is what makes an interface read as a SaaS product.
+   Altura mínima de 48 px no celular (área de toque), cantos levemente
+   arredondados e um único azul para a ação principal — o azul orienta a
+   ação, não pinta a interface inteira.
    ---------------------------------------------------------------------- */
 
 const buttonBase =
-  "group/btn inline-flex items-center justify-center gap-3 text-sm font-medium tracking-tight transition-colors duration-300 disabled:opacity-50";
+  "group/btn inline-flex items-center justify-center gap-2.5 rounded-control text-sm font-semibold tracking-tight transition-[background-color,border-color,color,box-shadow,transform] duration-300 active:scale-[0.98] disabled:opacity-50";
 
 const sizes = {
-  md: "h-11 px-6",
-  lg: "h-12 px-7 sm:h-14 sm:px-9 sm:text-[0.95rem]",
+  md: "h-11 px-5",
+  lg: "h-12 px-6 sm:h-13 sm:px-7",
 } as const;
 
 const variants = {
-  primary: "bg-brand text-white hover:bg-brand-bright",
-  invert: "bg-foreground text-ink-950 hover:bg-white",
+  primary:
+    "bg-brand text-white shadow-[0_8px_20px_-8px_rgb(20_96_242/0.6)] hover:bg-brand-deep",
+  solid: "bg-foreground text-background hover:bg-foreground/85",
   outline:
-    "border border-border-strong text-foreground hover:border-foreground hover:bg-foreground hover:text-ink-950",
-  outlineLight:
-    "border border-navy/25 text-navy hover:border-navy hover:bg-navy hover:text-bone-50",
+    "border border-border-strong bg-surface text-foreground hover:border-foreground",
+  ghost: "text-foreground hover:bg-foreground/5",
+  onDark:
+    "border border-white/25 text-white hover:border-white hover:bg-white hover:text-ink-900",
 } as const;
 
+export type ButtonVariant = keyof typeof variants;
+
+export function buttonClass(
+  variant: ButtonVariant = "primary",
+  size: keyof typeof sizes = "md",
+  className = "",
+) {
+  return `${buttonBase} ${sizes[size]} ${variants[variant]} ${className}`;
+}
+
 type ButtonLinkProps = {
-  variant?: keyof typeof variants;
+  variant?: ButtonVariant;
   size?: keyof typeof sizes;
   withArrow?: boolean;
 } & ComponentProps<typeof Link>;
@@ -69,13 +75,10 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   return (
-    <Link
-      className={`${buttonBase} ${sizes[size]} ${variants[variant]} ${className ?? ""}`}
-      {...props}
-    >
+    <Link className={buttonClass(variant, size, className)} {...props}>
       {children}
       {withArrow ? (
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
       ) : null}
     </Link>
   );
@@ -88,65 +91,94 @@ export function ButtonAnchor({
   children,
   ...props
 }: {
-  variant?: keyof typeof variants;
+  variant?: ButtonVariant;
   size?: keyof typeof sizes;
 } & ComponentProps<"a">) {
   return (
-    <a
-      className={`${buttonBase} ${sizes[size]} ${variants[variant]} ${className ?? ""}`}
-      {...props}
-    >
+    <a className={buttonClass(variant, size, className)} {...props}>
       {children}
     </a>
   );
 }
 
+/** Link de texto com seta — “ver todos”, “conhecer”. */
+export function ArrowLink({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof Link>) {
+  return (
+    <Link
+      className={`group/link inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 hover:text-accent ${className ?? ""}`}
+      {...props}
+    >
+      {children}
+      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-0.5" />
+    </Link>
+  );
+}
+
 /* -------------------------------------------------------------------------
-   Section heading
+   Cabeçalho de seção
    ---------------------------------------------------------------------- */
 
 export function SectionHeading({
   eyebrow,
   title,
   lead,
-  tone = "dark",
-  align = "start",
+  id,
+  action,
   className,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   lead?: ReactNode;
-  tone?: "dark" | "light";
-  align?: "start" | "between";
+  id?: string;
+  /** Link à direita do título (desktop) ou abaixo dele (celular). */
+  action?: ReactNode;
   className?: string;
 }) {
   return (
     <div
-      className={`${
-        align === "between"
-          ? "flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16"
-          : "max-w-3xl"
-      } ${className ?? ""}`}
+      className={`flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10 ${className ?? ""}`}
     >
-      <div className={align === "between" ? "max-w-2xl" : undefined}>
-        <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
+      <div className="max-w-3xl">
+        {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <h2
-          className={`mt-6 text-display-md font-semibold ${
-            tone === "dark" ? "text-foreground" : "text-navy"
-          }`}
+          id={id}
+          className={`text-display-md font-semibold text-foreground ${eyebrow ? "mt-3" : ""}`}
         >
           {title}
         </h2>
+        {lead ? (
+          <p className="text-lead mt-4 text-foreground-muted">{lead}</p>
+        ) : null}
       </div>
-      {lead ? (
-        <p
-          className={`text-lead max-w-xl ${
-            align === "between" ? "lg:pb-2" : "mt-6"
-          } ${tone === "dark" ? "text-foreground-muted" : "text-navy/70"}`}
-        >
-          {lead}
-        </p>
-      ) : null}
+      {action ? <div className="shrink-0 sm:pb-1.5">{action}</div> : null}
     </div>
+  );
+}
+
+/** Pílula de informação — selo real e verificável, nunca decorativo. */
+export function Badge({
+  children,
+  tone = "neutral",
+  className,
+}: {
+  children: ReactNode;
+  tone?: "neutral" | "brand" | "dark";
+  className?: string;
+}) {
+  const tones = {
+    neutral: "bg-surface-raised text-foreground-muted",
+    brand: "bg-brand/10 text-accent",
+    dark: "bg-ink-900/80 text-white backdrop-blur-md",
+  } as const;
+  return (
+    <span
+      className={`inline-flex h-6 items-center gap-1.5 rounded-full px-2.5 text-[0.6875rem] font-semibold tracking-tight ${tones[tone]} ${className ?? ""}`}
+    >
+      {children}
+    </span>
   );
 }

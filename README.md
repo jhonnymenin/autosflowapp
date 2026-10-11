@@ -50,28 +50,29 @@ src/
     veiculos/[slug]/        página de cada veículo (estática, 17 rotas)
     creditos/               créditos das imagens de referência (noindex)
     tabela-de-precos/       tabela de preços completa em HTML
+    vender/                 venda assistida (página própria)
     sobre/ · contato/       institucional
     icon.svg · apple-icon.png · sitemap.ts · robots.ts · not-found.tsx
   components/
     site-header.tsx         única parte "use client" relevante (menu + scroll)
     site-footer.tsx · logo.tsx · icons.tsx · ui.tsx · reveal.tsx
     vehicle-card.tsx        painel de veículo (home, relacionados)
-    vehicle-row.tsx         linha editorial do catálogo
+    filter-sheet.tsx        filtros: coluna no desktop, folha no celular
     stock-filters.tsx       busca e filtros em listas suspensas (form GET)
     filter-form.tsx         aplica o filtro ao mudar a lista, sem recarregar
     vehicle-lead.tsx        proposta por veículo (entrada, prazo, troca)
     trust-section.tsx       prova social — depoimentos reais + prova factual
-    trust-badges.tsx        garantias ao lado do botão de conversão
     price-table.tsx         tabela de preços semântica
     vehicle-gallery.tsx     carrossel (scroll-snap nativo, sem dependência)
     cta-section.tsx         bloco comercial compartilhado
-    home/                   hero, vitrine e "por que"
+    home/                   hero, busca rápida, vitrine, perfil, diferenciais, venda, loja
   data/
     vehicles.ts             ← fonte única do estoque (dados verificados)
     testimonials.ts         ← depoimentos de clientes (só reais)
     vehicle-photos.ts       ← FOTOS REAIS das unidades, em ordem
     vehicle-images.ts       ← imagens de referência (provisórias) + escolha
     brand.ts                ← fonte única do conteúdo institucional
+    body-types.ts           ← carroceria por modelo (SUV, hatch, sedã, picape)
   lib/
     stock.ts                filtros, ordenação, relacionados
     format.ts · site.ts     formatação pt-BR, rotas e links de WhatsApp
@@ -116,23 +117,30 @@ documentos de origem.
 
 ## Arquitetura da conversão
 
-A home é deliberadamente curta: um hero que diz em uma frase o que a AutosFlow
-faz, com os dois caminhos lado a lado ("Quero vender meu carro" e "Quero
-comprar um carro"), vitrine de 6 veículos (os com fotos reais primeiro), um
-resumo da marca e o CTA. O institucional completo — manifesto, jornada,
-ecossistema, verificação — vive em `/sobre`, fora do caminho de quem veio
-procurar carro.
+A home segue a ordem de quem chega querendo um carro, sem esconder quem quer
+vender: abertura em painel marinho com um carro real do estoque (o destaque com
+fotos da unidade, escolhido em `heroVehicle()`), os dois caminhos lado a lado
+("Explorar veículos" e "Quero vender meu carro") e a busca rápida por marca,
+preço e tipo; depois a vitrine, os atalhos por perfil (carroceria e
+orçamento), os diferenciais, a venda assistida, os depoimentos e a loja.
 
-**Busca e filtros** (`/veiculos`) são uma busca e uma linha de listas
-suspensas — marca, preço, ano, quilometragem, combustível e ordem — sobre
-search params: com JavaScript o filtro se aplica ao mudar a lista, sem
-recarregar; sem JavaScript, o botão envia o formulário. A URL guarda tudo, e os
-filtros aplicados aparecem abaixo, cada um removível. A ordem padrão põe os
-veículos com fotos reais primeiro.
+**Busca e filtros** (`/veiculos`): busca e ordem no topo, filtros em listas
+suspensas — marca, tipo de carro, preço, ano, quilometragem e combustível —
+numa coluna fixa no desktop e numa folha em tela cheia no celular (com "Ver N
+veículos" no rodapé). Com JavaScript o filtro se aplica ao mudar a lista, sem
+recarregar; a URL guarda tudo e os filtros aplicados viram chips removíveis. A
+ordem padrão põe os veículos com fotos reais primeiro. A carroceria é do
+modelo, não da tabela: fica em `src/data/body-types.ts`.
 
-**Cada veículo tem sua conversão.** O bloco de proposta monta a mensagem do
-WhatsApp com entrada, prazo e troca já preenchidos, e o anúncio identificado
-pela referência de estoque. O atendimento recebe a conversa pronta e dá para
+**Vender meu carro** (`/vender`) tem página própria: o desafio da venda
+particular, as seis etapas da jornada, os diferenciais e os serviços — tudo da
+apresentação comercial, em `data/brand.ts`.
+
+**Cada veículo tem sua conversão.** Galeria primeiro (miniaturas e tela
+cheia), depois identificação, preço e as ações: "Tenho interesse", agendar
+visita e, sob demanda, a proposta com entrada, prazo e troca. No celular, uma
+barra fixa mantém preço e WhatsApp ao alcance do polegar. A mensagem chega ao
+atendimento com o anúncio identificado pela referência de estoque. O atendimento recebe a conversa pronta e dá para
 medir depois quais veículos geram interesse.
 
 ### Prova social
@@ -255,8 +263,20 @@ Os tokens ficam no bloco `@theme` de
 (`clamp()`), espaçamento, container e curvas de animação. **Não** espalhe
 valores fixos pelos componentes — ajuste o token.
 
-As cores vêm da folha de logotipo: azul `#1460F2` e azul-marinho `#1B2E4F`,
-com uma rampa neutra derivada do marinho.
+As cores vêm da folha de logotipo: azul `#1460F2` e azul-marinho `#1B2E4F`.
+A direção é **premium claro**: superfícies claras (`#F8FAFC` de base, cards
+brancos, texto `#111827`) na maior parte do site, e o marinho concentrado onde
+cria profundidade — abertura da home, venda assistida, fechamento e rodapé.
+
+As seções escuras usam a utility `theme-dark`, que redefine os mesmos tokens
+semânticos (`background`, `surface`, `foreground`, `border`, `accent`…) dentro
+dela. Um componente escrito com tokens funciona nos dois fundos sem variante.
+O azul orienta a ação (botão principal) e o acento de texto; não pinta a
+interface.
+
+Cards e controles têm cantos arredondados (`rounded-card`, `rounded-control`)
+e sombra suave (`shadow-card`, `shadow-lift`). Áreas de toque têm no mínimo
+44–48 px.
 
 ### Motion
 
@@ -277,20 +297,22 @@ semântica preservada (`caption`, `scope`, `tfoot`) em qualquer largura.
 
 ## Performance
 
-Lighthouse desktop, build de produção:
+Lighthouse 12, build de produção local (desempenho · acessibilidade · SEO):
 
-| Página              | Performance | Acessibilidade | Boas práticas | SEO |
-| ------------------- | ----------- | -------------- | ------------- | --- |
-| `/`                 | 100         | 100            | 100           | 100 |
-| `/veiculos`         | 100         | 100            | 100           | 100 |
-| `/veiculos/[slug]`  | 100         | 100            | 100           | 100 |
-| `/tabela-de-precos` | 100         | 100            | 100           | 100 |
-| `/sobre`            | 100         | 96             | 100           | 100 |
-| `/contato`          | 100         | 96             | 100           | 100 |
+| Página              | Celular        | Desktop         |
+| ------------------- | -------------- | --------------- |
+| `/`                 | 92 · 100 · 100 | 100 · 96 · 100  |
+| `/veiculos`         | 92 · 100 · 100 | 100 · 100 · 100 |
+| `/veiculos/[slug]`  | 93 · 100 · 100 | 99 · 100 · 100  |
+| `/vender`           | 97 · 100 · 100 | 100 · 96 · 100  |
+| `/sobre`            | 96 · 96 · 100  | 100 · 96 · 100  |
+| `/contato`          | 95 · 100 · 100 | 100 · 96 · 100  |
+| `/tabela-de-precos` | 96 · 100 · 100 | 100 · 100 · 100 |
 
-Os 96 vêm do contraste medido em elementos que ainda estão no início da
-animação de entrada, abaixo da dobra — o contraste em repouso passa em AA, e
-leitores de tela leem o conteúdo normalmente.
+CLS 0 em todas. LCP no celular (rede simulada lenta) entre 2,6 e 3,4 s — acima
+da meta de 2,5 s na home e no estoque, onde a primeira imagem é uma foto real
+grande; no desktop fica abaixo de 1 s. Os 96 de acessibilidade vêm do contraste
+medido em elementos no meio da animação de entrada; em repouso passam em AA.
 
 O carrossel segue o padrão ARIA de carousel: `aria-roledescription`, slides
 como `role="group"`, botões rotulados e anúncio `aria-live` da imagem atual.
@@ -352,7 +374,6 @@ Estes itens estão pendentes de informação real, não de código:
 | Item | O que é preciso |
 | ---- | --------------- |
 | Filtro de câmbio | Só 6 dos 17 registros trazem indicação (MT, AT, CVT, Aut.). Precisa do campo na exportação do estoque. |
-| Filtro de carroceria | Não existe na tabela de origem. |
 | Simulador de parcela | Taxa, tarifas e prazos reais da financeira. |
 | Depoimentos | Avaliações reais de clientes. A seção de confiança já está no ar com a prova factual; basta preencher `src/data/testimonials.ts` e os depoimentos aparecem sozinhos. |
 | Horário, e-mail, atendente, prazo de resposta | Não constam em nenhum material recebido. |

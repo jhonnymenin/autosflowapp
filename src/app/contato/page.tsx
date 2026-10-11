@@ -84,14 +84,14 @@ export default function ContactPage() {
                   href={whatsappGeneral}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-13 items-center justify-center gap-3 bg-brand px-8 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-bright sm:h-14 sm:px-10"
+                  className="inline-flex h-13 items-center justify-center rounded-control gap-3 bg-brand px-8 text-sm font-medium tracking-tight text-white transition-colors duration-300 hover:bg-brand-deep sm:h-14 sm:px-10"
                 >
                   <WhatsApp className="h-4.5 w-4.5" />
                   Falar no WhatsApp
                 </a>
                 <a
                   href={`tel:+${contact.phoneE164}`}
-                  className="inline-flex h-13 items-center justify-center gap-3 border border-border-strong px-8 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-ink-950 sm:h-14 sm:px-10"
+                  className="inline-flex h-13 items-center justify-center rounded-control gap-3 border border-border-strong px-8 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background sm:h-14 sm:px-10"
                 >
                   <Phone className="h-4 w-4" />
                   <span className="tnum">{contact.phoneLabel}</span>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                 href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link mt-6 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+                className="group/link mt-6 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
               >
                 <MapPin className="h-4 w-4" />
                 Ver no mapa
@@ -132,14 +132,14 @@ export default function ContactPage() {
           <h2 id="caminhos" className="sr-only">
             Como podemos ajudar
           </h2>
-          <div className="grid gap-x-8 border-t border-border lg:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-3">
             {paths.map((path, index) => (
               <Reveal
                 key={path.title}
                 delay={index * 70}
-                className="flex flex-col border-b border-border py-9 lg:py-10"
+                className="flex flex-col rounded-card border border-border bg-surface p-7 shadow-card sm:p-8"
               >
-                <p className="tnum text-eyebrow font-medium tracking-[0.18em] text-brand-bright">
+                <p className="tnum text-eyebrow font-medium tracking-[0.18em] text-accent">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
@@ -152,7 +152,7 @@ export default function ContactPage() {
                   href={path.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/link mt-8 inline-flex items-center gap-2.5 self-start border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+                  className="group/link mt-8 inline-flex items-center gap-2.5 self-start border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
                 >
                   {path.action}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
@@ -167,7 +167,7 @@ export default function ContactPage() {
             </p>
             <Link
               href="/veiculos"
-              className="group/link mt-8 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-brand-bright hover:text-brand-bright"
+              className="group/link mt-8 inline-flex items-center gap-2.5 border-b border-border-strong pb-1 text-sm font-medium tracking-tight text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
             >
               Ver o estoque
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />

@@ -26,8 +26,9 @@ export default function CreditsPage() {
           {credits.length > 0 ? (
             <p className="text-lead mt-6 text-foreground-muted">
               Os veículos que ainda não têm fotos próprias são ilustrados com
-              referências do modelo, não da unidade anunciada. Todas são Creative Commons ou domínio
-              público, com uso comercial permitido, e estão creditadas abaixo.
+              referências do modelo, não da unidade anunciada. Todas são
+              Creative Commons ou domínio público, com uso comercial permitido,
+              e estão creditadas abaixo.
             </p>
           ) : (
             <p className="text-lead mt-6 text-foreground-muted">
@@ -65,7 +66,7 @@ export default function CreditsPage() {
 
         <Link
           href="/veiculos"
-          className="mt-10 inline-flex items-center text-sm font-medium tracking-tight text-foreground-muted transition-colors duration-300 hover:text-brand-bright"
+          className="mt-10 inline-flex items-center text-sm font-medium tracking-tight text-foreground-muted transition-colors duration-300 hover:text-accent"
         >
           Voltar ao estoque
         </Link>
