@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowRight, Camera } from "@/components/icons";
+import { Mark } from "@/components/logo";
 import { Badge } from "@/components/ui";
 import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { formatKmShort, priceLabel } from "@/lib/format";
@@ -43,9 +44,15 @@ export function VehicleCard({
             priority={priority}
             className="object-cover object-center transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/card:scale-[1.04]"
           />
-        ) : null}
+        ) : (
+          // Unidade recém-chegada, ainda sem fotos: a marca no lugar da foto.
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-foreground-subtle">
+            <Mark className="h-10 w-auto text-mute-300" />
+            <span className="text-sm font-semibold">Fotos em breve</span>
+          </div>
+        )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-          {real ? (
+          {!cover ? null : real ? (
             <Badge tone="dark">
               <Camera className="h-3.5 w-3.5" />
               Fotos da unidade

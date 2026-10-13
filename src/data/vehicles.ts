@@ -16,12 +16,15 @@ import type { Vehicle } from "@/types/vehicle";
  * To update the stock, replace the entries below from a fresh export. See
  * README.md.
  */
-export const STOCK_ISSUED_AT = "06/10/2026";
+export const STOCK_ISSUED_AT = "13/10/2026";
 
 /**
  * Revisões desde a tabela original de 26/08/2026:
  * - 30/09: Q3, X1 e Creta com valores novos; Argo, Cerato, HB20 e Territory
  *   entraram pela pasta de fotos e valores da equipe.
+ * - 13/10: tabela de 13/10/2026 — Nivus, EcoSport e Picanto ganham preço,
+ *   quilometragem, placa e origem; entra o Creta 1TA Limited. O Kwid também
+ *   deixou de constar e segue publicado, como os demais abaixo.
  * - 09/10: tabela de 06/10/2026 aplicada — valores de Onix LT2, Creta e Cerato,
  *   e placa, origem, ano e descrição de Argo, Cerato e HB20; entrou o Corolla
  *   Cross. Veículos que não constam nessa tabela continuam publicados até a
@@ -29,7 +32,7 @@ export const STOCK_ISSUED_AT = "06/10/2026";
  *   T-Cross e Territory). O Creta 1TA Limited consta com valor 0 e fica de
  *   fora até ter preço.
  */
-export const STOCK_UPDATED_AT = "09/10/2026";
+export const STOCK_UPDATED_AT = "13/10/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -438,51 +441,77 @@ export const vehicles: Vehicle[] = [
      Entradas de 13/10/2026: carros já na loja, com fotos da própria unidade
      (pasta "Carros Autosflow"). Modelo, versão e ano vêm do nome da pasta;
      cor, combustível e — no EcoSport — a quilometragem, das fotos. A pasta
-     não traz valor: `price: 0` publica "Sob consulta" até o preço chegar.
+     não trazia valor; preço, quilometragem, placa e origem vieram depois, da
+     tabela de 13/10/2026.
      ------------------------------------------------------------------- */
   {
     slug: "volkswagen-nivus-highline-1-0-tsi",
     make: "Volkswagen",
     model: "Nivus",
     version: "Highline 1.0 TSI",
-    sourceName: "Nivus High 1.0t 2025",
-    yearShort: "25",
-    year: "2025",
-    yearSort: 2025,
+    sourceName: "VW/NIVUS HL TSI",
+    yearShort: "24/25",
+    year: "2024/2025",
+    yearSort: 2024,
     fuel: "Flex",
     color: "Azul",
-    km: 0,
-    price: 0,
+    km: 26300,
+    plate: "TJF-0I26",
+    price: 132990,
+    origin: "consignado",
     featured: false,
   },
   {
     slug: "ford-ecosport-1-5-at",
     make: "Ford",
     model: "EcoSport",
-    version: "1.5 AT",
-    sourceName: "Eco 1.5 at 2021",
-    yearShort: "21",
-    year: "2021",
-    yearSort: 2021,
+    version: "SE 1.5 AT",
+    sourceName: "FORD / ECOSPORT SE ATDT1.5",
+    yearShort: "20/21",
+    year: "2020/2021",
+    yearSort: 2020,
     fuel: "Flex",
     color: "Prata",
-    km: 52000,
-    price: 0,
+    km: 52047,
+    plate: "GAK-2F04",
+    price: 79990,
+    origin: "consignado",
     featured: false,
   },
   {
     slug: "kia-picanto-1-0-at",
     make: "Kia",
     model: "Picanto",
-    version: "1.0 AT",
-    sourceName: "Picanto 1.0 at 2015",
-    yearShort: "15",
-    year: "2015",
+    version: "EX 1.0 AT",
+    sourceName: "I/KIA PICANTO EX4 1.0 ATFF",
+    yearShort: "15/15",
+    year: "2015/2015",
     yearSort: 2015,
     fuel: "Flex",
     color: "Prata",
-    km: 0,
-    price: 0,
+    km: 132991,
+    plate: "FHE-5855",
+    price: 49990,
+    origin: "consignado",
+    featured: false,
+  },
+
+  /* Tabela de 13/10/2026 — ainda sem fotos. */
+  {
+    slug: "hyundai-creta-1-0-tgdi-limited",
+    make: "Hyundai",
+    model: "Creta",
+    version: "1.0 Turbo Limited AT",
+    sourceName: "HYUNDAI CRETA 1TA LIMITED",
+    yearShort: "22/22",
+    year: "2022/2022",
+    yearSort: 2022,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 50093,
+    plate: "ECZ-9H25",
+    price: 112990,
+    origin: "consignado",
     featured: false,
   },
 ];

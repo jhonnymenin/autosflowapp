@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ArrowRight, Close, Expand } from "@/components/icons";
+import { Mark } from "@/components/logo";
 import { ILLUSTRATIVE_NOTE, type VehicleImage } from "@/data/vehicle-images";
 
 /**
@@ -93,7 +94,19 @@ export function VehicleGallery({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [full, scrollTo]);
 
-  if (images.length === 0) return null;
+  if (images.length === 0) {
+    return (
+      <div className="flex aspect-4/3 flex-col items-center justify-center gap-3 bg-surface-raised text-center text-foreground-subtle sm:rounded-card">
+        <Mark className="h-14 w-auto text-mute-300" />
+        <p className="text-sm font-semibold text-foreground-muted">
+          Fotos desta unidade em breve
+        </p>
+        <p className="max-w-xs px-6 text-xs">
+          Peça fotos e vídeo pelo WhatsApp.
+        </p>
+      </div>
+    );
+  }
 
   const go = (delta: number) =>
     scrollTo(Math.max(0, Math.min(images.length - 1, active + delta)));
