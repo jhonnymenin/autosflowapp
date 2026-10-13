@@ -82,7 +82,6 @@ export const vehicles: Vehicle[] = [
     price: 62990,
     origin: "loja",
     featured: false,
-    imageSet: "chevrolet-onix",
   },
   {
     slug: "chevrolet-onix-hb",
@@ -433,5 +432,57 @@ export const vehicles: Vehicle[] = [
     price: 147990,
     origin: "consignado",
     featured: true,
+  },
+
+  /* -----------------------------------------------------------------------
+     Entradas de 13/10/2026: carros já na loja, com fotos da própria unidade
+     (pasta "Carros Autosflow"). Modelo, versão e ano vêm do nome da pasta;
+     cor, combustível e — no EcoSport — a quilometragem, das fotos. A pasta
+     não traz valor: `price: 0` publica "Sob consulta" até o preço chegar.
+     ------------------------------------------------------------------- */
+  {
+    slug: "volkswagen-nivus-highline-1-0-tsi",
+    make: "Volkswagen",
+    model: "Nivus",
+    version: "Highline 1.0 TSI",
+    sourceName: "Nivus High 1.0t 2025",
+    yearShort: "25",
+    year: "2025",
+    yearSort: 2025,
+    fuel: "Flex",
+    color: "Azul",
+    km: 0,
+    price: 0,
+    featured: false,
+  },
+  {
+    slug: "ford-ecosport-1-5-at",
+    make: "Ford",
+    model: "EcoSport",
+    version: "1.5 AT",
+    sourceName: "Eco 1.5 at 2021",
+    yearShort: "21",
+    year: "2021",
+    yearSort: 2021,
+    fuel: "Flex",
+    color: "Prata",
+    km: 52000,
+    price: 0,
+    featured: false,
+  },
+  {
+    slug: "kia-picanto-1-0-at",
+    make: "Kia",
+    model: "Picanto",
+    version: "1.0 AT",
+    sourceName: "Picanto 1.0 at 2015",
+    yearShort: "15",
+    year: "2015",
+    yearSort: 2015,
+    fuel: "Flex",
+    color: "Prata",
+    km: 0,
+    price: 0,
+    featured: false,
   },
 ];

@@ -21,7 +21,7 @@ import { bodyLabels, bodyOf } from "@/data/body-types";
 import { contact } from "@/data/brand";
 import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { STOCK_ISSUED_AT, vehicles } from "@/data/vehicles";
-import { formatKm, formatPrice } from "@/lib/format";
+import { formatKm, priceLabel } from "@/lib/format";
 import {
   siteUrl,
   toLeadVehicle,
@@ -52,7 +52,7 @@ export async function generateMetadata({
   if (!vehicle) return {};
 
   const name = fullName(vehicle);
-  const description = `${name}, ${vehicle.year}, ${vehicle.fuel.toLowerCase()}, cor ${vehicle.color.toLowerCase()}, ${formatKm(vehicle.km).toLowerCase()}. ${formatPrice(vehicle.price)} na AutosFlow.`;
+  const description = `${name}, ${vehicle.year}, ${vehicle.fuel.toLowerCase()}, cor ${vehicle.color.toLowerCase()}, ${formatKm(vehicle.km).toLowerCase()}. ${priceLabel(vehicle.price)} na AutosFlow.`;
 
   return {
     title: `${name} ${vehicle.year}`,
@@ -170,7 +170,7 @@ export default async function VehiclePage({
     url: `${siteUrl}/veiculos/${vehicle.slug}`,
     offers: {
       "@type": "Offer",
-      price: vehicle.price,
+      price: vehicle.price > 0 ? vehicle.price : undefined,
       priceCurrency: "BRL",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/veiculos/${vehicle.slug}`,
@@ -258,7 +258,7 @@ export default async function VehiclePage({
                 <div className="mt-6 rounded-card border border-border bg-surface p-5 shadow-card sm:p-6">
                   <p className="text-sm text-foreground-subtle">Valor</p>
                   <p className="tnum mt-1 font-display text-[2.5rem] font-bold leading-none tracking-tight text-foreground">
-                    {formatPrice(vehicle.price)}
+                    {priceLabel(vehicle.price)}
                   </p>
 
                   <div className="mt-5 flex flex-col gap-2">
@@ -429,7 +429,7 @@ export default async function VehiclePage({
               {vehicle.model} {vehicle.version}
             </p>
             <p className="tnum font-display text-xl font-bold leading-tight text-foreground">
-              {formatPrice(vehicle.price)}
+              {priceLabel(vehicle.price)}
             </p>
           </div>
           <a

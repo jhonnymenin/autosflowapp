@@ -5,7 +5,7 @@ import { ArrowRight } from "@/components/icons";
 import { buttonClass } from "@/components/ui";
 import { imagesFor } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, priceLabel } from "@/lib/format";
 import { heroVehicle, priceRange, realPhotoCount } from "@/lib/stock";
 
 import { QuickSearch } from "./quick-search";
@@ -108,7 +108,7 @@ export function Hero() {
                 <span className="text-white/70">Em destaque · </span>
                 {feature.model} {feature.version}
                 <span className="tnum ml-2 font-semibold">
-                  {formatPrice(feature.price)}
+                  {priceLabel(feature.price)}
                 </span>
               </span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-ink-900 transition-transform duration-300 group-hover/feature:translate-x-0.5">

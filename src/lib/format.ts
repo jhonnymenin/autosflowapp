@@ -11,6 +11,11 @@ export function formatPrice(value: number): string {
   return brl.format(value);
 }
 
+/** Preço do anúncio, ou "Sob consulta" quando ainda não há valor (0). */
+export function priceLabel(value: number): string {
+  return value > 0 ? formatPrice(value) : "Sob consulta";
+}
+
 /** 92.014 km, or "Não informada" when the source records no reading. */
 export function formatKm(value: number): string {
   if (value <= 0) return "Não informada";

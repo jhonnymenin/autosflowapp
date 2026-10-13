@@ -88,7 +88,7 @@ function vehicleBlock(lead: LeadVehicle): string {
     `*${lead.name}*`,
     `Ref. ${lead.ref}`,
     `Ano ${lead.year} · ${lead.km} · ${lead.fuel} · ${lead.color}`,
-    `Valor ${formatPrice(lead.price)}`,
+    ...(lead.price > 0 ? [`Valor ${formatPrice(lead.price)}`] : []),
   ].join("\n");
 }
 

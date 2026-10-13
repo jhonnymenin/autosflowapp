@@ -5,7 +5,7 @@ import { join } from "node:path";
 
 import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
-import { formatKm, formatPrice } from "@/lib/format";
+import { formatKm, priceLabel } from "@/lib/format";
 import { archivoFonts, ogColors, ogSize, wordmarkDataUrl } from "@/lib/og";
 import { fullName, getVehicle, stockRef } from "@/lib/stock";
 
@@ -63,12 +63,13 @@ export default async function VehicleOpengraphImage({
     : undefined;
   const textWidth = photo ? 700 : ogSize.width;
 
+  // Quilometragem não informada fica de fora da prévia.
   const facts = [
     vehicle.year,
-    formatKm(vehicle.km),
+    vehicle.km > 0 ? formatKm(vehicle.km) : null,
     vehicle.fuel,
     vehicle.color,
-  ];
+  ].filter((fact): fact is string => fact !== null);
 
   return new ImageResponse(
     <div
@@ -165,12 +166,12 @@ export default async function VehicleOpengraphImage({
         >
           <div
             style={{
-              fontSize: photo ? 64 : 76,
+              fontSize: vehicle.price > 0 ? (photo ? 64 : 76) : photo ? 44 : 56,
               fontWeight: 700,
               letterSpacing: -2,
             }}
           >
-            {formatPrice(vehicle.price)}
+            {priceLabel(vehicle.price)}
           </div>
           <div
             style={{ fontSize: 26, fontWeight: 500, color: ogColors.subtle }}

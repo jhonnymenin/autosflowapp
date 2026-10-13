@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Camera } from "@/components/icons";
 import { Badge } from "@/components/ui";
 import { hasRealPhotos, imagesFor } from "@/data/vehicle-images";
-import { formatKmShort, formatPrice } from "@/lib/format";
+import { formatKmShort, priceLabel } from "@/lib/format";
 import type { Vehicle } from "@/types/vehicle";
 
 /**
@@ -96,7 +96,7 @@ export function VehicleCard({
               {vehicle.origin === "consignado" ? "Consignado · valor" : "Valor"}
             </p>
             <p className="tnum mt-0.5 font-display text-[1.625rem] font-bold leading-none tracking-tight text-foreground">
-              {formatPrice(vehicle.price)}
+              {priceLabel(vehicle.price)}
             </p>
           </div>
           <span

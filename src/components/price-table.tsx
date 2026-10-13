@@ -148,7 +148,7 @@ export function PriceTable() {
                 <td
                   className={`${cell} tnum whitespace-nowrap text-right font-medium text-foreground`}
                 >
-                  {formatNumber(vehicle.price)}
+                  {vehicle.price > 0 ? formatNumber(vehicle.price) : "Consulte"}
                 </td>
               </tr>
             ))}

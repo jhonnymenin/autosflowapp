@@ -4,7 +4,7 @@ import {
   isBodyType,
   type BodyType,
 } from "@/data/body-types";
-import { hasRealPhotos } from "@/data/vehicle-images";
+import { hasRealPhotos, photoTier } from "@/data/vehicle-images";
 import { vehicles } from "@/data/vehicles";
 import type { Vehicle } from "@/types/vehicle";
 
@@ -204,14 +204,20 @@ export function countInBand(kind: "price" | "year" | "km", band: Band): number {
 const kmOrder = (vehicle: Vehicle) =>
   vehicle.km > 0 ? vehicle.km : Number.POSITIVE_INFINITY;
 
-const photoOrder = (vehicle: Vehicle) => (hasRealPhotos(vehicle) ? 0 : 1);
+/** Preço sob consulta (0) vai para o fim da ordem por preço. */
+const priceOrder = (vehicle: Vehicle) =>
+  vehicle.price > 0 ? vehicle.price : Number.POSITIVE_INFINITY;
+
+const photoOrder = photoTier;
 
 const comparators: Record<SortKey, (a: Vehicle, b: Vehicle) => number> = {
-  destaque: (a, b) => photoOrder(a) - photoOrder(b) || a.price - b.price,
-  "preco-asc": (a, b) => a.price - b.price,
-  "preco-desc": (a, b) => b.price - a.price,
-  "ano-desc": (a, b) => b.yearSort - a.yearSort || a.price - b.price,
-  "km-asc": (a, b) => kmOrder(a) - kmOrder(b) || a.price - b.price,
+  destaque: (a, b) =>
+    photoOrder(a) - photoOrder(b) || priceOrder(a) - priceOrder(b),
+  "preco-asc": (a, b) => priceOrder(a) - priceOrder(b),
+  "preco-desc": (a, b) => b.price - a.price || priceOrder(a) - priceOrder(b),
+  "ano-desc": (a, b) =>
+    b.yearSort - a.yearSort || priceOrder(a) - priceOrder(b),
+  "km-asc": (a, b) => kmOrder(a) - kmOrder(b) || priceOrder(a) - priceOrder(b),
 };
 
 export function isSortKey(value: string | undefined): value is SortKey {
@@ -254,7 +260,15 @@ export function featuredVehicles(): Vehicle[] {
 export function showcaseVehicles(limit = 6): Vehicle[] {
   const newest = (a: Vehicle, b: Vehicle) =>
     b.yearSort - a.yearSort || kmOrder(a) - kmOrder(b);
-  const withPhotos = vehicles.filter(hasRealPhotos).sort(newest);
+  const withPhotos = vehicles
+    .filter(hasRealPhotos)
+    .sort(
+      (a, b) =>
+        photoTier(a) - photoTier(b) ||
+        // Na vitrine, carro com preço publicado vem antes do "sob consulta".
+        Number(b.price > 0) - Number(a.price > 0) ||
+        newest(a, b),
+    );
   const featured = featuredVehicles().filter((v) => !hasRealPhotos(v));
   const rest = vehicles
     .filter((v) => !hasRealPhotos(v) && !v.featured)
@@ -292,7 +306,9 @@ export function relatedVehicles(vehicle: Vehicle, limit = 3): Vehicle[] {
   return [...sameMake, ...nearestPrice].slice(0, limit);
 }
 
+const priced = vehicles.filter((vehicle) => vehicle.price > 0);
+
 export const priceRange = {
-  min: Math.min(...vehicles.map((vehicle) => vehicle.price)),
-  max: Math.max(...vehicles.map((vehicle) => vehicle.price)),
+  min: Math.min(...priced.map((vehicle) => vehicle.price)),
+  max: Math.max(...priced.map((vehicle) => vehicle.price)),
 };
