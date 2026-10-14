@@ -29,6 +29,7 @@ export const showroomPhotos = new Set([
   "chevrolet-onix-10mt-lt2",
   "ford-ecosport-1-5-at",
   "kia-picanto-1-0-at",
+  "chevrolet-tracker-lt-1-0-turbo",
 ]);
 
 export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
@@ -1056,6 +1057,123 @@ export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
       src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/16-7a04e290.jpg",
       width: 1200,
       height: 1600,
+    },
+  ],
+  "chevrolet-tracker-lt-1-0-turbo": [
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/01-e34dcfa3.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/02-03f567ed.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/03-a79b0afb.jpg",
+      width: 960,
+      height: 1280,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/04-0eb8ffed.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/05-b563947d.jpg",
+      width: 960,
+      height: 1280,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/06-b1401d93.jpg",
+      width: 960,
+      height: 1280,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/07-baae7847.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/08-43d8f43b.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/09-2c273f9c.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/10-f4a6f1a7.jpg",
+      width: 960,
+      height: 1280,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/11-ccd75eb6.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/12-cfa9946f.jpg",
+      width: 960,
+      height: 1280,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/13-80949cdc.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/14-624a66e1.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/15-4cfc36c9.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/16-7baef623.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/17-b29fc61e.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/18-00436e0c.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/19-cbe10d43.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/20-30560b3b.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/21-16af295d.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/22-74071be1.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo/23-e5598d94.jpg",
+      width: 960,
+      height: 1280,
     },
   ],
 };

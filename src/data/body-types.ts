@@ -29,6 +29,7 @@ const byModel: Record<string, BodyType> = {
   "Corolla Cross": "suv",
   EcoSport: "suv",
   Nivus: "suv",
+  Tracker: "suv",
   Onix: "hatch",
   Sonic: "hatch",
   "PT Cruiser": "hatch",

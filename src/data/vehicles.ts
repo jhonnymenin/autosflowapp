@@ -514,4 +514,22 @@ export const vehicles: Vehicle[] = [
     origin: "consignado",
     featured: false,
   },
+
+  /* 14/10/2026: pasta "Track Lt 1.0 turbo 2024 km 37800. Confirmar valor
+     venal" — fotos na loja. Valor a confirmar pela equipe: sob consulta. */
+  {
+    slug: "chevrolet-tracker-lt-1-0-turbo",
+    make: "Chevrolet",
+    model: "Tracker",
+    version: "LT 1.0 Turbo AT",
+    sourceName: "Track Lt 1.0 turbo 2024",
+    yearShort: "24",
+    year: "2024",
+    yearSort: 2024,
+    fuel: "Flex",
+    color: "Preta",
+    km: 37800,
+    price: 0,
+    featured: false,
+  },
 ];
