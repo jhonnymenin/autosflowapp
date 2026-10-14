@@ -515,8 +515,8 @@ export const vehicles: Vehicle[] = [
     featured: false,
   },
 
-  /* 14/10/2026: pasta "Track Lt 1.0 turbo 2024 km 37800. Confirmar valor
-     venal" — fotos na loja. Valor a confirmar pela equipe: sob consulta. */
+  /* 14/10/2026: pasta "Track Lt 1.0 turbo 2024 km 37800" — fotos na loja.
+     Valor de R$ 104.990 informado pela equipe no mesmo dia. */
   {
     slug: "chevrolet-tracker-lt-1-0-turbo",
     make: "Chevrolet",
@@ -529,7 +529,7 @@ export const vehicles: Vehicle[] = [
     fuel: "Flex",
     color: "Preta",
     km: 37800,
-    price: 0,
+    price: 104990,
     featured: false,
   },
 ];
