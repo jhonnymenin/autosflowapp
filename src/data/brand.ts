@@ -31,11 +31,11 @@ export const contact = {
   /** E.164, for tel: links. */
   phoneE164: "5511948768653",
   /**
-   * WhatsApp comercial — Vinicius (desde 02/10/2026). Todas as mensagens do
-   * site (proposta, visita, venda, contato) vão para este número.
+   * WhatsApp comercial (desde 15/10/2026). Todas as mensagens do site
+   * (proposta, visita, venda, contato) vão para este número.
    */
-  whatsappLabel: "(11) 95047-1706",
-  whatsappE164: "5511950471706",
+  whatsappLabel: "(11) 94739-2873",
+  whatsappE164: "5511947392873",
   /** Rodapé da tabela de preços de 06/10/2026. */
   address: {
     street: "Rua Silva Bueno, 1.489",
