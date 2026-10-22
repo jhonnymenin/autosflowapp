@@ -260,15 +260,13 @@ export function featuredVehicles(): Vehicle[] {
 export function showcaseVehicles(limit = 6): Vehicle[] {
   const newest = (a: Vehicle, b: Vehicle) =>
     b.yearSort - a.yearSort || kmOrder(a) - kmOrder(b);
-  const withPhotos = vehicles
-    .filter(hasRealPhotos)
-    .sort(
-      (a, b) =>
-        photoTier(a) - photoTier(b) ||
-        // Na vitrine, carro com preço publicado vem antes do "sob consulta".
-        Number(b.price > 0) - Number(a.price > 0) ||
-        newest(a, b),
-    );
+  const withPhotos = vehicles.filter(hasRealPhotos).sort(
+    (a, b) =>
+      photoTier(a) - photoTier(b) ||
+      // Na vitrine, carro com preço publicado vem antes do "sob consulta".
+      Number(b.price > 0) - Number(a.price > 0) ||
+      newest(a, b),
+  );
   const featured = featuredVehicles().filter((v) => !hasRealPhotos(v));
   const rest = vehicles
     .filter((v) => !hasRealPhotos(v) && !v.featured)
@@ -286,10 +284,10 @@ export function showcaseVehicles(limit = 6): Vehicle[] {
  * estoque, e não fotografia genérica.
  */
 export function heroVehicle(): Vehicle | undefined {
-  const withPhotos = vehicles.filter(hasRealPhotos);
-  const pool = withPhotos.filter((v) => v.featured);
-  return [...(pool.length ? pool : withPhotos)].sort(
-    (a, b) => b.price - a.price,
+  // Melhor fotografia primeiro; entre elas, o carro de maior valor publicado.
+  const candidates = vehicles.filter((v) => hasRealPhotos(v) && v.price > 0);
+  return [...candidates].sort(
+    (a, b) => photoTier(a) - photoTier(b) || b.price - a.price,
   )[0];
 }
 

@@ -109,7 +109,8 @@ export const audiences = [
   },
   {
     title: "Lojistas",
-    description: "Estoque virtual, geração de leads e oportunidades comerciais.",
+    description:
+      "Estoque virtual, geração de leads e oportunidades comerciais.",
   },
   {
     title: "Prestadores",

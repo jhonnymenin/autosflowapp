@@ -39,12 +39,29 @@ export function ProfileSection() {
           />
         </Reveal>
 
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 lg:grid-cols-4">
+        <ul
+          className={`mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 ${
+            bodies.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
+          }`}
+        >
           {bodies.map((entry, index) => (
-            <Reveal as="li" key={entry.body} delay={index * 30}>
+            <Reveal
+              as="li"
+              key={entry.body}
+              delay={index * 30}
+              className={
+                bodies.length % 2 === 1 && index === bodies.length - 1
+                  ? "col-span-2 lg:col-span-1"
+                  : undefined
+              }
+            >
               <Link
                 href={`/veiculos?carroceria=${entry.body}`}
-                className="group/tile relative flex aspect-4/5 flex-col justify-end overflow-hidden rounded-card bg-ink-900 p-4 text-white sm:aspect-square sm:p-6"
+                className={`group/tile relative flex flex-col justify-end overflow-hidden rounded-card bg-ink-900 p-4 text-white sm:aspect-square sm:p-6 ${
+                  bodies.length % 2 === 1 && index === bodies.length - 1
+                    ? "aspect-[2/1]"
+                    : "aspect-4/5"
+                }`}
               >
                 {entry.cover ? (
                   <Image

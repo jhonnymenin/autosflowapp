@@ -242,9 +242,10 @@ Para adicionar fotos:
    detalhes. Fotos em pé funcionam: a galeria mostra o quadro inteiro.
 2. Acrescente a lista em `vehicle-photos.ts` com `width` e `height` de cada
    arquivo.
-3. Fotos tiradas no showroom da AutosFlow entram também em `showroomPhotos`
-   (mesmo arquivo): elas abrem a vitrine e a ordem padrão do estoque, à frente
-   de fotos feitas em outros lugares. Use nomes com hash (`01-<hash>.jpg`) ao
+3. Marque a qualidade no mesmo arquivo: `professionalPhotos` (ensaio
+   profissional) abre a home — o carro da abertura sai daqui —, a vitrine e a
+   ordem padrão do estoque; depois vêm `showroomPhotos` (celular, na loja), as
+   demais fotos da unidade e, por último, as imagens de referência. Use nomes com hash (`01-<hash>.jpg`) ao
    trocar fotos de um carro, para que nenhum cache sirva a imagem antiga.
 4. Se o conjunto de referência do modelo não for mais usado por ninguém, apague
    a chave em `vehicle-images.ts` e os arquivos em `public/imagens/veiculos/`.
