@@ -22,6 +22,8 @@ export const STOCK_ISSUED_AT = "13/10/2026";
  * Revisões desde a tabela original de 26/08/2026:
  * - 30/09: Q3, X1 e Creta com valores novos; Argo, Cerato, HB20 e Territory
  *   entraram pela pasta de fotos e valores da equipe.
+ * - 26/10: saem Kicks e HR-V — constam na tabela de 13/10, mas a equipe
+ *   confirmou que não estão na loja.
  * - 21/10: saem os 8 veículos que não constavam mais na tabela (Onix HB,
  *   PT Cruiser, Strada, Fiesta SE, City, Kwid, T-Cross e Territory); entra
  *   um Onix LT 1.0 Turbo 2024 com fotos profissionais.
@@ -35,7 +37,7 @@ export const STOCK_ISSUED_AT = "13/10/2026";
  *   T-Cross e Territory). O Creta 1TA Limited consta com valor 0 e fica de
  *   fora até ter preço.
  */
-export const STOCK_UPDATED_AT = "21/10/2026";
+export const STOCK_UPDATED_AT = "26/10/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -144,24 +146,6 @@ export const vehicles: Vehicle[] = [
     featured: false,
   },
   {
-    slug: "honda-hr-v-ex-cvt",
-    make: "Honda",
-    model: "HR-V",
-    version: "EX CVT",
-    sourceName: "HONDA HR-V EX CVT",
-    yearShort: "15/16",
-    year: "2015/2016",
-    yearSort: 2015,
-    fuel: "Flex",
-    color: "Cinza",
-    km: 100474,
-    plate: "FFM-6308",
-    price: 95990,
-    origin: "loja",
-    featured: false,
-    imageSet: "honda-hr-v",
-  },
-  {
     slug: "hyundai-creta-16a-attitude",
     make: "Hyundai",
     model: "Creta",
@@ -195,24 +179,6 @@ export const vehicles: Vehicle[] = [
     origin: "consignado",
     featured: true,
     imageSet: "mitsubishi-eclipse-cross",
-  },
-  {
-    slug: "nissan-kicks-advance-1-6-16v-aut",
-    make: "Nissan",
-    model: "Kicks",
-    version: "Advance 1.6 16V Flex Aut.",
-    sourceName: "KICKS ADVANCE 1.6 16V FLEX AUT.",
-    yearShort: "24/24",
-    year: "2024/2024",
-    yearSort: 2024,
-    fuel: "Flex",
-    color: "Preta",
-    km: 35600,
-    plate: "TLY-5A01",
-    price: 109990,
-    origin: "loja",
-    featured: true,
-    imageSet: "nissan-kicks",
   },
 
   /* -----------------------------------------------------------------------

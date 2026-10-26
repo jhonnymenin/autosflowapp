@@ -80,29 +80,6 @@ const imageSets: Record<string, VehicleImage[]> = {
         "https://commons.wikimedia.org/wiki/File:2014_Chevrolet_Sonic_LS_Hatchback_in_Silver_Ice_Metallic,_Front_Right,_09-02-2023.jpg",
     },
   ],
-  "honda-hr-v": [
-    {
-      src: "/imagens/veiculos/honda-hr-v-1.jpg",
-      author: "LuvsMG481",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2015_Honda_HR-V_1.8S_front.jpg",
-    },
-    {
-      src: "/imagens/veiculos/honda-hr-v-2.jpg",
-      author: "オーバードライブ83",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2015_Honda_HR-V_1.8_Prestige_RU5_(20210922).jpg",
-    },
-    {
-      src: "/imagens/veiculos/honda-hr-v-3.jpg",
-      author: "Alex Neman",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2015_Honda_HR-V_rear,_West_Surabaya.jpg",
-    },
-  ],
   "mitsubishi-eclipse-cross": [
     {
       src: "/imagens/veiculos/mitsubishi-eclipse-cross-1.jpg",
@@ -124,29 +101,6 @@ const imageSets: Record<string, VehicleImage[]> = {
       licence: "CC BY-SA 4.0",
       source:
         "https://commons.wikimedia.org/wiki/File:2018_Mitsubishi_Eclipse_Cross_3_4X2_1.5_Front.jpg",
-    },
-  ],
-  "nissan-kicks": [
-    {
-      src: "/imagens/veiculos/nissan-kicks-1.jpg",
-      author: "TTTNIS",
-      licence: "CC0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2024_Nissan_Kicks_X_Two-Tone_Interior_Edition.jpg",
-    },
-    {
-      src: "/imagens/veiculos/nissan-kicks-2.jpg",
-      author: "TTTNIS",
-      licence: "CC0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2024_Nissan_Kicks_X_Two-Tone_Interior_Edition_rear.jpg",
-    },
-    {
-      src: "/imagens/veiculos/nissan-kicks-3.jpg",
-      author: "Dinkun Chen",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:NISSAN_KICKS_China_(9).jpg",
     },
   ],
 };
