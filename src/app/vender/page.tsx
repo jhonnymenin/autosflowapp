@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/image";
 
 import { CtaSection } from "@/components/cta-section";
 import { Check, Phone, WhatsApp } from "@/components/icons";

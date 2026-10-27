@@ -242,6 +242,8 @@ Para adicionar fotos:
    detalhes. Fotos em pé funcionam: a galeria mostra o quadro inteiro.
 2. Acrescente a lista em `vehicle-photos.ts` com `width` e `height` de cada
    arquivo.
+   Depois rode `npm run images` (gera as versões AVIF/WebP em `public/_img/`)
+   e inclua `public/_img/` no commit.
 3. Marque a qualidade no mesmo arquivo: `professionalPhotos` (ensaio
    profissional) abre a home — o carro da abertura sai daqui —, a vitrine e a
    ordem padrão do estoque; depois vêm `showroomPhotos` (celular, na loja), as
@@ -257,10 +259,42 @@ da ordem por preço, e a mensagem do WhatsApp sai sem valor.
 `imageOffset` gira um conjunto de referência compartilhado para que duas
 unidades do mesmo modelo não abram com o mesmo quadro.
 
+## Imagens: arquivos estáticos, sem Image Optimization
+
+O site **não** usa o Image Optimization da Vercel (`/_next/image`). No plano
+Hobby ele tem limite de 5.000 transformações por mês — cada combinação de
+imagem, largura e formato conta —, e estourá-lo pausou a conta em 26/10/2026.
+
+Como funciona:
+
+- `scripts/build-images.mjs` gera, para cada JPG/PNG de `public/imagens/` e
+  `public/brand/`, versões **AVIF e WebP** em 7 larguras (160, 384, 640, 750,
+  828, 1200 e 1600 px) em `public/_img/`. A receita (AVIF 47 / WebP 75) é a
+  mesma que o otimizador do Next usava, então o visual e o peso não mudam.
+- É incremental: `public/_img/manifest.json` guarda o hash de cada original;
+  só o que é novo ou mudou é convertido, e versões de originais apagados são
+  removidas. Roda sozinho antes de `npm run dev` e `npm run build`; com tudo
+  em dia, leva menos de um segundo. Converter do zero leva ~7 minutos.
+- `src/components/image.tsx` substitui o `next/image`: mesma API e o mesmo
+  `<img>`, dentro de um `<picture>` que oferece AVIF com WebP de reserva. O
+  loader (`src/lib/image-loader.ts`) aponta cada largura do `srcset` para o
+  arquivo pré-gerado.
+- As larguras precisam ser iguais em três lugares: `WIDTHS` do script,
+  `WIDTHS` do loader e `deviceSizes` + `imageSizes` em `next.config.ts`.
+
+Regras:
+
+- **Importe `Image` de `@/components/image`, nunca de `next/image`.** Um
+  `next/image` direto volta a gerar `/_next/image`.
+- Ao adicionar ou trocar fotos, **rode `npm run images` e faça commit de
+  `public/_img/`** junto com os originais. Se esquecer, o `prebuild` gera na
+  Vercel — funciona, mas o deploy fica minutos mais lento.
+- Para conferir: `grep -c "_next/image"` no HTML das páginas deve dar 0.
+
 ## Adicionar imagens institucionais
 
-Coloque os arquivos em `public/imagens/` e use `next/image` com `sizes`
-adequado. As imagens institucionais têm 1920×1080, JPEG progressivo, qualidade
+Coloque os arquivos em `public/imagens/`, rode `npm run images` e use o
+`Image` de `@/components/image` com `sizes` adequado. As imagens institucionais têm 1920×1080, JPEG progressivo, qualidade
 82.
 
 ---
