@@ -18,7 +18,7 @@ import {
 } from "@/components/stock-filters";
 import { buttonClass } from "@/components/ui";
 import { VehicleCard } from "@/components/vehicle-card";
-import { STOCK_ISSUED_AT, STOCK_UPDATED_AT, vehicles } from "@/data/vehicles";
+import { STOCK_UPDATED_AT, vehicles } from "@/data/vehicles";
 import { formatPrice } from "@/lib/format";
 import { whatsappUrl } from "@/lib/site";
 import { filterStock, isSortKey, priceRange } from "@/lib/stock";
@@ -198,8 +198,8 @@ export default async function VehiclesPage({
               )}
 
               <p className="mt-10 text-xs leading-relaxed text-foreground-subtle">
-                Estoque conforme a tabela de preços de {STOCK_ISSUED_AT}, com
-                valores revistos em {STOCK_UPDATED_AT}. Consignado é o veículo
+                Estoque e valores conforme o registro de estoque de{" "}
+                {STOCK_UPDATED_AT}. Consignado é o veículo
                 de um proprietário, anunciado e negociado com intermediação da
                 AutosFlow. Valores e disponibilidade sujeitos a alteração sem
                 aviso prévio.

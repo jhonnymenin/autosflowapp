@@ -3,193 +3,57 @@ import type { Vehicle } from "@/types/vehicle";
 /**
  * Single source of truth for the published stock.
  *
- * Every field below is transcribed from "Tabela de Preços dos Veículos em
- * Estoque" (issued 26/08/2026, 09:03:24). The original PDF is NOT published:
- * it carries full plates, which the site only shows masked.
+ * Desde 10/11/2026 a fonte é a planilha "AutosFlow | Central de Estoque e
+ * Anúncios" (aba ESTOQUE), mantida pela equipe. O site publica exatamente os
+ * veículos com status "Disponível" ali, com o código AF-### da planilha como
+ * referência pública. Preço e quilometragem são os da planilha; placa e
+ * origem (loja/consignado), que a planilha não traz, vêm das tabelas de preços
+ * anteriores (26/08 a 13/10/2026), cujo PDF não é publicado por trazer placas
+ * completas.
  *
- * `sourceName` holds the description string verbatim; `make`, `model` and
- * `version` are the same string split and normalised for display only. No
- * specification, option, warranty or figure is added that is not in the
- * document — the source leaves "Opcionais", "Loja" and "Fotos" empty, so the
- * site does not show them.
+ * `sourceName` guarda a descrição como veio da fonte; `make`, `model` e
+ * `version` são a mesma descrição normalizada para exibição. Nenhuma
+ * especificação, opcional ou garantia é acrescentada sem estar na fonte.
  *
- * To update the stock, replace the entries below from a fresh export. See
- * README.md.
+ * Só entra no site carro com fotos da própria unidade: nada de imagem
+ * ilustrativa de modelo. Para atualizar, veja README.md.
  */
-export const STOCK_ISSUED_AT = "13/10/2026";
+export const STOCK_ISSUED_AT = "10/11/2026";
 
 /**
- * Revisões desde a tabela original de 26/08/2026:
- * - 30/09: Q3, X1 e Creta com valores novos; Argo, Cerato, HB20 e Territory
- *   entraram pela pasta de fotos e valores da equipe.
- * - 26/10: saem Kicks e HR-V — constam na tabela de 13/10, mas a equipe
- *   confirmou que não estão na loja.
- * - 21/10: saem os 8 veículos que não constavam mais na tabela (Onix HB,
- *   PT Cruiser, Strada, Fiesta SE, City, Kwid, T-Cross e Territory); entra
- *   um Onix LT 1.0 Turbo 2024 com fotos profissionais.
- * - 13/10: tabela de 13/10/2026 — Nivus, EcoSport e Picanto ganham preço,
- *   quilometragem, placa e origem; entra o Creta 1TA Limited. O Kwid também
- *   deixou de constar e segue publicado, como os demais abaixo.
- * - 09/10: tabela de 06/10/2026 aplicada — valores de Onix LT2, Creta e Cerato,
- *   e placa, origem, ano e descrição de Argo, Cerato e HB20; entrou o Corolla
- *   Cross. Veículos que não constam nessa tabela continuam publicados até a
- *   equipe confirmar se foram vendidos (Onix HB, PT Cruiser, Strada, City,
- *   T-Cross e Territory). O Creta 1TA Limited consta com valor 0 e fica de
- *   fora até ter preço.
+ * Revisões:
+ * - 10/11: site alinhado à Central de Estoque. Saem os vendidos (Cerato e
+ *   Creta Limited) e os que não constam na planilha (Eclipse Cross, Tracker,
+ *   Onix LT Turbo 2024, Onix LT2, Onix LS, Sonic e Picanto). Entra o Compass
+ *   Limited T270 (AF-015). Fiesta e Creta Attitude com valores novos; Fiesta,
+ *   Nivus e EcoSport com a quilometragem da planilha.
+ * - 26/10: saem Kicks e HR-V, que não estavam na loja.
+ * - 21/10: saem 8 veículos fora da tabela; fotos profissionais.
+ * - 13/10, 06/10, 30/09: tabelas de preços e pastas de fotos da equipe.
  */
-export const STOCK_UPDATED_AT = "26/10/2026";
+export const STOCK_UPDATED_AT = "10/11/2026";
 
 export const vehicles: Vehicle[] = [
   {
-    slug: "audi-q3-1-4-tfsi",
-    make: "Audi",
-    model: "Q3",
-    version: "1.4 TFSI",
-    sourceName: "AUDI/Q3 1.4TFSI",
-    yearShort: "17/17",
-    year: "2017/2017",
-    yearSort: 2017,
-    fuel: "Flex",
-    color: "Azul",
-    km: 92261,
-    plate: "PZI-1G13",
-    price: 91990,
-    origin: "loja",
-    featured: true,
-  },
-  {
-    slug: "bmw-x1-s20i-active-flex",
-    make: "BMW",
-    model: "X1",
-    version: "S20i Active Flex",
-    sourceName: "BMW/X1 S20I ACTIVE FLEX",
-    yearShort: "17/17",
-    year: "2017/2017",
-    yearSort: 2017,
-    fuel: "Flex",
-    color: "Prata",
-    km: 97198,
-    plate: "GEF-8H55",
-    price: 105990,
-    origin: "loja",
-    featured: true,
-  },
-  {
-    slug: "chevrolet-onix-10mt-lt2",
-    make: "Chevrolet",
-    model: "Onix",
-    version: "10MT LT2",
-    sourceName: "CHEV/ONIX 10MT LT2",
-    yearShort: "22/23",
-    year: "2022/2023",
-    yearSort: 2022,
-    fuel: "Flex",
-    color: "Preta",
-    km: 85141,
-    plate: "FVG-2H43",
-    price: 62990,
-    origin: "loja",
-    featured: false,
-  },
-  {
-    slug: "chevrolet-onix-1-0-mt-ls",
-    make: "Chevrolet",
-    model: "Onix",
-    version: "1.0 MT LS",
-    sourceName: "CHEVROLET/ ONIX 1.0 MT LS",
-    yearShort: "16/16",
-    year: "2016/2016",
-    yearSort: 2016,
-    fuel: "Flex",
-    color: "Preta",
-    km: 83264,
-    plate: "PQX-6H46",
-    price: 46990,
-    origin: "consignado",
-    featured: false,
-    imageSet: "chevrolet-onix-hatch",
-    imageOffset: 1,
-  },
-  {
-    slug: "chevrolet-sonic-ltz-hb-at",
-    make: "Chevrolet",
-    model: "Sonic",
-    version: "LTZ HB AT",
-    sourceName: "I/CHEV SONIC LTZ HB AT",
-    yearShort: "13/14",
-    year: "2013/2014",
-    yearSort: 2013,
-    fuel: "Flex",
-    color: "Branco",
-    km: 0,
-    plate: "FIJ-8A60",
-    price: 45990,
-    origin: "loja",
-    featured: false,
-    imageSet: "chevrolet-sonic",
-  },
-  {
-    slug: "ford-fiesta-ha-1-6l-titanium",
-    make: "Ford",
-    model: "Fiesta",
-    version: "HA 1.6L Titanium",
-    sourceName: "FIESTA HA 1,6L TITANIUM",
-    yearShort: "15/16",
-    year: "2015/2016",
-    yearSort: 2015,
-    fuel: "Flex",
-    color: "Branco",
-    km: 106569,
-    plate: "FGX-5E24",
-    price: 51990,
-    origin: "consignado",
-    featured: false,
-  },
-  {
-    slug: "hyundai-creta-16a-attitude",
-    make: "Hyundai",
-    model: "Creta",
-    version: "16A Attitude",
-    sourceName: "HYUNDAI / CRETA 16A ATTITUDE",
-    yearShort: "20/21",
-    year: "2020/2021",
-    yearSort: 2020,
-    fuel: "Flex",
-    color: "Preta",
-    km: 85137,
-    plate: "ERZ-4H31",
-    price: 87990,
-    origin: "consignado",
-    featured: false,
-  },
-  {
-    slug: "mitsubishi-eclipse-cross-hpe",
-    make: "Mitsubishi",
-    model: "Eclipse Cross",
-    version: "HPE",
-    sourceName: "MMC/ ECLIPSE CR HPE",
+    ref: "AF-001",
+    slug: "toyota-corolla-cross-xre-2-0",
+    make: "Toyota",
+    model: "Corolla Cross",
+    version: "XRE 2.0",
+    sourceName: "TOYOTA / CCROSS XRE 20",
     yearShort: "23/24",
     year: "2023/2024",
     yearSort: 2023,
-    fuel: "Gasolina",
-    color: "Preta",
-    km: 26841,
-    plate: "SDL-0A16",
-    price: 142990,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 58000,
+    plate: "EXR-5H55",
+    price: 147990,
     origin: "consignado",
     featured: true,
-    imageSet: "mitsubishi-eclipse-cross",
   },
-
-  /* -----------------------------------------------------------------------
-     Entradas de 30/09/2026, vindas da pasta de fotos e valores enviada pela
-     equipe ("Carros com fotos e Valores"). Modelo, ano e preço são os do nome
-     da pasta; cor e quilometragem foram lidas nas próprias fotos (painel),
-     exceto a do Cerato, informada pela equipe em 02/10/2026. O que não
-     aparece em lugar nenhum — placa, origem e a quilometragem do Territory —
-     fica em branco até o registro chegar.
-     ------------------------------------------------------------------- */
   {
+    ref: "AF-002",
     slug: "fiat-argo-1-0-mt",
     make: "Fiat",
     model: "Argo",
@@ -207,23 +71,79 @@ export const vehicles: Vehicle[] = [
     featured: false,
   },
   {
-    slug: "kia-cerato-1-6-at",
-    make: "Kia",
-    model: "Cerato",
-    version: "1.6 AT",
-    sourceName: "I/KIA CERATO FF SX4 ATBN",
-    yearShort: "17/18",
-    year: "2017/2018",
+    ref: "AF-003",
+    slug: "audi-q3-1-4-tfsi",
+    make: "Audi",
+    model: "Q3",
+    version: "1.4 TFSI",
+    sourceName: "AUDI/Q3 1.4TFSI",
+    yearShort: "17/17",
+    year: "2017/2017",
+    yearSort: 2017,
+    fuel: "Flex",
+    color: "Azul",
+    km: 92261,
+    plate: "PZI-1G13",
+    price: 91990,
+    origin: "loja",
+    featured: true,
+  },
+  {
+    ref: "AF-004",
+    slug: "bmw-x1-s20i-active-flex",
+    make: "BMW",
+    model: "X1",
+    version: "S20i Active Flex",
+    sourceName: "BMW/X1 S20I ACTIVE FLEX",
+    yearShort: "17/17",
+    year: "2017/2017",
     yearSort: 2017,
     fuel: "Flex",
     color: "Prata",
-    km: 169000,
-    plate: "GJC-3G89",
-    price: 67990,
+    km: 97198,
+    plate: "GEF-8H55",
+    price: 105990,
     origin: "loja",
+    featured: true,
+  },
+  {
+    ref: "AF-006",
+    slug: "hyundai-creta-16a-attitude",
+    make: "Hyundai",
+    model: "Creta",
+    version: "16A Attitude",
+    sourceName: "HYUNDAI / CRETA 16A ATTITUDE",
+    yearShort: "20/21",
+    year: "2020/2021",
+    yearSort: 2020,
+    fuel: "Flex",
+    color: "Preta",
+    km: 85137,
+    plate: "ERZ-4H31",
+    price: 86990,
+    origin: "consignado",
     featured: false,
   },
   {
+    ref: "AF-007",
+    slug: "ford-fiesta-ha-1-6l-titanium",
+    make: "Ford",
+    model: "Fiesta",
+    version: "HA 1.6L Titanium",
+    sourceName: "FIESTA HA 1,6L TITANIUM",
+    yearShort: "15/16",
+    year: "2015/2016",
+    yearSort: 2015,
+    fuel: "Flex",
+    color: "Branco",
+    km: 108343,
+    plate: "FGX-5E24",
+    price: 48990,
+    origin: "consignado",
+    featured: false,
+  },
+  {
+    ref: "AF-008",
     slug: "hyundai-hb20-1-0-mt",
     make: "Hyundai",
     model: "HB20",
@@ -240,55 +160,8 @@ export const vehicles: Vehicle[] = [
     origin: "loja",
     featured: false,
   },
-
-  /* -----------------------------------------------------------------------
-     Entrada de 09/10/2026: linha da tabela de preços emitida em 06/10/2026
-     (06/10/2026 12:15:00) e fotos da própria unidade, na pasta "infos
-     autosflow" enviada pela equipe.
-     ------------------------------------------------------------------- */
   {
-    slug: "toyota-corolla-cross-xre-2-0",
-    make: "Toyota",
-    model: "Corolla Cross",
-    version: "XRE 2.0",
-    sourceName: "TOYOTA / CCROSS XRE 20",
-    yearShort: "23/24",
-    year: "2023/2024",
-    yearSort: 2023,
-    fuel: "Flex",
-    color: "Cinza",
-    km: 58000,
-    plate: "EXR-5H55",
-    price: 147990,
-    origin: "consignado",
-    featured: true,
-  },
-
-  /* -----------------------------------------------------------------------
-     Entradas de 13/10/2026: carros já na loja, com fotos da própria unidade
-     (pasta "Carros Autosflow"). Modelo, versão e ano vêm do nome da pasta;
-     cor, combustível e — no EcoSport — a quilometragem, das fotos. A pasta
-     não trazia valor; preço, quilometragem, placa e origem vieram depois, da
-     tabela de 13/10/2026.
-     ------------------------------------------------------------------- */
-  {
-    slug: "volkswagen-nivus-highline-1-0-tsi",
-    make: "Volkswagen",
-    model: "Nivus",
-    version: "Highline 1.0 TSI",
-    sourceName: "VW/NIVUS HL TSI",
-    yearShort: "24/25",
-    year: "2024/2025",
-    yearSort: 2024,
-    fuel: "Flex",
-    color: "Azul",
-    km: 26300,
-    plate: "TJF-0I26",
-    price: 132990,
-    origin: "consignado",
-    featured: false,
-  },
-  {
+    ref: "AF-010",
     slug: "ford-ecosport-1-5-at",
     make: "Ford",
     model: "EcoSport",
@@ -299,82 +172,44 @@ export const vehicles: Vehicle[] = [
     yearSort: 2020,
     fuel: "Flex",
     color: "Prata",
-    km: 52047,
+    km: 52000,
     plate: "GAK-2F04",
     price: 79990,
     origin: "consignado",
     featured: false,
   },
   {
-    slug: "kia-picanto-1-0-at",
-    make: "Kia",
-    model: "Picanto",
-    version: "EX 1.0 AT",
-    sourceName: "I/KIA PICANTO EX4 1.0 ATFF",
-    yearShort: "15/15",
-    year: "2015/2015",
-    yearSort: 2015,
+    ref: "AF-011",
+    slug: "volkswagen-nivus-highline-1-0-tsi",
+    make: "Volkswagen",
+    model: "Nivus",
+    version: "Highline 1.0 TSI",
+    sourceName: "VW/NIVUS HL TSI",
+    yearShort: "24/25",
+    year: "2024/2025",
+    yearSort: 2024,
     fuel: "Flex",
-    color: "Prata",
-    km: 132991,
-    plate: "FHE-5855",
-    price: 49990,
+    color: "Azul",
+    km: 26000,
+    plate: "TJF-0I26",
+    price: 132990,
     origin: "consignado",
     featured: false,
   },
-
-  /* Tabela de 13/10/2026 — ainda sem fotos. */
   {
-    slug: "hyundai-creta-1-0-tgdi-limited",
-    make: "Hyundai",
-    model: "Creta",
-    version: "1.0 Turbo Limited AT",
-    sourceName: "HYUNDAI CRETA 1TA LIMITED",
-    yearShort: "22/22",
-    year: "2022/2022",
+    ref: "AF-015",
+    slug: "jeep-compass-limited-t270",
+    make: "Jeep",
+    model: "Compass",
+    version: "Limited T270 1.3 Turbo AT",
+    sourceName: "JEEP COMPASS LIMITED T270 FLEX",
+    yearShort: "22",
+    year: "2022",
     yearSort: 2022,
     fuel: "Flex",
-    color: "Cinza",
-    km: 50093,
-    plate: "ECZ-9H25",
-    price: 112990,
-    origin: "consignado",
-    featured: false,
-  },
-
-  /* 14/10/2026: pasta "Track Lt 1.0 turbo 2024 km 37800" — fotos na loja.
-     Valor de R$ 104.990 informado pela equipe no mesmo dia. */
-  {
-    slug: "chevrolet-tracker-lt-1-0-turbo",
-    make: "Chevrolet",
-    model: "Tracker",
-    version: "LT 1.0 Turbo AT",
-    sourceName: "Track Lt 1.0 turbo 2024",
-    yearShort: "24",
-    year: "2024",
-    yearSort: 2024,
-    fuel: "Flex",
     color: "Preta",
-    km: 37800,
-    price: 104990,
-    featured: false,
-  },
-
-  /* 21/10/2026: fotos profissionais (pasta "Carros Autosflow"). Unidade nova,
-     fora da tabela de 13/10: valor e quilometragem a confirmar. */
-  {
-    slug: "chevrolet-onix-lt-1-0-turbo-mt",
-    make: "Chevrolet",
-    model: "Onix",
-    version: "LT 1.0 Turbo MT",
-    sourceName: "Onix lt 1.0 turbo 2024",
-    yearShort: "24",
-    year: "2024",
-    yearSort: 2024,
-    fuel: "Flex",
-    color: "Cinza",
-    km: 0,
-    price: 0,
-    featured: false,
+    km: 18000,
+    price: 123990,
+    featured: true,
   },
 ];

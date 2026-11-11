@@ -35,75 +35,10 @@ export interface VehicleImage {
   source?: string;
 }
 
-const imageSets: Record<string, VehicleImage[]> = {
-  "chevrolet-onix-hatch": [
-    {
-      src: "/imagens/veiculos/chevrolet-onix-hatch-1.jpg",
-      author: "Jengtingchen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:Chevrolet_Onix_008.jpg",
-    },
-    {
-      src: "/imagens/veiculos/chevrolet-onix-hatch-2.jpg",
-      author: "Matti Blume",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:Chevrolet_Onix_20150814-DSC05650.JPG",
-    },
-    {
-      src: "/imagens/veiculos/chevrolet-onix-hatch-3.jpg",
-      author: "Jengtingchen",
-      licence: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:Chevrolet_Onix_006.jpg",
-    },
-  ],
-  "chevrolet-sonic": [
-    {
-      src: "/imagens/veiculos/chevrolet-sonic-1.jpg",
-      author: "IFCAR",
-      licence: "Public domain",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Sonic_1LT_hatchback_--_10-19-2011_front_1.jpg",
-    },
-    {
-      src: "/imagens/veiculos/chevrolet-sonic-2.jpg",
-      author: "IFCAR",
-      licence: "Public domain",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Sonic_1LT_hatchback_--_10-19-2011_front_2.jpg",
-    },
-    {
-      src: "/imagens/veiculos/chevrolet-sonic-3.jpg",
-      author: "Elise240SX",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2014_Chevrolet_Sonic_LS_Hatchback_in_Silver_Ice_Metallic,_Front_Right,_09-02-2023.jpg",
-    },
-  ],
-  "mitsubishi-eclipse-cross": [
-    {
-      src: "/imagens/veiculos/mitsubishi-eclipse-cross-1.jpg",
-      author: "Tokumeigakarinoaoshima",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:Osaka_Auto_Messe_2019_(414)_-_Mitsubishi_ECLIPSE_CROSS_STREET_SPORT.jpg",
-    },
-    {
-      src: "/imagens/veiculos/mitsubishi-eclipse-cross-2.jpg",
-      author: "Alexander Migl",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:Mitsubishi_Eclipse_Cross_PHEV_1X7A6477.jpg",
-    },
-    {
-      src: "/imagens/veiculos/mitsubishi-eclipse-cross-3.jpg",
-      author: "Vauxford",
-      licence: "CC BY-SA 4.0",
-      source:
-        "https://commons.wikimedia.org/wiki/File:2018_Mitsubishi_Eclipse_Cross_3_4X2_1.5_Front.jpg",
-    },
-  ],
-};
+// Vazio de propósito desde 10/11/2026: um cliente viu o Eclipse Cross com
+// fotos de referência, cada uma de um carro diferente, e achou que era a
+// unidade. Só entra no site carro com fotos da própria unidade.
+const imageSets: Record<string, VehicleImage[]> = {};
 
 /**
  * Qualidade da apresentação: 0 = fotos profissionais, 1 = fotos no showroom

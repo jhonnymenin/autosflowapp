@@ -3,6 +3,8 @@ export type Fuel = "Flex" | "Gasolina";
 export type Origin = "loja" | "consignado";
 
 export interface Vehicle {
+  /** Código da planilha Central de Estoque (AF-###), usado como referência pública. */
+  ref?: string;
   /** URL segment, unique across the stock. */
   slug: string;
   /** Manufacturer, exactly as grouped in the source price table. */

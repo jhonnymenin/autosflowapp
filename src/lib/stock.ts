@@ -69,11 +69,13 @@ const findBand = (bands: Band[], value?: string) =>
    Referência de estoque
 
    Identificador público do anúncio, usado no lugar da placa nas conversas e
-   nas páginas. Derivado do slug, então é estável entre builds e não muda se a
-   ordem do estoque mudar.
+   nas páginas. É o código AF-### da planilha Central de Estoque, para que o
+   cliente e a equipe falem do mesmo carro; sem ele, um código derivado do
+   slug, estável entre builds.
    ---------------------------------------------------------------------- */
 
 export function stockRef(vehicle: Vehicle): string {
+  if (vehicle.ref) return vehicle.ref;
   let hash = 0;
   for (const char of vehicle.slug) {
     hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
