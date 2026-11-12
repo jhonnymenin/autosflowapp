@@ -39,8 +39,10 @@ const byModel: Record<string, BodyType> = {
   Argo: "hatch",
   HB20: "hatch",
   Picanto: "hatch",
+  Fit: "hatch",
   City: "sedan",
   Cerato: "sedan",
+  Etios: "sedan",
   Strada: "picape",
 };
 

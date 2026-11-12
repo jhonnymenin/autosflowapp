@@ -12,7 +12,7 @@ export type SortKey =
   "destaque" | "preco-asc" | "preco-desc" | "ano-desc" | "km-asc";
 
 export const sortOptions: { value: SortKey; label: string }[] = [
-  { value: "destaque", label: "Fotos primeiro" },
+  { value: "destaque", label: "Destaques" },
   { value: "preco-asc", label: "Menor preço" },
   { value: "preco-desc", label: "Maior preço" },
   { value: "ano-desc", label: "Mais novos" },
@@ -22,7 +22,7 @@ export const sortOptions: { value: SortKey; label: string }[] = [
 /* -------------------------------------------------------------------------
    Faixas
 
-   Definidas a partir do estoque real (R$ 45.990 a R$ 142.990) e não de
+   Definidas a partir do estoque real (R$ 49.990 a R$ 147.990) e não de
    valores genéricos, para que nenhuma faixa apareça vazia.
    ---------------------------------------------------------------------- */
 
@@ -43,8 +43,7 @@ export const priceBands: Band[] = [
 export const yearBands: Band[] = [
   { value: "2023-mais", label: "2023 ou mais novo", min: 2023 },
   { value: "2020-2022", label: "2020 a 2022", min: 2020, max: 2022 },
-  { value: "2016-2019", label: "2016 a 2019", min: 2016, max: 2019 },
-  { value: "ate-2015", label: "Até 2015", max: 2015 },
+  { value: "ate-2019", label: "Até 2019", max: 2019 },
 ];
 
 export const kmBands: Band[] = [
@@ -210,11 +209,11 @@ const kmOrder = (vehicle: Vehicle) =>
 const priceOrder = (vehicle: Vehicle) =>
   vehicle.price > 0 ? vehicle.price : Number.POSITIVE_INFINITY;
 
-const photoOrder = photoTier;
+// A ordem de `vehicles` é a vitrine montada à mão (ver data/vehicles.ts).
+const curatedOrder = (vehicle: Vehicle) => vehicles.indexOf(vehicle);
 
 const comparators: Record<SortKey, (a: Vehicle, b: Vehicle) => number> = {
-  destaque: (a, b) =>
-    photoOrder(a) - photoOrder(b) || priceOrder(a) - priceOrder(b),
+  destaque: (a, b) => curatedOrder(a) - curatedOrder(b),
   "preco-asc": (a, b) => priceOrder(a) - priceOrder(b),
   "preco-desc": (a, b) => b.price - a.price || priceOrder(a) - priceOrder(b),
   "ano-desc": (a, b) =>
@@ -256,27 +255,13 @@ export function featuredVehicles(): Vehicle[] {
 }
 
 /**
- * Vitrine da home: primeiro quem tem fotos reais (do mais novo para o mais
- * antigo), depois os destaques e o restante do estoque.
+ * Vitrine da home: os carros com fotos da unidade, na ordem montada em
+ * data/vehicles.ts, sem o carro que já abre a página.
  */
 export function showcaseVehicles(limit = 6): Vehicle[] {
-  const newest = (a: Vehicle, b: Vehicle) =>
-    b.yearSort - a.yearSort || kmOrder(a) - kmOrder(b);
-  const withPhotos = vehicles.filter(hasRealPhotos).sort(
-    (a, b) =>
-      photoTier(a) - photoTier(b) ||
-      // Na vitrine, carro com preço publicado vem antes do "sob consulta".
-      Number(b.price > 0) - Number(a.price > 0) ||
-      newest(a, b),
-  );
-  const featured = featuredVehicles().filter((v) => !hasRealPhotos(v));
-  const rest = vehicles
-    .filter((v) => !hasRealPhotos(v) && !v.featured)
-    .sort(newest);
-  // O carro da abertura já aparece no hero; repetir logo abaixo é desperdício.
   const hero = heroVehicle();
-  return [...withPhotos, ...featured, ...rest]
-    .filter((v) => v.slug !== hero?.slug)
+  return vehicles
+    .filter((v) => hasRealPhotos(v) && v.slug !== hero?.slug)
     .slice(0, limit);
 }
 
