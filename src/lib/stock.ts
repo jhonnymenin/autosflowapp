@@ -186,6 +186,8 @@ export const originCounts = {
   loja: vehicles.filter((vehicle) => vehicle.origin === "loja").length,
   consignado: vehicles.filter((vehicle) => vehicle.origin === "consignado")
     .length,
+  assistida: vehicles.filter((vehicle) => vehicle.origin === "assistida")
+    .length,
 };
 
 /** Quantos veículos cada faixa devolve, para mostrar no filtro. */

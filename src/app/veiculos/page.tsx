@@ -201,7 +201,9 @@ export default async function VehiclesPage({
                 Estoque e valores conforme o registro de estoque de{" "}
                 {STOCK_UPDATED_AT}. Consignado é o veículo
                 de um proprietário, anunciado e negociado com intermediação da
-                AutosFlow. Valores e disponibilidade sujeitos a alteração sem
+                AutosFlow. Venda assistida é o carro de um proprietário que
+                continua com ele: a AutosFlow conduz a negociação e agenda a
+                visita. Valores e disponibilidade sujeitos a alteração sem
                 aviso prévio.
               </p>
             </div>

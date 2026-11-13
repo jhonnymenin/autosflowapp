@@ -1,9 +1,14 @@
-export type Fuel = "Flex" | "Gasolina";
+export type Fuel = "Flex" | "Gasolina" | "Híbrido";
 
-export type Origin = "loja" | "consignado";
+/**
+ * loja: estoque próprio. consignado: carro de proprietário, na loja.
+ * assistida: venda assistida — carro de terceiro que fica com o proprietário;
+ * a AutosFlow anuncia e conduz a negociação (código AO-### na planilha).
+ */
+export type Origin = "loja" | "consignado" | "assistida";
 
 export interface Vehicle {
-  /** Código da planilha Central de Estoque (AF-###), usado como referência pública. */
+  /** Código da planilha (AF-### no estoque físico, AO-### na venda assistida), usado como referência pública. */
   ref?: string;
   /** URL segment, unique across the stock. */
   slug: string;
@@ -32,7 +37,7 @@ export interface Vehicle {
   plate?: string;
   /** Asking price in BRL. */
   price: number;
-  /** Stock vehicle or vehicle listed on consignment (marked "*" in the source). */
+  /** Estoque próprio, consignado (marcado "*" na fonte) ou venda assistida. */
   origin?: Origin;
   featured: boolean;
   /**

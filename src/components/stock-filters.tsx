@@ -245,7 +245,12 @@ export function appliedFilters(active: ActiveFilters) {
     active.origem
       ? {
           key: "origem",
-          label: active.origem === "loja" ? "Da loja" : "Consignados",
+          label:
+            active.origem === "loja"
+              ? "Da loja"
+              : active.origem === "assistida"
+                ? "Venda assistida"
+                : "Consignados",
         }
       : null,
   ].filter((item): item is { key: keyof ActiveFilters; label: string } =>

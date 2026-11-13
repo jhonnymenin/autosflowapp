@@ -6,7 +6,9 @@ import type { Vehicle } from "@/types/vehicle";
  * Desde 10/11/2026 a fonte é a planilha "AutosFlow | Central de Estoque e
  * Anúncios" (aba ESTOQUE), mantida pela equipe. O site publica exatamente os
  * veículos com status "Disponível" ali, com o código AF-### da planilha como
- * referência pública. Preço e quilometragem são os da planilha; placa e
+ * referência pública. Os carros de venda assistida (de terceiros, que ficam
+ * com o proprietário) vêm da planilha "02 — Central de Estoque Online | Venda
+ * Assistida", com código AO-### e `origin: "assistida"`. Preço e quilometragem são os da planilha; placa e
  * origem (loja/consignado), que a planilha não traz, vêm das tabelas de preços
  * anteriores (26/08 a 13/10/2026), cujo PDF não é publicado por trazer placas
  * completas.
@@ -27,6 +29,9 @@ export const STOCK_ISSUED_AT = "12/11/2026";
 
 /**
  * Revisões:
+ * - 13/11: entra o primeiro carro de venda assistida, Corolla Cross XRX
+ *   Hybrid 2024 (AO-001), no topo da vitrine. Quilometragem sob consulta
+ *   até o proprietário confirmar; placa coberta nas fotos.
  * - 12/11: sai o Fiesta (vendido); entram Fit LX 2016 (AF-016), Nivus preto
  *   2022 (AF-017) e Etios Sedan Platinum 2018 (AF-018). Q3, X1, Creta
  *   Attitude e HB20 com fotos novas, feitas na AutosFlow. Lista em ordem de
@@ -40,9 +45,27 @@ export const STOCK_ISSUED_AT = "12/11/2026";
  * - 21/10: saem 8 veículos fora da tabela; fotos profissionais.
  * - 13/10, 06/10, 30/09: tabelas de preços e pastas de fotos da equipe.
  */
-export const STOCK_UPDATED_AT = "12/11/2026";
+export const STOCK_UPDATED_AT = "13/11/2026";
 
 export const vehicles: Vehicle[] = [
+  {
+    ref: "AO-001",
+    slug: "toyota-corolla-cross-xrx-hybrid",
+    make: "Toyota",
+    model: "Corolla Cross",
+    version: "XRX Hybrid 1.8",
+    sourceName: "TOYOTA COROLLA CROSS XRX HYBRID 1.8",
+    yearShort: "24",
+    year: "2024",
+    yearSort: 2024,
+    fuel: "Híbrido",
+    color: "Branco",
+    // A planilha deixa a quilometragem em branco até o proprietário confirmar.
+    km: 0,
+    price: 155990,
+    origin: "assistida",
+    featured: false,
+  },
   {
     ref: "AF-015",
     slug: "jeep-compass-limited-t270",
@@ -57,24 +80,6 @@ export const vehicles: Vehicle[] = [
     color: "Preta",
     km: 18000,
     price: 123990,
-    featured: true,
-  },
-  {
-    ref: "AF-001",
-    slug: "toyota-corolla-cross-xre-2-0",
-    make: "Toyota",
-    model: "Corolla Cross",
-    version: "XRE 2.0",
-    sourceName: "TOYOTA / CCROSS XRE 20",
-    yearShort: "23/24",
-    year: "2023/2024",
-    yearSort: 2023,
-    fuel: "Flex",
-    color: "Cinza",
-    km: 58000,
-    plate: "EXR-5H55",
-    price: 147990,
-    origin: "consignado",
     featured: true,
   },
   {
@@ -94,6 +99,24 @@ export const vehicles: Vehicle[] = [
     price: 132990,
     origin: "consignado",
     featured: false,
+  },
+  {
+    ref: "AF-001",
+    slug: "toyota-corolla-cross-xre-2-0",
+    make: "Toyota",
+    model: "Corolla Cross",
+    version: "XRE 2.0",
+    sourceName: "TOYOTA / CCROSS XRE 20",
+    yearShort: "23/24",
+    year: "2023/2024",
+    yearSort: 2023,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 58000,
+    plate: "EXR-5H55",
+    price: 147990,
+    origin: "consignado",
+    featured: true,
   },
   {
     ref: "AF-006",

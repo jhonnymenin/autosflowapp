@@ -114,9 +114,20 @@ export function PriceTable() {
                         *
                       </span>
                     ) : null}
+                    {vehicle.origin === "assistida" ? (
+                      <span
+                        aria-hidden="true"
+                        className="mr-1.5 text-foreground-subtle"
+                      >
+                        †
+                      </span>
+                    ) : null}
                     {vehicle.sourceName}
                     {vehicle.origin === "consignado" ? (
                       <span className="sr-only"> (consignado)</span>
+                    ) : null}
+                    {vehicle.origin === "assistida" ? (
+                      <span className="sr-only"> (venda assistida)</span>
                     ) : null}
                   </Link>
                 </th>
@@ -128,7 +139,11 @@ export function PriceTable() {
                 <td
                   className={`${cell} whitespace-nowrap text-foreground-muted`}
                 >
-                  {vehicle.fuel === "Gasolina" ? "GAS" : "FLEX"}
+                  {vehicle.fuel === "Gasolina"
+                    ? "GAS"
+                    : vehicle.fuel === "Híbrido"
+                      ? "HÍBRIDO"
+                      : "FLEX"}
                 </td>
                 <td
                   className={`${cell} whitespace-nowrap text-foreground-muted`}
@@ -138,7 +153,7 @@ export function PriceTable() {
                 <td
                   className={`${cell} tnum whitespace-nowrap text-right text-foreground-muted`}
                 >
-                  {vehicle.km > 0 ? formatKmShort(vehicle.km) : "0"}
+                  {vehicle.km > 0 ? formatKmShort(vehicle.km) : "Consulte"}
                 </td>
                 <td
                   className={`${cell} tnum whitespace-nowrap text-foreground-muted`}
@@ -178,6 +193,19 @@ export function PriceTable() {
               {originCounts.consignado}
             </td>
           </tr>
+          {originCounts.assistida > 0 ? (
+            <tr>
+              <th
+                scope="row"
+                className="sticky left-0 bg-background py-2 pr-4 text-left font-normal text-foreground-muted lg:static"
+              >
+                Venda assistida (†)
+              </th>
+              <td colSpan={6} className="tnum px-4 py-2 text-foreground">
+                {originCounts.assistida}
+              </td>
+            </tr>
+          ) : null}
           <tr className="border-t border-border-strong">
             <th
               scope="row"

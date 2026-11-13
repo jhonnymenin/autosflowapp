@@ -100,7 +100,11 @@ export function VehicleCard({
         <div className="mt-auto flex items-end justify-between gap-4 pt-5">
           <div>
             <p className="text-xs text-foreground-subtle">
-              {vehicle.origin === "consignado" ? "Consignado · valor" : "Valor"}
+              {vehicle.origin === "consignado"
+                ? "Consignado · valor"
+                : vehicle.origin === "assistida"
+                  ? "Venda assistida · valor"
+                  : "Valor"}
             </p>
             <p className="tnum mt-0.5 font-display text-[1.625rem] font-bold leading-none tracking-tight text-foreground">
               {priceLabel(vehicle.price)}

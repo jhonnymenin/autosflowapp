@@ -57,6 +57,13 @@ export default function PriceTablePage() {
               entrega seguem o mesmo processo dos veículos da loja.
             </p>
             <p>
+              <span className="text-foreground-muted">(†)</span> Venda
+              assistida — carro de um proprietário particular, que fica com
+              ele e não na loja. A AutosFlow conduz o atendimento, a
+              negociação e a documentação; visita e test-drive com
+              agendamento.
+            </p>
+            <p>
               A coluna <span className="text-foreground-muted">Ref.</span> é o
               código público do anúncio. A placa completa não é publicada e é
               informada no atendimento.

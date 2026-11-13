@@ -1195,4 +1195,51 @@ export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
       height: 1200,
     },
   ],
+  "toyota-corolla-cross-xrx-hybrid": [
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/01-1f54353e.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/02-89124508.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/03-2a0ad177.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/04-8dc10a96.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/05-14b7bced.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/06-3ae0ff1b.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/07-3ee32934.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/08-7d845f9c.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/09-7dea4826.jpg",
+      width: 1600,
+      height: 900,
+    },
+  ],
 };

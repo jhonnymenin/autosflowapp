@@ -123,7 +123,12 @@ export default async function VehiclePage({
       ? [
           {
             label: "Situação",
-            value: vehicle.origin === "loja" ? "Veículo da loja" : "Consignado",
+            value:
+              vehicle.origin === "loja"
+                ? "Veículo da loja"
+                : vehicle.origin === "consignado"
+                  ? "Consignado"
+                  : "Venda assistida",
           },
         ]
       : []),
@@ -226,6 +231,9 @@ export default async function VehiclePage({
                   {vehicle.origin === "consignado" ? (
                     <Badge>Consignado</Badge>
                   ) : null}
+                  {vehicle.origin === "assistida" ? (
+                    <Badge>Venda assistida</Badge>
+                  ) : null}
                   {body ? <Badge>{bodyLabels[body].label}</Badge> : null}
                 </div>
 
@@ -307,6 +315,14 @@ export default async function VehiclePage({
                   Referência <span className="tnum font-semibold">{ref}</span> —
                   cite este código no atendimento.
                 </p>
+                {vehicle.origin === "assistida" ? (
+                  <p className="mt-2 text-xs leading-relaxed text-foreground-subtle">
+                    Venda assistida: o carro é de um proprietário particular e
+                    não fica na loja. A AutosFlow conduz o atendimento, a
+                    negociação e a documentação; visita e test-drive com
+                    agendamento.
+                  </p>
+                ) : null}
               </div>
             </aside>
           </div>
