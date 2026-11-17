@@ -25,10 +25,15 @@ import type { Vehicle } from "@/types/vehicle";
  * tipo de carro e faixa de preço nas primeiras posições e fecha com os de
  * entrada. Para atualizar, veja README.md.
  */
-export const STOCK_ISSUED_AT = "12/11/2026";
+export const STOCK_ISSUED_AT = "17/11/2026";
 
 /**
  * Revisões:
+ * - 17/11: planilhas da Central de Operações (estoque físico e venda
+ *   assistida). Entram Ranger Storm XLS 3.2 Diesel 2021/22 (AF-020), Onix LT
+ *   1.0 Turbo 2024 (AF-019) e Picanto EX 2015 (AF-021). Nivus 2025 baixa para
+ *   R$ 129.990. Corolla Cross Hybrid com 38.243 km, confirmados pelo
+ *   proprietário.
  * - 13/11: entra o primeiro carro de venda assistida, Corolla Cross XRX
  *   Hybrid 2024 (AO-001), no topo da vitrine. Quilometragem sob consulta
  *   até o proprietário confirmar; placa coberta nas fotos.
@@ -45,7 +50,7 @@ export const STOCK_ISSUED_AT = "12/11/2026";
  * - 21/10: saem 8 veículos fora da tabela; fotos profissionais.
  * - 13/10, 06/10, 30/09: tabelas de preços e pastas de fotos da equipe.
  */
-export const STOCK_UPDATED_AT = "13/11/2026";
+export const STOCK_UPDATED_AT = "17/11/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -60,10 +65,25 @@ export const vehicles: Vehicle[] = [
     yearSort: 2024,
     fuel: "Híbrido",
     color: "Branco",
-    // A planilha deixa a quilometragem em branco até o proprietário confirmar.
-    km: 0,
+    km: 38243,
     price: 155990,
     origin: "assistida",
+    featured: false,
+  },
+  {
+    ref: "AF-020",
+    slug: "ford-ranger-storm-xls-3-2-diesel",
+    make: "Ford",
+    model: "Ranger",
+    version: "Storm XLS 3.2 Diesel AT 4x4",
+    sourceName: "FORD RANGER STORM XLS 3.2 DIESEL",
+    yearShort: "21/22",
+    year: "2021/2022",
+    yearSort: 2021,
+    fuel: "Diesel",
+    color: "Branca",
+    km: 90000,
+    price: 154990,
     featured: false,
   },
   {
@@ -96,7 +116,7 @@ export const vehicles: Vehicle[] = [
     color: "Azul",
     km: 26000,
     plate: "TJF-0I26",
-    price: 132990,
+    price: 129990,
     origin: "consignado",
     featured: false,
   },
@@ -189,6 +209,22 @@ export const vehicles: Vehicle[] = [
     featured: false,
   },
   {
+    ref: "AF-019",
+    slug: "chevrolet-onix-lt-1-0-turbo-mt",
+    make: "Chevrolet",
+    model: "Onix",
+    version: "LT 1.0 Turbo MT",
+    sourceName: "CHEVROLET ONIX LT 1.0 TURBO MANUAL",
+    yearShort: "24",
+    year: "2024",
+    yearSort: 2024,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 45000,
+    price: 74990,
+    featured: false,
+  },
+  {
     ref: "AF-010",
     slug: "ford-ecosport-1-5-at",
     make: "Ford",
@@ -272,6 +308,22 @@ export const vehicles: Vehicle[] = [
     plate: "PZS-0C98",
     price: 49990,
     origin: "loja",
+    featured: false,
+  },
+  {
+    ref: "AF-021",
+    slug: "kia-picanto-1-0-at",
+    make: "Kia",
+    model: "Picanto",
+    version: "EX 1.0 AT",
+    sourceName: "KIA PICANTO EX 1.0 FLEX AT",
+    yearShort: "15",
+    year: "2015",
+    yearSort: 2015,
+    fuel: "Flex",
+    color: "Prata",
+    km: 133000,
+    price: 49990,
     featured: false,
   },
 ];

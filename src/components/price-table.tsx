@@ -143,7 +143,9 @@ export function PriceTable() {
                     ? "GAS"
                     : vehicle.fuel === "Híbrido"
                       ? "HÍBRIDO"
-                      : "FLEX"}
+                      : vehicle.fuel === "Diesel"
+                        ? "DIESEL"
+                        : "FLEX"}
                 </td>
                 <td
                   className={`${cell} whitespace-nowrap text-foreground-muted`}

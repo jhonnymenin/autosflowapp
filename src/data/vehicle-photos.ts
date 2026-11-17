@@ -26,6 +26,7 @@ export const professionalPhotos = new Set([
   "ford-ecosport-1-5-at",
   "hyundai-creta-16a-attitude",
   "hyundai-hb20-1-0-mt",
+  "chevrolet-onix-lt-1-0-turbo-mt",
 ]);
 
 /** Fotos de celular na loja da AutosFlow, com a placa da marca. */
@@ -38,6 +39,8 @@ export const showroomPhotos = new Set([
   "bmw-x1-s20i-active-flex",
   "honda-fit-lx-cvt",
   "toyota-etios-sedan-platinum",
+  "ford-ranger-storm-xls-3-2-diesel",
+  "kia-picanto-1-0-at",
 ]);
 
 export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
@@ -1237,9 +1240,320 @@ export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
       height: 1600,
     },
     {
-      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/09-7dea4826.jpg",
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/09-3faf9da1.jpg",
+      width: 900,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/toyota-corolla-cross-xrx-hybrid/10-7dea4826.jpg",
       width: 1600,
       height: 900,
+    },
+  ],
+  "chevrolet-onix-lt-1-0-turbo-mt": [
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/01-5158248e.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/02-becb43e9.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/03-fda188dc.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/04-4701603a.jpg",
+      width: 1280,
+      height: 962,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/05-19de84ab.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/06-bb4ad03b.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/07-60344a32.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/08-b08a09cd.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/09-c2decc07.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/10-1f22cf65.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/11-4001b69c.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/12-2cb27224.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/13-3dfee657.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/14-98ab0cbc.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/15-8b43d2f3.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/16-23a27d96.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/17-4c3b500d.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/18-0600c2ca.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/19-81565a82.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-onix-lt-1-0-turbo-mt/20-ca3d4e71.jpg",
+      width: 1280,
+      height: 960,
+    },
+  ],
+  "ford-ranger-storm-xls-3-2-diesel": [
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/01-785a1af7.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/02-488a472b.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/03-1f5b6987.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/04-c0cbd23f.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/05-881ba7d2.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/06-aa8aadf2.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/07-7c55aad4.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/08-b01c34b8.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/09-31bb3e1e.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/10-44f5f5b8.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/11-b344709a.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/12-dc0b2754.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/13-eacd92ba.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/14-7a97c4f5.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/15-71bcf0bd.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/16-67209ee8.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/17-4e0c813d.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/18-907931fe.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/19-e6727713.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/20-bd6a10f9.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/21-577e058e.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/22-336bf0c5.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/23-30333ff3.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/24-615c3588.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ranger-storm-xls-3-2-diesel/25-e2271cd7.jpg",
+      width: 1600,
+      height: 1200,
+    },
+  ],
+  "kia-picanto-1-0-at": [
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/01-cb54d40d.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/02-47360d70.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/03-94e9c34c.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/04-6f6df1a8.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/05-3da524d5.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/06-d890e8fe.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/07-f8ab4ea9.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/08-1a02af70.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/09-e1b3e430.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/10-2a30b8eb.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/11-d63fbcf6.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/12-0a5ad15f.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/13-eafe480d.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/14-ae95c055.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/kia-picanto-1-0-at/15-6671001a.jpg",
+      width: 1600,
+      height: 1200,
     },
   ],
 };

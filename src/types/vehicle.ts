@@ -1,4 +1,4 @@
-export type Fuel = "Flex" | "Gasolina" | "Híbrido";
+export type Fuel = "Flex" | "Gasolina" | "Híbrido" | "Diesel";
 
 /**
  * loja: estoque próprio. consignado: carro de proprietário, na loja.

@@ -44,6 +44,7 @@ const byModel: Record<string, BodyType> = {
   Cerato: "sedan",
   Etios: "sedan",
   Strada: "picape",
+  Ranger: "picape",
 };
 
 export function bodyOf(vehicle: Vehicle): BodyType | undefined {
