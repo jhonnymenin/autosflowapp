@@ -29,6 +29,8 @@ export const STOCK_ISSUED_AT = "17/11/2026";
 
 /**
  * Revisões:
+ * - 23/11: sai o Nivus Highline 2024/25 azul (AF-011), que não está mais à
+ *   venda, conforme a equipe.
  * - 17/11: planilhas da Central de Operações (estoque físico e venda
  *   assistida). Entram Ranger Storm XLS 3.2 Diesel 2021/22 (AF-020), Onix LT
  *   1.0 Turbo 2024 (AF-019) e Picanto EX 2015 (AF-021). Nivus 2025 baixa para
@@ -50,7 +52,7 @@ export const STOCK_ISSUED_AT = "17/11/2026";
  * - 21/10: saem 8 veículos fora da tabela; fotos profissionais.
  * - 13/10, 06/10, 30/09: tabelas de preços e pastas de fotos da equipe.
  */
-export const STOCK_UPDATED_AT = "17/11/2026";
+export const STOCK_UPDATED_AT = "23/11/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -101,24 +103,6 @@ export const vehicles: Vehicle[] = [
     km: 18000,
     price: 123990,
     featured: true,
-  },
-  {
-    ref: "AF-011",
-    slug: "volkswagen-nivus-highline-1-0-tsi",
-    make: "Volkswagen",
-    model: "Nivus",
-    version: "Highline 1.0 TSI",
-    sourceName: "VW/NIVUS HL TSI",
-    yearShort: "24/25",
-    year: "2024/2025",
-    yearSort: 2024,
-    fuel: "Flex",
-    color: "Azul",
-    km: 26000,
-    plate: "TJF-0I26",
-    price: 129990,
-    origin: "consignado",
-    featured: false,
   },
   {
     ref: "AF-001",

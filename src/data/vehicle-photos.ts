@@ -32,7 +32,6 @@ export const professionalPhotos = new Set([
 /** Fotos de celular na loja da AutosFlow, com a placa da marca. */
 export const showroomPhotos = new Set([
   "toyota-corolla-cross-xre-2-0",
-  "volkswagen-nivus-highline-1-0-tsi",
   "volkswagen-nivus-highline-tsi-2022",
   "jeep-compass-limited-t270",
   "audi-q3-1-4-tfsi",
@@ -751,88 +750,6 @@ export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
       src: "/imagens/veiculos/reais/ford-ecosport-1-5-at/20-ccdf5395.jpg",
       width: 1600,
       height: 1202,
-    },
-  ],
-  "volkswagen-nivus-highline-1-0-tsi": [
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/01-61a46c6f.jpg",
-      width: 1600,
-      height: 1280,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/02-08bced3f.jpg",
-      width: 1488,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/03-f82b717a.jpg",
-      width: 1530,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/04-1504f6be.jpg",
-      width: 1446,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/05-0f27ef74.jpg",
-      width: 1200,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/06-a953f697.jpg",
-      width: 1600,
-      height: 1200,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/07-9f37602a.jpg",
-      width: 1600,
-      height: 1200,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/08-2984a1e0.jpg",
-      width: 1600,
-      height: 1200,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/09-e975be32.jpg",
-      width: 1600,
-      height: 1200,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/10-d538b9b7.jpg",
-      width: 1600,
-      height: 1144,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/11-e0b01b67.jpg",
-      width: 1200,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/12-8037139b.jpg",
-      width: 1600,
-      height: 1200,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/13-c3eaa5df.jpg",
-      width: 1200,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/14-a52a8b52.jpg",
-      width: 1200,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/15-80d8afe3.jpg",
-      width: 1200,
-      height: 1600,
-    },
-    {
-      src: "/imagens/veiculos/reais/volkswagen-nivus-highline-1-0-tsi/16-7a04e290.jpg",
-      width: 1200,
-      height: 1600,
     },
   ],
   "jeep-compass-limited-t270": [
