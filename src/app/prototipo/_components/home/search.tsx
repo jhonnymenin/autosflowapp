@@ -326,7 +326,7 @@ export function QuickSearch({ cars }: { cars: ProtoCar[] }) {
           </AnimatePresence>
 
           {/* Filtros clássicos + Buscar carros. */}
-          <div className="grid grid-cols-1 gap-2 pt-3 sm:grid-cols-[1fr_1fr_1fr_auto] sm:gap-3 sm:pt-4">
+          <div className="grid grid-cols-1 gap-2 pt-3 sm:grid-cols-2 sm:gap-3 sm:pt-4 lg:grid-cols-[1fr_1fr_1fr_auto]">
             <LightSelect
               label="Marca"
               value={parsed.make ?? ""}
