@@ -62,7 +62,7 @@ export function Showroom({ items }: { items: StageCar[] }) {
       onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
-      <FeTag code="FE-04" title="Destaques: a vitrine com o estoque real" className="left-4 top-6 sm:left-10" />
+      <FeTag code="Extra" title="Proposta fora do material de apoio" status="Proposta" className="left-4 top-6 sm:left-10" />
 
       <div className="container-p relative z-10 grid gap-6 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">

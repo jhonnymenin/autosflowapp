@@ -106,8 +106,8 @@ export const personas: Persona[] = [
     fears: ["Cair em golpe", "Carro batido ou de leilão", "Pagar acima da FIPE", "Vendedor empurrando"],
     firstSee: ["Preço e km na cara", "Fotos do carro de verdade", "Laudo e histórico"],
     where: [
-      { label: "Busca em linguagem natural (FE-02)", href: "/prototipo#vitrine" },
-      { label: "Vitrine e destaques (FE-04)", href: "/prototipo#vitrine" },
+      { label: "Busca em linguagem natural (FE-02)", href: "/prototipo#busca" },
+      { label: "Destaques (FE-04)", href: "/prototipo#destaques" },
     ],
   },
   {
@@ -171,8 +171,8 @@ export interface Step {
 export const journeys: Record<PersonaKey, Step[]> = {
   comprador: [
     { title: "Chega pela home", thinks: "Será que aqui tem carro no meu orçamento?", feels: "Desconfiada", emotion: 0.28, touch: { label: "Topo com as quatro frentes", href: "/prototipo" } },
-    { title: "Escreve o que quer", thinks: "Escrevi do meu jeito e ele entendeu.", feels: "Surpresa", emotion: 0.55, touch: { label: "Busca em linguagem natural", href: "/prototipo#vitrine" } },
-    { title: "Compara os carros", thinks: "Foto do carro de verdade, km e preço na cara.", feels: "Interessada", emotion: 0.66, touch: { label: "Vitrine", href: "/prototipo#vitrine" } },
+    { title: "Escreve o que quer", thinks: "Escrevi do meu jeito e ele entendeu.", feels: "Surpresa", emotion: 0.55, touch: { label: "Busca em linguagem natural", href: "/prototipo#busca" } },
+    { title: "Compara os carros", thinks: "Foto do carro de verdade, km e preço na cara.", feels: "Interessada", emotion: 0.66, touch: { label: "Destaques", href: "/prototipo#destaques" } },
     { title: "Confere o laudo", thinks: "Laudo cautelar e histórico: menos medo de golpe.", feels: "Mais segura", emotion: 0.78, touch: { label: "Selo Verified", href: "/prototipo" } },
     { title: "Chama no WhatsApp", thinks: "Não precisei explicar qual era o carro.", feels: "Atendida", emotion: 0.84, touch: { label: "Página do carro", href: "/veiculos" } },
     { title: "Agenda a visita", thinks: "Horário marcado, sem pressão.", feels: "Confiante", emotion: 0.95, touch: { label: "Visite a loja", href: "/prototipo#loja" } },
@@ -222,7 +222,7 @@ export const blocks: Block[] = [
   { code: "FE-01", title: "Carrossel institucional", what: "As quatro frentes no topo, com vídeo e troca automática.", why: "A home só falava de comprar.", events: ["topo_frente_clicada", "lista_espera_lojista"], phase: "Fase 1 + 2", status: "Em validação", href: "/prototipo" },
   { code: "FE-02", title: "Busca em linguagem natural", what: "Campo livre que entende frases e mostra o que entendeu em chips editáveis.", why: "A busca pedia vários filtros no meio da página.", events: ["busca_natural_usada", "busca_sem_resultado", "busca_para_catalogo"], phase: "Fase 1", status: "Em validação", href: "/prototipo" },
   { code: "FE-03", title: "Faixa de serviços", what: "Cada categoria abre a listagem já filtrada.", why: "Os ícones não clicavam.", events: ["servico_categoria_clicada"], phase: "Fase 2", status: "Em validação", href: "/prototipo" },
-  { code: "FE-04", title: "Destaques e vitrine", what: "Cards compactos, selos e personalização por histórico.", why: "O card grande ocupava espaço e não ajudava a comparar.", events: ["card_veiculo_clicado", "favorito_adicionado", "personalizacao_exibida"], phase: "Fase 1", status: "Em validação", href: "/prototipo#vitrine" },
+  { code: "FE-04", title: "Destaques compactos", what: "Cards compactos, selos e personalização por histórico.", why: "O card grande ocupava espaço e não ajudava a comparar.", events: ["card_veiculo_clicado", "favorito_adicionado", "personalizacao_exibida"], phase: "Fase 1", status: "Em validação", href: "/prototipo#destaques" },
   { code: "FE-05", title: "Perfil e atalhos", what: "Tipos de carro e “Mais buscados” com contagem real.", why: "Os atalhos de busca eram poucos.", events: ["atalho_clicado"], phase: "Fase 1", status: "Em validação", href: "/prototipo#perfil" },
   { code: "FE-06", title: "Por que a AutosFlow", what: "Como funciona em três passos e números reais do estoque.", why: "O bloco existia, mas convertia pouco.", events: ["como_funciona_visto"], phase: "Fase 1", status: "Proposta", href: "/prototipo" },
   { code: "FE-07", title: "Pré-avaliação", what: "Placa, km e WhatsApp, com uma faixa de valor na hora.", why: "Captar carro é o motor do negócio e só havia um botão.", events: ["pre_avaliacao_iniciada", "lead_venda_home", "whatsapp_click"], phase: "Fase 1", status: "Proposta", href: "/prototipo#vender" },
@@ -245,7 +245,7 @@ export const principles = [
   },
   {
     title: "Prova real",
-    text: "Só estoque, fotos e depoimentos de verdade. A vitrine usa a unidade anunciada, recortada da foto da loja. O que ainda é exemplo vem escrito como exemplo.",
+    text: "Só estoque, fotos e depoimentos de verdade. Os destaques usam as fotos da unidade anunciada. O que ainda é exemplo vem escrito como exemplo.",
   },
   {
     title: "Uma ação por tela",
@@ -253,7 +253,7 @@ export const principles = [
   },
   {
     title: "Movimento com propósito",
-    text: "A animação explica: o carro entra na vitrine, a placa confirma, a linha mostra o caminho. Para quem pede menos movimento no sistema, tudo aparece parado.",
+    text: "A animação explica: o banner troca, a placa confirma, a estrada do “como funciona” mostra o caminho. Para quem pede menos movimento no sistema, tudo aparece parado.",
   },
   {
     title: "Feito para o polegar",

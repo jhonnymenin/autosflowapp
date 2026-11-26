@@ -25,7 +25,6 @@ import {
 import { Logo, Mark } from "@/components/logo";
 
 import { serviceCategories } from "../_data/services";
-import { ProtoFooter } from "./footer";
 import { ArrowRight, ArrowUpRight, Check, Close, Menu } from "./icons";
 import { ease } from "./motion";
 
@@ -83,7 +82,6 @@ export function ProtoShell({ children }: { children: React.ReactNode }) {
         <ProtoBar />
         <ProtoNav />
         {children}
-        <ProtoFooter />
         <Cursor />
 
         <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-6 z-[90] flex flex-col items-center gap-2 px-4">
@@ -415,10 +413,10 @@ function ProtoNav() {
   const onNight = !lightTop || solid || open;
 
   const links: { label: string; href?: string; onClick?: () => void }[] = [
-    { label: "Comprar", href: "/prototipo#vitrine" },
+    { label: "Comprar", href: "/prototipo#destaques" },
     { label: "Vender", href: "/prototipo#vender" },
     { label: "Serviços", href: "/prototipo/servicos" },
-    { label: "Lojistas", onClick: () => openWaitlist("lojista") },
+    { label: "Sou lojista", onClick: () => openWaitlist("lojista") },
   ];
 
   return (
@@ -465,17 +463,15 @@ function ProtoNav() {
           >
             Entrar
           </button>
-          <Link
-            href="/prototipo#vender"
-            className={`group hidden items-center gap-2 rounded-full py-2.5 pr-2.5 pl-5 text-[15px] font-semibold transition-colors sm:inline-flex ${
-              onNight ? "bg-white text-[var(--ink)] hover:bg-[var(--signal)]" : "bg-[var(--ink)] text-white hover:bg-[var(--blue)]"
-            }`}
+          <motion.button
+            type="button"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => toast("Criar conta: favoritos, alertas de preço e histórico de buscas (Fase 2).")}
+            className="hidden rounded-full bg-[var(--blue)] px-5 py-2.5 text-[15px] font-semibold text-white sm:inline-flex"
           >
-            Vender meu carro
-            <span className={`grid h-7 w-7 place-items-center rounded-full ${onNight ? "bg-[var(--ink)] text-white" : "bg-white text-[var(--ink)]"}`}>
-              <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-0.5" />
-            </span>
-          </Link>
+            Criar conta
+          </motion.button>
           <button
             type="button"
             aria-expanded={open}
@@ -537,9 +533,9 @@ function ProtoNav() {
               <button type="button" onClick={() => toast("Área do cliente (Fase 2).")} className="rounded-full bg-white/10 py-4 font-semibold">
                 Entrar
               </button>
-              <Link href="/prototipo#vender" onClick={() => setOpen(false)} className="rounded-full bg-white py-4 text-center font-semibold text-[var(--ink)]">
-                Vender meu carro
-              </Link>
+              <button type="button" onClick={() => toast("Criar conta (Fase 2).")} className="rounded-full bg-[var(--blue)] py-4 font-semibold text-white">
+                Criar conta
+              </button>
             </div>
           </motion.div>
         )}

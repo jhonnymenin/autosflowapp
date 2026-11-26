@@ -17,6 +17,26 @@ Três coisas só da AutosFlow sustentam a página:
 3. **A placa Mercosul**, objeto que todo brasileiro reconhece, como a peça viva de
    "Vender".
 
+## Regra número um: o esquema do time manda
+
+A estrutura vem do material de apoio de 23/11/2026 e do wireframe navegável
+(FE-01 a FE-13). Esta direção de arte decide **como** cada bloco aparece, nunca
+**quais** blocos existem, em que ordem, nem o fluxo de cada um.
+
+- Ordem da home: 1 Carrossel institucional (3 banners: vender, lojista,
+  serviços) · 2 Busca rápida (cartão logo abaixo do carrossel) · 3 Faixa de
+  serviços (ícones) · 4 Destaques (5 por linha) · 5 Perfil e atalhos ·
+  6 Por que a AutosFlow (4 cartões + como funciona + números) · 7 Venda seu
+  carro · 8 Depoimentos (carrossel contínuo) · 9 Banner Selo Verified ·
+  10 Visite a loja · 11 Continue sua busca · 12 Rodapé (o do site, sem mudanças).
+- Blocos escuros: só o carrossel, a venda (7) e o banner Verified (9). O resto
+  é claro.
+- Navegação: Comprar · Vender · Serviços · Sou lojista · Entrar · Criar conta.
+- Textos dos banners, títulos e atalhos seguem o wireframe; ajuste de texto
+  segue por outro caminho (como diz o material).
+- Ideia nova fora do esquema vira **proposta extra**, em página separada
+  (ex.: `/prototipo/vitrine`), nunca dentro da home.
+
 ## Paleta (tokens em `prototipo.css`)
 
 | Papel | Token | Valor |

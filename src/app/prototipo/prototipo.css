@@ -4,9 +4,9 @@
    site em produção não é afetado.
    ========================================================================== */
 
-/* O protótipo tem cabeçalho e rodapé próprios: esconde os do site. */
-body:has(#proto-root) > header,
-body:has(#proto-root) > footer {
+/* O protótipo tem cabeçalho próprio: esconde o do site. O rodapé é o do
+   site, sem mudanças (item 12 do material de apoio). */
+body:has(#proto-root) > header {
   display: none !important;
 }
 body:has(#proto-root) {

@@ -61,7 +61,7 @@ function MiniMap() {
     transition: { duration: 1.6, delay, ease },
   });
   return (
-    <figure className="overflow-hidden rounded-[6px] bg-[var(--night-2)]">
+    <figure className="overflow-hidden rounded-[6px] bg-white">
       <svg
         viewBox="0 0 480 250"
         role="img"
@@ -119,7 +119,7 @@ function MiniMap() {
           AutosFlow
         </text>
       </svg>
-      <figcaption className="flex items-center justify-between gap-4 px-4 py-3 text-[13px] text-[var(--on-night-mute)]">
+      <figcaption className="flex items-center justify-between gap-4 px-4 py-3 text-[13px] text-[var(--ink-mute)]">
         <span>{contact.address.street} · {contact.address.district}</span>
         <span>mapa ilustrativo</span>
       </figcaption>
@@ -154,7 +154,7 @@ export function Visit() {
   const chosen = days.find((d) => d.key === day);
 
   return (
-    <section id="loja" aria-label="Visite a loja" className="night grain section-y relative">
+    <section id="loja" aria-label="Visite a loja" className="paper section-y relative">
       <FeTag code="FE-10" title="Visite a loja: agenda e mapa" status="Proposta" className="left-4 top-6 sm:left-10" />
       <div className="container-p relative z-[2] grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="relative lg:col-span-7">
@@ -190,7 +190,7 @@ export function Visit() {
         <div className="lg:sticky lg:top-28 lg:col-span-5">
           <WordReveal as="h2" text="Venha ver de perto." className="t-display" />
           <Reveal delay={0.15}>
-            <p className="t-lead mt-6 text-[var(--on-night-mute)]">{manifesto.order}</p>
+            <p className="t-lead mt-6 text-[var(--ink-mute)]">{manifesto.order}</p>
           </Reveal>
 
           <Reveal delay={0.25} className="mt-10 flex flex-col gap-5">
@@ -199,7 +199,7 @@ export function Visit() {
               <span>
                 <b className="font-semibold">{contact.address.street}</b>
                 <br />
-                <span className="text-[var(--on-night-mute)]">
+                <span className="text-[var(--ink-mute)]">
                   {contact.address.district}, {contact.address.city} · {contact.address.state}
                 </span>
               </span>
@@ -209,7 +209,7 @@ export function Visit() {
               <span>
                 <b className="font-semibold">Seg a sáb · 9h às 18h</b>
                 <br />
-                <span className="text-[var(--on-night-mute)]">Horário de exemplo, a confirmar com a loja</span>
+                <span className="text-[var(--ink-mute)]">Horário de exemplo, a confirmar com a loja</span>
               </span>
             </p>
           </Reveal>
@@ -222,7 +222,7 @@ export function Visit() {
             <PillLink href={mapsHref} external tone="white">
               Como chegar
             </PillLink>
-            <PillButton tone="ghost-night" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen((value) => !value)}>
+            <PillButton tone="ghost-paper" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen((value) => !value)}>
               {open ? "Fechar agenda" : "Agendar visita"}
             </PillButton>
           </div>
@@ -237,7 +237,7 @@ export function Visit() {
                 transition={{ duration: 0.6, ease }}
                 className="overflow-hidden"
               >
-                <div className="mt-6 rounded-[6px] bg-[var(--night-2)] p-5 sm:p-7">
+                <div className="mt-6 rounded-[10px] bg-white p-5 sm:p-7">
                   <AnimatePresence mode="wait" initial={false}>
                     {booked ? (
                       <motion.div key="ok" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="flex items-start gap-4">
@@ -253,7 +253,7 @@ export function Visit() {
                           <p className="text-[20px] font-semibold">
                             Visita marcada: {chosen ? `${chosen.week} ${chosen.date}` : ""}, {hour}
                           </p>
-                          <p className="mt-1 text-[15px] text-[var(--on-night-mute)]">
+                          <p className="mt-1 text-[15px] text-[var(--ink-mute)]">
                             Confirmação pelo WhatsApp. No produto, o horário fica bloqueado na agenda do backoffice.
                           </p>
                         </div>
@@ -271,7 +271,7 @@ export function Visit() {
                               aria-pressed={day === d.key}
                               onClick={() => setDay(d.key)}
                               className={`flex flex-col items-center rounded-[6px] py-2.5 transition-colors ${
-                                day === d.key ? "bg-white text-[var(--ink)]" : "bg-white/[0.06] hover:bg-white/[0.12]"
+                                day === d.key ? "bg-[var(--ink)] text-white" : "bg-[var(--paper)] hover:bg-[var(--paper-3)]"
                               }`}
                             >
                               <span className="text-[13px] opacity-70">{d.week}</span>
@@ -289,8 +289,8 @@ export function Visit() {
                               aria-pressed={hour === h}
                               onClick={() => setHour(h)}
                               title={full.has(h) ? "Horário lotado" : undefined}
-                              className={`t-num rounded-full px-4 py-2 text-[15px] transition-colors disabled:cursor-not-allowed disabled:bg-transparent disabled:text-white/30 disabled:line-through ${
-                                hour === h ? "bg-[var(--blue)] text-white" : "bg-white/[0.06] hover:bg-white/[0.12]"
+                              className={`t-num rounded-full px-4 py-2 text-[15px] transition-colors disabled:cursor-not-allowed disabled:bg-transparent disabled:text-[#a3a39e] disabled:line-through ${
+                                hour === h ? "bg-[var(--blue)] text-white" : "bg-[var(--paper)] hover:bg-[var(--paper-3)]"
                               }`}
                             >
                               {h}
@@ -307,7 +307,7 @@ export function Visit() {
                           inputMode="tel"
                           autoComplete="tel"
                           placeholder="(11) 99999-9999"
-                          className="mt-2 w-full rounded-[6px] bg-white/[0.07] px-4 py-4 text-[17px] font-medium text-white outline-none ring-[var(--blue-glow)] placeholder:text-white/35 focus:ring-2"
+                          className="mt-2 w-full rounded-[6px] bg-[var(--paper)] px-4 py-4 text-[17px] font-medium text-[var(--ink)] outline-none ring-[var(--blue)] placeholder:text-[#8a8a85] focus:ring-2"
                         />
                         {error && (
                           <p role="alert" className="mt-3 text-[15px] font-medium text-[#ff8a80]">

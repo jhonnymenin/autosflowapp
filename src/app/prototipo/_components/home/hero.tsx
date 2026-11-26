@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * FE-01 — Topo. A promessa fica parada ("Seu carro no fluxo certo."), as
- * quatro frentes passam por baixo como portais: cada uma troca o fundo (a
- * Marginal à noite, a chave na mão, a loja, o lava-rápido), a frase e a ação.
- * Passam sozinhas (o carrossel do FE-01); mouse, foco ou toque escolhem.
+ * FE-01 — Carrossel institucional no topo, como no material de apoio: três
+ * banners (vender, lojista, serviços) que passam sozinhos; o mouse pausa, no
+ * celular dá pra arrastar, setas e bolinhas navegam e há o botão "Pausar".
+ * Os banners vêm de `_data/banners.ts`.
  */
 import {
   AnimatePresence,
@@ -15,28 +15,17 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 
-import { ArrowDownRight, Pause, Play } from "../icons";
+import { banners } from "../../_data/banners";
+import { ChevronLeft, ChevronRight } from "../icons";
 import { FeTag, useProto } from "../shell";
-import { ease } from "../motion";
+import { WordReveal, ease } from "../motion";
 import { PillButton, PillLink } from "../ui";
 
-const DURATION = 7500;
+const DURATION = 7000;
 
-export interface HeroFront {
-  key: "comprar" | "vender" | "lojista" | "servicos";
-  label: string;
-  meta: string;
-  sentence: string;
-  cta: string;
-  poster: string;
-  video?: string;
-  action: { href: string } | { waitlist: "lojista" };
-}
-
-export function Hero({ fronts, updatedAt }: { fronts: HeroFront[]; updatedAt: string }) {
+export function Hero() {
   const { openWaitlist } = useProto();
   const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -46,16 +35,15 @@ export function Hero({ fronts, updatedAt }: { fronts: HeroFront[]; updatedAt: st
   const ref = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
-  const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
 
   const go = useCallback(
     (next: number) => {
-      setIndex((next + fronts.length) % fronts.length);
+      setIndex((next + banners.length) % banners.length);
       progress.set(0);
     },
-    [fronts.length, progress],
+    [progress],
   );
 
   const stopped = paused || hover || !!reduce;
@@ -66,14 +54,16 @@ export function Hero({ fronts, updatedAt }: { fronts: HeroFront[]; updatedAt: st
     else progress.set(next);
   });
 
-  const front = fronts[index];
+  const banner = banners[index];
 
   return (
     <section
       ref={ref}
       aria-roledescription="carrossel"
-      aria-label="As quatro frentes da AutosFlow"
-      className="night grain relative isolate flex min-h-[max(44rem,100svh)] flex-col overflow-hidden"
+      aria-label="Destaques institucionais"
+      className="night grain relative isolate flex min-h-[clamp(40rem,94svh,58rem)] flex-col overflow-hidden"
+      onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
+      onPointerLeave={() => setHover(false)}
       onKeyDown={(event) => {
         if (event.key === "ArrowRight") go(index + 1);
         if (event.key === "ArrowLeft") go(index - 1);
@@ -81,163 +71,121 @@ export function Hero({ fronts, updatedAt }: { fronts: HeroFront[]; updatedAt: st
     >
       <FeTag code="FE-01" title="Carrossel institucional no topo" phase="Fase 1 + 2" className="left-4 top-[5.5rem] sm:left-10" />
 
-      {/* Fundo de cada frente. */}
+      {/* Fundo de cada banner: vídeo com pôster, zoom lento e parallax. */}
       <motion.div className="absolute inset-0 -z-10" style={{ scale: mediaScale }}>
         <AnimatePresence initial={false}>
           <motion.div
-            key={front.key}
+            key={banner.key}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 1.08 }}
-            animate={{ opacity: 1, scale: 1, transition: { opacity: { duration: 1.2, ease }, scale: { duration: 9, ease: "linear" } } }}
-            exit={{ opacity: 0, transition: { duration: 1.2, ease } }}
+            animate={{ opacity: 1, scale: 1, transition: { opacity: { duration: 1.1, ease }, scale: { duration: 8, ease: "linear" } } }}
+            exit={{ opacity: 0, transition: { duration: 1.1, ease } }}
           >
-            {front.video && !reduce ? (
-              <video
-                className="h-full w-full object-cover"
-                src={front.video}
-                poster={front.poster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                aria-hidden="true"
-              />
+            {banner.video && !reduce ? (
+              <video className="h-full w-full object-cover" src={banner.video} poster={banner.poster} autoPlay muted loop playsInline aria-hidden="true" />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element -- fundo decorativo já otimizado
-              <img src={front.poster} alt="" className="h-full w-full object-cover" />
+              <img src={banner.poster} alt="" className="h-full w-full object-cover" />
             )}
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-[rgb(5_8_15/0.35)]" />
-        <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,rgb(5_8_15/0.85),transparent)]" />
-        <div className="absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(0deg,rgb(5_8_15/0.97)_8%,rgb(5_8_15/0.55)_55%,transparent)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_8_15/0.92)_0%,rgb(5_8_15/0.65)_40%,rgb(5_8_15/0.2)_75%,rgb(5_8_15/0.1)_100%)]" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgb(5_8_15/0.8),transparent)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(0deg,rgb(5_8_15/0.95),transparent)]" />
       </motion.div>
 
-      <motion.div style={{ y: titleY, opacity: fade }} className="container-p relative z-10 flex flex-1 flex-col pt-[8.5rem] sm:pt-[9.5rem]">
-        {/* Estoque ao vivo: prova real logo no topo. */}
-        <motion.p
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.4, ease }}
-          className="flex items-center gap-2.5 text-[14px] font-medium text-[var(--on-night-mute)]"
-        >
-          <span className="relative grid h-2.5 w-2.5 place-items-center">
-            <span className="ping absolute h-2.5 w-2.5 rounded-full bg-[#3ddc84]" />
-            <span className="h-2 w-2 rounded-full bg-[#3ddc84]" />
-          </span>
-          Estoque atualizado em {updatedAt} · Ipiranga, São Paulo
-        </motion.p>
-
-        <h1 className="t-mega mt-6 text-[clamp(2.5rem,9.4vw,10.5rem)]" aria-label="Seu carro no fluxo certo.">
-          {[
-            { lines: ["Seu carro", "no fluxo", "certo."], cls: "sm:hidden" },
-            { lines: ["Seu carro no", "fluxo certo."], cls: "hidden sm:block" },
-          ].map((variant) => (
-            <span key={variant.cls} aria-hidden="true" className={variant.cls}>
-              {variant.lines.map((line, li) => (
-                <span key={line} className="block overflow-hidden pb-[0.04em]">
-                  <motion.span
-                    className="block"
-                    initial={reduce ? false : { y: "105%" }}
-                    animate={{ y: "0%" }}
-                    transition={{ duration: 1.2, delay: 1.9 + li * 0.12, ease }}
-                  >
-                    {line.split(" ").map((word, wi, words) => (
-                      <span key={wi} className={word === "fluxo" ? "text-[var(--blue-glow)]" : undefined}>
-                        {word}
-                        {wi < words.length - 1 ? " " : ""}
-                      </span>
-                    ))}
-                  </motion.span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </h1>
-
-        <div className="mt-8 grid flex-1 items-start gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={front.key}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.55, ease }}
-              >
-                <p className="t-lead max-w-xl text-[var(--on-night)]">{front.sentence}</p>
-                <div className="mt-7">
-                  {"href" in front.action ? (
-                    <PillLink href={front.action.href} tone="white">
-                      {front.cta}
-                    </PillLink>
-                  ) : (
-                    <PillButton tone="white" onClick={() => openWaitlist("lojista")}>
-                      {front.cta}
-                    </PillButton>
-                  )}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Portais: as quatro frentes, com o tempo de cada uma. */}
-      <div
-        className="container-p relative z-10 pb-8 sm:pb-10"
-        onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
-        onPointerLeave={() => setHover(false)}
+      <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.12}
+        onDragEnd={(_, info) => {
+          if (info.offset.x < -70) go(index + 1);
+          if (info.offset.x > 70) go(index - 1);
+        }}
+        style={{ y: contentY }}
+        className="container-p relative z-10 flex flex-1 touch-pan-y flex-col justify-center pt-[8rem] pb-52 sm:pb-56"
       >
-        <div className="flex items-end gap-4">
-          <div role="tablist" aria-label="Escolha a frente" className="grid flex-1 grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-4 md:gap-6">
-            {fronts.map((item, i) => {
-              const active = i === index;
-              return (
-                <motion.button
-                  key={item.key}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => go(i)}
-                  onPointerEnter={(e) => e.pointerType === "mouse" && i !== index && go(i)}
-                  initial={reduce ? false : { opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 2.2 + i * 0.08, ease }}
-                  className="group flex flex-col gap-3 text-left"
-                >
-                  <span className="relative h-[2px] overflow-hidden rounded-full bg-white/20">
-                    {active ? (
-                      <motion.span className="absolute inset-0 origin-left bg-[linear-gradient(90deg,var(--blue-glow),#fff)]" style={{ scaleX: progress }} />
-                    ) : null}
-                  </span>
-                  <span className={`flex items-center justify-between gap-2 transition-colors ${active ? "text-white" : "text-white/55 group-hover:text-white/85"}`}>
-                    <span className="text-[clamp(1.25rem,2vw,1.75rem)] leading-none font-bold tracking-[-0.02em]" style={{ fontStretch: "112%" }}>
-                      {item.label}
-                    </span>
-                    <ArrowDownRight
-                      className={`h-5 w-5 shrink-0 transition-transform duration-500 ${active ? "-rotate-90 text-[var(--signal)]" : "group-hover:-rotate-45"}`}
-                    />
-                  </span>
-                  <span className={`text-[13.5px] transition-colors ${active ? "text-[var(--on-night-mute)]" : "text-white/35"}`}>{item.meta}</span>
-                </motion.button>
-              );
-            })}
+        <AnimatePresence mode="wait">
+          <motion.div key={banner.key} className="max-w-[62rem]" exit={{ opacity: 0, y: -24, transition: { duration: 0.35, ease } }}>
+            <motion.p
+              initial={reduce ? false : { opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease }}
+              className="t-spec flex items-center gap-2.5 text-[13px] text-[var(--blue-glow)]"
+            >
+              <span className="h-2 w-2 rounded-full bg-[var(--blue-glow)]" />
+              {banner.label}
+            </motion.p>
+            <WordReveal as="h1" inView={false} delay={0.05} text={banner.title} className="t-display mt-5 text-[clamp(2.5rem,5.6vw,6rem)]" />
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease }}
+              className="t-lead mt-6 max-w-xl text-[var(--on-night-mute)]"
+            >
+              {banner.text}
+            </motion.p>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease }}
+              className="mt-9"
+            >
+              {"href" in banner.action ? (
+                <PillLink href={banner.action.href} tone="white">
+                  {banner.cta}
+                </PillLink>
+              ) : (
+                <PillButton tone="white" onClick={() => openWaitlist("lojista")}>
+                  {banner.cta}
+                </PillButton>
+              )}
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Controles: setas, bolinhas com o tempo de cada banner e "Pausar". */}
+      <div className="container-p absolute inset-x-0 bottom-36 z-10 sm:bottom-40">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => go(index - 1)}
+            aria-label="Banner anterior"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white hover:text-[var(--ink)]"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div role="tablist" aria-label="Escolha o banner" className="flex items-center gap-2">
+            {banners.map((item, i) => (
+              <button key={item.key} role="tab" aria-selected={i === index} aria-label={item.label} onClick={() => go(i)} className="relative h-11 w-12 sm:w-16">
+                <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 overflow-hidden rounded-full bg-white/25">
+                  {i === index && <motion.span className="absolute inset-0 origin-left rounded-full bg-white" style={{ scaleX: progress }} />}
+                  {i < index && <span className="absolute inset-0 rounded-full bg-white/60" />}
+                </span>
+              </button>
+            ))}
           </div>
           <button
             type="button"
-            onClick={() => setPaused((value) => !value)}
-            aria-label={paused ? "Retomar a troca das frentes" : "Pausar a troca das frentes"}
-            className="hidden h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:grid"
+            onClick={() => go(index + 1)}
+            aria-label="Próximo banner"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white hover:text-[var(--ink)]"
           >
-            {paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+            <ChevronRight className="h-5 w-5" />
           </button>
+          <button
+            type="button"
+            onClick={() => setPaused((value) => !value)}
+            className="ml-1 rounded-full bg-white/10 px-4 py-2.5 text-[14px] font-semibold transition-colors hover:bg-white/20"
+          >
+            {paused ? "Retomar" : "Pausar"}
+          </button>
+          {"waitlist" in banner.action && (
+            <span className="ml-auto hidden text-[14px] text-[var(--on-night-mute)] md:block">Fase 2 · por enquanto, lista de espera</span>
+          )}
         </div>
       </div>
-
-      <Link href="#busca" aria-label="Ir para a busca" className="sr-only focus:not-sr-only">
-        Ir para a busca
-      </Link>
     </section>
   );
 }

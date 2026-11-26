@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
 
 import { testimonials } from "@/data/testimonials";
-import { STOCK_UPDATED_AT } from "@/data/vehicles";
 import { priceBands, yearBands } from "@/lib/stock";
 
-import { services } from "./_data/services";
-import { Hero, type HeroFront } from "./_components/home/hero";
+import { Hero } from "./_components/home/hero";
 import { Profiles, type Shortcut } from "./_components/home/profiles";
 import { QuickSearch } from "./_components/home/search";
 import { Sell } from "./_components/home/sell";
 import { Seo, type SeoGroup } from "./_components/home/seo";
 import { ServicesStrip } from "./_components/home/services-strip";
 import { Showcase } from "./_components/home/showcase";
-import { Showroom, type StageCar } from "./_components/home/showroom";
 import { Testimonials } from "./_components/home/testimonials";
 import { Verified } from "./_components/home/verified";
 import { Visit } from "./_components/home/visit";
 import { Why } from "./_components/home/why";
-import { VelocityMarquee } from "./_components/ui";
 import { carsByBody, protoCars, stockStats } from "./_lib/cars";
 import type { ProtoCar } from "./_lib/types";
 
@@ -39,71 +35,12 @@ function inBand(value: number, band: { min?: number; max?: number }) {
   return true;
 }
 
-/** Recortes (fundo removido no Magnific) das fotos reais, para a vitrine. */
-const CUTOUTS: Record<string, [number, number]> = {
-  "jeep-compass-limited-t270": [1051, 792],
-  "ford-ranger-storm-xls-3-2-diesel": [1400, 952],
-  "volkswagen-nivus-highline-tsi-2022": [1400, 957],
-  "audi-q3-1-4-tfsi": [1395, 1021],
-  "chevrolet-onix-lt-1-0-turbo-mt": [1050, 646],
-  "fiat-argo-1-0-mt": [1369, 1020],
-};
 
 /**
- * Nova home (protótipo v2 "Fluxo"), na ordem do material de apoio de
- * 23/11/2026: topo, busca, serviços, destaques, perfil, como funciona,
- * venda, depoimentos, selo Verified, loja e "continue sua busca".
+ * Nova home (protótipo), bloco a bloco como no material de apoio de
+ * 23/11/2026 (FE-01 a FE-11), com o visual da direção "Fluxo" (DESIGN.md).
  */
 export default function PrototypeHome() {
-  const fronts: HeroFront[] = [
-    {
-      key: "comprar",
-      label: "Comprar",
-      meta: `${stockStats.count} carros · desde R$ ${BRL.format(stockStats.minPrice)}`,
-      sentence: "Carros selecionados com critério, com fotos da própria unidade e preço na mesa. Sem pressão, sem letras pequenas.",
-      cta: "Ver a vitrine",
-      poster: "/prototipo/hero-fluxo.jpg",
-      video: "/prototipo/hero-fluxo.mp4",
-      action: { href: "/prototipo#vitrine" },
-    },
-    {
-      key: "vender",
-      label: "Vender",
-      meta: "Faixa de valor na hora",
-      sentence: "Venda o seu com a gente cuidando de tudo: avaliação, fotos, anúncio, atendimento e documentação. Você acompanha.",
-      cta: "Quanto vale meu carro?",
-      poster: "/imagens/prototipo/hero-vender.jpg",
-      action: { href: "/prototipo#vender" },
-    },
-    {
-      key: "lojista",
-      label: "Lojistas",
-      meta: "Fase 2 · lista de espera aberta",
-      sentence: "Sua frota na vitrine certa, com leads qualificados e atendimento integrado. O primeiro mês é por nossa conta.",
-      cta: "Entrar na lista de espera",
-      poster: "/imagens/prototipo/hero-lojista.jpg",
-      video: "/prototipo/hero-lojista.mp4",
-      action: { waitlist: "lojista" },
-    },
-    {
-      key: "servicos",
-      label: "Serviços",
-      meta: `${services.length} serviços · 6 categorias`,
-      sentence: "Revisão, lavagem, troca de óleo, débitos e blindagem, com parceiros avaliados pela AutosFlow e orçamento sem compromisso.",
-      cta: "Ver serviços",
-      poster: "/imagens/prototipo/hero-servicos.jpg",
-      video: "/prototipo/hero-servicos.mp4",
-      action: { href: "/prototipo/servicos" },
-    },
-  ];
-
-  const stage: StageCar[] = Object.entries(CUTOUTS)
-    .map(([slug, [width, height]]) => {
-      const car = protoCars.find((c) => c.slug === slug);
-      return car ? { car, cutout: { src: `/prototipo/carros/${slug}.webp`, width, height } } : null;
-    })
-    .filter((item): item is StageCar => item !== null);
-
   const tiles = carsByBody().map((entry) => ({
     body: entry.body,
     plural: entry.plural,
@@ -111,6 +48,7 @@ export default function PrototypeHome() {
     cover: entry.cover.photos[0].src,
   }));
 
+  // A lista exata do material de apoio (FE-05), na mesma ordem.
   const shortcuts: Shortcut[] = [
     { label: "Até R$ 50 mil", href: "/veiculos?price=ate-50", count: count((c) => c.price > 0 && c.price <= 50000) },
     { label: "R$ 50 a 80 mil", href: "/veiculos?price=50-80", count: count((c) => c.price > 50000 && c.price <= 80000) },
@@ -118,11 +56,9 @@ export default function PrototypeHome() {
     { label: "2020 ou mais", href: "/veiculos?year=2020-2022", count: count((c) => c.yearSort >= 2020) },
     { label: "Automático", href: "/veiculos", count: count((c) => c.gearbox === "Automático") },
     { label: "Flex", href: "/veiculos?fuel=Flex", count: count((c) => c.fuel === "Flex") },
-    { label: "Híbrido", href: "/veiculos?fuel=H%C3%ADbrido", count: count((c) => c.fuel === "Híbrido") },
-    { label: "Diesel", href: "/veiculos?fuel=Diesel", count: count((c) => c.fuel === "Diesel") },
     { label: "Abaixo da FIPE", href: "/veiculos", count: count((c) => c.badges.includes("abaixo-fipe")) },
     { label: "Com laudo Verified", href: "/veiculos", count: count((c) => c.badges.includes("verified")) },
-  ].filter((shortcut) => shortcut.count > 0);
+  ];
 
   const makes = [...new Set(protoCars.map((c) => c.make))].sort((a, b) => a.localeCompare(b, "pt-BR"));
   const seo: SeoGroup[] = [
@@ -171,17 +107,15 @@ export default function PrototypeHome() {
 
   return (
     <>
-      <Hero fronts={fronts} updatedAt={STOCK_UPDATED_AT} />
+      {/* Ordem do material de apoio (02 · Visão geral), itens 1 a 11; o 12 é o rodapé do site, sem mudanças. */}
+      <Hero />
       <QuickSearch cars={protoCars} />
-      <VelocityMarquee words={["Comprar", "Vender", "Cuidar", "AutosFlow"]} tone="night" />
       <ServicesStrip />
-      <Showroom items={stage} />
       <Showcase cars={protoCars} />
       <Profiles tiles={tiles} shortcuts={shortcuts} />
       <Why stats={stats} />
       <Sell />
       <Testimonials items={testimonials} />
-      <VelocityMarquee words={["Sem pressão", "Sem letras pequenas", "Sem surpresas"]} tone="night" baseSpeed={2.4} />
       <Verified />
       <Visit />
       <Seo groups={seo} initial={2} />
