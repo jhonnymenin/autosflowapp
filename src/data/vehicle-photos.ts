@@ -40,6 +40,11 @@ export const showroomPhotos = new Set([
   "toyota-etios-sedan-platinum",
   "ford-ranger-storm-xls-3-2-diesel",
   "kia-picanto-1-0-at",
+  "chevrolet-tracker-lt-1-0-turbo-2024",
+  "chevrolet-trailblazer-ltz-2-8-diesel",
+  "ford-ecosport-se-1-5-at-2021",
+  "citroen-c3-picasso-exclusive-1-6-at",
+  "citroen-c3-glx-1-4-2012",
 ]);
 
 export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
@@ -1469,6 +1474,436 @@ export const vehiclePhotos: Record<string, VehiclePhoto[]> = {
     },
     {
       src: "/imagens/veiculos/reais/kia-picanto-1-0-at/15-6671001a.jpg",
+      width: 1600,
+      height: 1200,
+    },
+  ],
+  "chevrolet-tracker-lt-1-0-turbo-2024": [
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/01-88837e72.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/02-601580e3.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/03-22215346.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/04-26253535.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/05-0af80bfb.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/06-7928a756.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/07-46e5a23f.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/08-68bc5650.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/09-e734489b.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/11-1b5b4fbc.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/12-1e0e5cab.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/13-b45ee500.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/14-493d0d16.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/15-e6a24945.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/16-713f01b7.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/17-8d8f72f4.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/18-e78d95a1.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/19-39f0369f.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-tracker-lt-1-0-turbo-2024/20-948efc05.jpg",
+      width: 1600,
+      height: 1200,
+    },
+  ],
+  "chevrolet-trailblazer-ltz-2-8-diesel": [
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/01-aeb78629.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/02-292dec9a.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/03-c78637f3.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/04-f50725bd.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/05-a7bf8605.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/06-8589b5f7.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/07-507971ba.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/08-d0621903.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/09-07a7fe5a.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/10-778f08eb.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/11-f9d5d4d3.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/12-1799462e.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/13-b15bfc33.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/14-35131b20.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/15-2d98fcdd.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/16-548fccc8.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/17-4dea9b09.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/chevrolet-trailblazer-ltz-2-8-diesel/18-c9dbe4ab.jpg",
+      width: 1280,
+      height: 960,
+    },
+  ],
+  "ford-ecosport-se-1-5-at-2021": [
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/01-c834b51d.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/02-90c8c21f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/03-2194981f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/04-52501561.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/05-f36b77ba.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/06-1df57e60.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/07-31faf557.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/08-032c3c0d.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/09-d4ce2db5.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/10-71f84de5.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/11-f88cb22f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/12-91d99183.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/13-f2e22afe.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/14-6693ebc7.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/15-d27b67f0.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/16-9416fc5a.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/17-b59dca5f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/18-ff9f3add.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/ford-ecosport-se-1-5-at-2021/19-b0f05380.jpg",
+      width: 1280,
+      height: 960,
+    },
+  ],
+  "citroen-c3-picasso-exclusive-1-6-at": [
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/01-de0a91e9.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/02-ce047d1f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/03-69830358.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/04-55f2b678.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/05-aa36f90f.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/06-77bedd0e.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/07-8888b9bf.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/08-08c75e3e.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/09-749e7c48.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/10-9cb52826.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/11-ee3f5fe9.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/12-bfaab279.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/13-229c3f52.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/14-7aa33bcd.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/15-7dac6033.jpg",
+      width: 1280,
+      height: 960,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-picasso-exclusive-1-6-at/16-5f34ae70.jpg",
+      width: 1280,
+      height: 960,
+    },
+  ],
+  "citroen-c3-glx-1-4-2012": [
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/01-de92cdcd.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/02-d2c5082b.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/03-e34e1f11.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/04-b86bd1a5.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/05-ceb9dac5.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/06-1d2757e7.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/07-adaae1fd.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/08-870be20d.jpg",
+      width: 1200,
+      height: 1600,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/09-7d45a635.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/10-092c371d.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/11-941b03b7.jpg",
+      width: 1600,
+      height: 1200,
+    },
+    {
+      src: "/imagens/veiculos/reais/citroen-c3-glx-1-4-2012/12-484824c4.jpg",
       width: 1600,
       height: 1200,
     },

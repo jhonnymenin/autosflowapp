@@ -25,10 +25,16 @@ import type { Vehicle } from "@/types/vehicle";
  * tipo de carro e faixa de preço nas primeiras posições e fecha com os de
  * entrada. Para atualizar, veja README.md.
  */
-export const STOCK_ISSUED_AT = "17/11/2026";
+export const STOCK_ISSUED_AT = "26/11/2026";
 
 /**
  * Revisões:
+ * - 27/11: planilhas da Central de Operações de 26/11, veículos com "Site:
+ *   status" Pendente. Entram Tracker LT 1.0 Turbo 2024 (AF-022), C3 GLX 1.4
+ *   2012 (AF-023), C3 Picasso Exclusive 1.6 AT 2013/14 (AF-024), Trailblazer
+ *   LTZ 2.8 Diesel 2017/18 (AF-025) e EcoSport SE 1.5 AT 2020/21 (AF-026),
+ *   todos com fotos da unidade na loja. O Nivus azul (AF-011), também
+ *   Pendente na planilha, segue fora: não está à venda, conforme a equipe.
  * - 23/11: sai o Nivus Highline 2024/25 azul (AF-011), que não está mais à
  *   venda, conforme a equipe.
  * - 17/11: planilhas da Central de Operações (estoque físico e venda
@@ -52,7 +58,7 @@ export const STOCK_ISSUED_AT = "17/11/2026";
  * - 21/10: saem 8 veículos fora da tabela; fotos profissionais.
  * - 13/10, 06/10, 30/09: tabelas de preços e pastas de fotos da equipe.
  */
-export const STOCK_UPDATED_AT = "23/11/2026";
+export const STOCK_UPDATED_AT = "27/11/2026";
 
 export const vehicles: Vehicle[] = [
   {
@@ -89,6 +95,22 @@ export const vehicles: Vehicle[] = [
     featured: false,
   },
   {
+    ref: "AF-022",
+    slug: "chevrolet-tracker-lt-1-0-turbo-2024",
+    make: "Chevrolet",
+    model: "Tracker",
+    version: "LT 1.0 Turbo AT",
+    sourceName: "CHEVROLET TRACKER LT 1.0 TURBO FLEX",
+    yearShort: "24/24",
+    year: "2024/2024",
+    yearSort: 2024,
+    fuel: "Flex",
+    color: "Preta",
+    km: 37836,
+    price: 104990,
+    featured: true,
+  },
+  {
     ref: "AF-015",
     slug: "jeep-compass-limited-t270",
     make: "Jeep",
@@ -102,6 +124,22 @@ export const vehicles: Vehicle[] = [
     color: "Preta",
     km: 18000,
     price: 123990,
+    featured: true,
+  },
+  {
+    ref: "AF-025",
+    slug: "chevrolet-trailblazer-ltz-2-8-diesel",
+    make: "Chevrolet",
+    model: "Trailblazer",
+    version: "LTZ 2.8 Diesel AT",
+    sourceName: "CHEVROLET TRAILBLAZER LTZ 2.8 DIESEL AT",
+    yearShort: "17/18",
+    year: "2017/2018",
+    yearSort: 2017,
+    fuel: "Diesel",
+    color: "Preta",
+    km: 167000,
+    price: 142990,
     featured: true,
   },
   {
@@ -120,6 +158,22 @@ export const vehicles: Vehicle[] = [
     plate: "EXR-5H55",
     price: 147990,
     origin: "consignado",
+    featured: true,
+  },
+  {
+    ref: "AF-026",
+    slug: "ford-ecosport-se-1-5-at-2021",
+    make: "Ford",
+    model: "EcoSport",
+    version: "SE 1.5 AT",
+    sourceName: "FORD ECOSPORT SE 1.5 AT",
+    yearShort: "20/21",
+    year: "2020/2021",
+    yearSort: 2020,
+    fuel: "Flex",
+    color: "Cinza",
+    km: 13000,
+    price: 75990,
     featured: true,
   },
   {
@@ -308,6 +362,38 @@ export const vehicles: Vehicle[] = [
     color: "Prata",
     km: 133000,
     price: 49990,
+    featured: false,
+  },
+  {
+    ref: "AF-024",
+    slug: "citroen-c3-picasso-exclusive-1-6-at",
+    make: "Citroën",
+    model: "C3 Picasso",
+    version: "Exclusive 1.6 AT",
+    sourceName: "CITROEN C3 PICASSO EXCLUSIVE FLEX AUTOMATICO",
+    yearShort: "13/14",
+    year: "2013/2014",
+    yearSort: 2013,
+    fuel: "Flex",
+    color: "Prata",
+    km: 115000,
+    price: 41990,
+    featured: false,
+  },
+  {
+    ref: "AF-023",
+    slug: "citroen-c3-glx-1-4-2012",
+    make: "Citroën",
+    model: "C3",
+    version: "GLX 1.4 MT",
+    sourceName: "CITROEN C3 GLX 1.4 FLEX MANUAL",
+    yearShort: "12/12",
+    year: "2012/2012",
+    yearSort: 2012,
+    fuel: "Flex",
+    color: "Vermelha",
+    km: 156890,
+    price: 27990,
     featured: false,
   },
 ];
